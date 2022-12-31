@@ -10,11 +10,12 @@ function containsNumbers(str) {
 }
 export default function BreadCrumb({keywordgroup}) {
    // const searchParams = new URLSearchParams(location.search);
-   let selectedNavIndex=''
-    if(location.href.includes('page')){
-         selectedNavIndex =getSelectedNavIndex({keywordgroup,href:location.href}) //searchParams.get('index')
-    }
 
+   let selectedNavIndex=''
+    if(location.href.includes('sayfa')){
+         selectedNavIndex =getSelectedNavIndex({keywordgroup,slug:location.href.split('/').slice(3)}) //searchParams.get('index')
+    }
+ console.log('selectedNavIndex+++++',selectedNavIndex)
     function handleClick({ event, keyword }) {
         event.preventDefault()
         const index = localStorage.getItem(`${keyword}-index`)

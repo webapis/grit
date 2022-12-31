@@ -30,7 +30,7 @@ export default function Products(props) {
   }).sort((a, b) => {
     return b.totalGroup - a.totalGroup
   })
-debugger
+
   return <>
     <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile categories={mapped} keywordgroup={keywordgroup}><Content  navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
     <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop categories={mapped} keywordgroup={keywordgroup}><Content  navKeywords={navKeywords}  products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
@@ -71,24 +71,24 @@ function Page({products}){
   const {count,data}=products
 
 
-  debugger
+  
   const totalPages =  Math.ceil(count/100)
 
   function handleChange(e,pageNumber){
     var url = new URL(location.href);
 var search_params = url.searchParams;
 search_params.set('page', pageNumber);
-    debugger
+    
     location.replace(url)
   }
 return <>
 <Grid item xs={12} sm={12} md={6} style={{marginTop:10}}><Typography variant="body2" display="block" gutterBottom sx={{color:'#9e9e9e'}}>Toplam bulunan ürün: {new Intl.NumberFormat().format(count)} adet</Typography></Grid>
 <Grid item xs={12} sm={12} md={6} sx={{display:'flex',justifyContent:'end'}}>
-  <Pagination count={totalPages} page={page} onChange={handleChange}/>
+  {/* <Pagination count={totalPages} page={page} onChange={handleChange}/> */}
 </Grid>
 {data.map((m, i) => <Grid key={i} item xs={6} sm={3} md={3} lg={2} ><ImageComponent {...m} /></Grid>)}
 <Grid item xs={12} sx={{display:'flex',justifyContent:'end',marginBottom:10}}>
-  <Pagination count={totalPages}  page={page} onChange={handleChange} />
+  {/* <Pagination count={totalPages}  page={page} onChange={handleChange} /> */}
 </Grid>
 </>
 }
@@ -101,28 +101,28 @@ function Keywords({ navKeywords,selectedNavIndex }) {
     localStorage.setItem(`${urlKeywords}-index`,index)
     event.preventDefault()
    // history.pushState({},"")
-    debugger
+    
     const indexExist = selectedNavIndex.split('-').find(f => index !== "" && index.replace('-', "") === f)
 
     let nextUrl;
     let selectedIndex = null
     if (indexExist) {
-      debugger
+      
       selectedIndex = selectedNavIndex.split('-').filter(f => f !== "" && f !== indexExist).map(m => parseInt(m)).sort((a, b) => a - b).map(m => m + "-").join('')
 
-      debugger
+      
        nextUrl = `${decodeURI(location.pathname).replace(`/${urlKeywords.toLowerCase()}`, '')}?page=1`
    
     }
     else {
-      debugger
+      
       selectedIndex = selectedNavIndex.concat(index).split('-').filter(f => f !== "").map(m => parseInt(m)).sort((a, b) => a - b).map(m => m + "-").join('')
       nextUrl=`${location.pathname}${urlKeywords.toLowerCase()}/?page=1`
     }
-    debugger
+    
   
    
-    debugger
+    
     location.replace(nextUrl)
 }
 

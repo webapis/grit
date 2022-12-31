@@ -1,27 +1,27 @@
 
 import unicodeReplacer from "./unicodeReplacer";
-export default function getSelectedNavIndex({ keywordgroup, href }) {
+export default function getSelectedNavIndex({ keywordgroup, slug }) {
     let decodedHref = "";
     let decodedHrefArr = [];
     let keywordsFromUrl = [];
     let sortedKeywords = [];
     let selectedNavIndex;
-
+console.log('slug----',slug)
     function containsNumbers(str) {
         return /\d/.test(str);
     }
 
         const keywordIndexs = Object.entries(keywordgroup).map((m) => { return { index: m[0], ...m[1] } })
-        decodedHref = unicodeReplacer(href);
+        decodedHref = unicodeReplacer(slug);
 
         decodedHrefArr = decodedHref
-            .split("/")
-            .slice(4, decodedHref.split("/").length - 1)
+            
+            .slice(1, decodedHref.length - 1)
             .map((m) => {
                 const mm = containsNumbers(m) ? m : m.replace('-', ' ')
                 return mm
             });
-
+         
         keywordsFromUrl = keywordIndexs
             .filter((c) =>
                 decodedHrefArr.find(
@@ -44,6 +44,6 @@ export default function getSelectedNavIndex({ keywordgroup, href }) {
 
         selectedNavIndex = keywordsFromUrl.join('-') + '-';
     
-
+      
     return selectedNavIndex
 }

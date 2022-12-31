@@ -3,9 +3,9 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import BreadCrumb from './BreadCrumb';
 import Link from '@mui/material/Link';
-import Badge from '@mui/material/Badge';
+import Image from 'next/image'
+import NextLink from 'next/link'
 import { Typography } from '@mui/material';
-
 
 export default function Categories({ categories }) {
     useEffect(() => {
@@ -36,19 +36,13 @@ export default function Categories({ categories }) {
             <div style={{ marginTop: 20 }}>
                 <BreadCrumb />
             </div>
-
             <div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography id={groupNameId} variant="h4" gutterBottom>{groupName}</Typography><Typography style={{ color: '#bdbdbd' }} variant="h4" gutterBottom>{new Intl.NumberFormat().format(totalGroup)} adet</Typography></div>
             <Grid spacing={2} container>
                 {images.map((m, i) => {
                     const urlGroupName = groupName.replace(' ', '-').toLowerCase()
-                    const url = `/${urlGroupName}/${m.title}/?page=1`
+                    const url = `/${urlGroupName}/${m.title}/sayfa/1`
                     return <Grid key={i} item xs={6} sm={3} md={3} lg={2} xg={1} ><Paper elevation={1} style={{ display: 'flex', flexDirection: 'column', padding: 2, overflow: 'hidden',height:'100%' }}>
-
-
                         <CategoryImage title={m.title} url={url} count={m.count} />
-
-
-
                     </Paper></Grid>
                 })}
             </Grid></div>
@@ -89,9 +83,9 @@ function CategoryImage({ title, url, count }) {
     }, []);
     return  <a style={{ textDecoration: 'none',height:'100%',display:'flex',flexDirection:'column', justifyContent:'space-between' }} href={url}>
               
-            <img ref={imageEl} src={window.placeholder} style={{ width: '100%', borderRadius: 6 }} data-src={`https://res.cloudinary.com/codergihub/image/upload/w_200/categories/${title}.jpg`} alt={`kadin ${title}`} />
+            <img  ref={imageEl} src={window.placeholder} style={{ width: '100%', borderRadius: 6 }} data-src={`https://res.cloudinary.com/codergihub/image/upload/w_200/categories/${title}.jpg`} alt={`kadin ${title}`} />
             <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
-                <Link underline="hover" href={url} style={{ textTransform: 'uppercase' }} >{title}</Link>
+                <NextLink underline="hover" href={url} style={{ textTransform: 'uppercase' }} >{title}</NextLink>
                 <div style={{textAlign:'center',color:'#9e9e9e'}}>{new Intl.NumberFormat().format(count)}</div>
             </div>
            
