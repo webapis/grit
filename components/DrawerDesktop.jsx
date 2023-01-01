@@ -12,7 +12,7 @@ const drawerWidth = 300;
 
 export default function DrawerDesktop(props) {
   const {categories,keywordgroup}=props
-  console.log('desktop--------',categories)
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

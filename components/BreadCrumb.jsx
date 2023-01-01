@@ -15,7 +15,7 @@ export default function BreadCrumb({ keywordgroup }) {
     if (location.href.includes('sayfa')) {
         selectedNavIndex = getSelectedNavIndex({ keywordgroup, slug: location.href.split('/').slice(3) }) //searchParams.get('index')
     }
-    console.log('selectedNavIndex+++++', selectedNavIndex)
+
     function handleClick({ event, keyword }) {
         event.preventDefault()
         const index = localStorage.getItem(`${keyword}-index`)
@@ -43,7 +43,7 @@ export default function BreadCrumb({ keywordgroup }) {
         .split("/")
         .filter((f) => f !== "");
     const bcrumbs =decodedbcrumb.slice(0, decodedbcrumb.length - 2)
-    //console.log('bcrumbs---++',bcrumbs.slice(0,bcrumbs.length-1))
+
     return <div><Breadcrumbs separator="›" aria-label="breadcrumb" >
         <Link
             underline="hover"

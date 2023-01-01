@@ -1,6 +1,6 @@
 export default function Layout({children}){
 
-    return <div style={{backgroundColor:'yellow'}}>
+    return <div >
         {children}
     </div>
 

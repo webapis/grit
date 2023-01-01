@@ -19,7 +19,7 @@ import Pagination from '@mui/material/Pagination';
 import Chip from '@mui/material/Chip';
 
 export default function Products(props) {
-  const { categories, products, selectedNavIndex, functionName,navKeywords,keywordgroup } = props
+  const { categories, products, selectedNavIndex, functionName,navKeywords,keywordgroup,pageNumber } = props
 
   const mapped = Object.entries(categories).filter((f) => f[0] !== 'diger').map((g) => {
     const groupName = g[0]
@@ -33,8 +33,8 @@ export default function Products(props) {
   })
 
   return <>
-    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile categories={mapped} keywordgroup={keywordgroup}><Content  navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
-    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop categories={mapped} keywordgroup={keywordgroup}><Content  navKeywords={navKeywords}  products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
+    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile categories={mapped} keywordgroup={keywordgroup}><Content pageNumber={pageNumber}  navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
+    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop categories={mapped} keywordgroup={keywordgroup}><Content pageNumber={pageNumber}  navKeywords={navKeywords}  products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
   </>
 }
 
@@ -42,7 +42,7 @@ function containsNumbers(str) {
   return /\d/.test(str);
 }
 
-function Content({ products, selectedNavIndex, functionName, navKeywords,keywordgroup }) {
+function Content({ products, selectedNavIndex, functionName, navKeywords,keywordgroup ,pageNumber}) {
 
   const [selectedTab, setSelectedTab] = useState(0)
  
@@ -58,38 +58,36 @@ function Content({ products, selectedNavIndex, functionName, navKeywords,keyword
       <TabsContainer selectedTab={selectedTab} handleTabSelection={handleTabSelection} />
     </Grid>
 
-    {selectedTab === 0 && <Page products={products}/>}
+    {selectedTab === 0 && <Page pageNumber={pageNumber} products={products}/>}
     {selectedTab === 1 && <Grid xs={12} sm={3} md={6} lg={6} item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
   </Grid>
 }
 
 
-function Page({products}){
-  var currentUrl = new URL(location.href);
-  var currentSearch_params = currentUrl.searchParams;
-  var currentPage =parseInt( currentSearch_params.get('page'));
-  const [page, setPage] = React.useState(currentPage);
+function Page({products,pageNumber}){
+ 
+ // var currentPage =parseInt( location.href.lastIndexOf('/'));
+
+  const [page, setPage] = React.useState(pageNumber);
   const {count,data}=products
 
-
+console.log('currentPage----',typeof( pageNumber))
   
   const totalPages =  Math.ceil(count/100)
 
   function handleChange(e,pageNumber){
-    var url = new URL(location.href);
-var search_params = url.searchParams;
-search_params.set('page', pageNumber);
-    
-    location.replace(url)
+    const nextUrl = location.href.substring(0,location.href.indexOf('sayfa')) 
+    setPage(pageNumber)
+    location.replace(nextUrl+'sayfa/'+pageNumber)
   }
 return <>
 <Grid item xs={12} sm={12} md={6} style={{marginTop:10}}><Typography variant="body2" display="block" gutterBottom sx={{color:'#9e9e9e'}}>Toplam bulunan ürün: {new Intl.NumberFormat().format(count)} adet</Typography></Grid>
 <Grid item xs={12} sm={12} md={6} sx={{display:'flex',justifyContent:'end'}}>
-  {/* <Pagination count={totalPages} page={page} onChange={handleChange}/> */}
+  <Pagination count={totalPages} page={pageNumber} onChange={handleChange}/>
 </Grid>
 {data.map((m, i) => <Grid key={i} item xs={6} sm={3} md={3} lg={2} ><ImageComponent {...m} /></Grid>)}
 <Grid item xs={12} sx={{display:'flex',justifyContent:'end',marginBottom:10}}>
-  {/* <Pagination count={totalPages}  page={page} onChange={handleChange} /> */}
+<Pagination count={totalPages}  page={pageNumber} onChange={handleChange} /> 
 </Grid>
 </>
 }

@@ -4,14 +4,14 @@ import fetchNavKeywords from '../components/fetchNavKeywords'
 import { useRouter } from 'next/router';
 import Products from '../components/Products'
 function TestPage(props) {
-    const {navKeywords,products,categories,functionName,keywordgroup,selectedNavIndex} =props
+    const {navKeywords,products,categories,functionName,keywordgroup,selectedNavIndex,pageNumber} =props
     const router = useRouter();
 
     // console.log(router.pathname);
     // console.log(router.query);
     // console.log('props.....', props)
   
-        return <Products selectedNavIndex={selectedNavIndex}  keywordgroup={keywordgroup} navKeywords={navKeywords} products={products} categories={categories} functionName={functionName}/>
+        return <Products pageNumber={pageNumber} selectedNavIndex={selectedNavIndex}  keywordgroup={keywordgroup} navKeywords={navKeywords} products={products} categories={categories} functionName={functionName}/>
   
 
 }
@@ -56,7 +56,7 @@ export async function getStaticProps(context) {
       }
 
     return {
-        props: {navKeywords,products,categories,functionName,keywordgroup,selectedNavIndex}, // will be passed to the page component as props
+        props: {navKeywords,products,categories,functionName,keywordgroup,selectedNavIndex,pageNumber:parseInt(pageNumber)}, // will be passed to the page component as props
         revalidate: 10
     }
 }

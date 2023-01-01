@@ -36,7 +36,7 @@ HideOnScroll.propTypes = {
 
 export default function HideAppBar(props) {
   const {toggleDrawer}=props
-  console.log(toggleDrawer)
+
   debugger
   return (
     <React.Fragment>

@@ -79,14 +79,17 @@ function CategoryImage({ title, url, count }) {
 
 
     }, []);
-    return  <a style={{ textDecoration: 'none',height:'100%',display:'flex',flexDirection:'column', justifyContent:'space-between' }} href={url}>
+    return <div style={{ textDecoration: 'none',height:'100%',display:'flex',flexDirection:'column', justifyContent:'space-between' }}>
+ <a  href={url}>
               
-            <img  ref={imageEl} src={window.placeholder} style={{ width: '100%', borderRadius: 6 }} data-src={`https://res.cloudinary.com/codergihub/image/upload/w_200/categories/${title}.jpg`} alt={`kadin ${title}`} />
-            <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
-                <NextLink underline="hover" href={url} style={{ textTransform: 'uppercase' }} >{title}</NextLink>
-                <div style={{textAlign:'center',color:'#9e9e9e'}}>{new Intl.NumberFormat().format(count)}</div>
-            </div>
-           
-        </a>
+              <img  ref={imageEl} src={window.placeholder} style={{ width: '100%', borderRadius: 6 }} data-src={`https://res.cloudinary.com/codergihub/image/upload/w_200/categories/${title}.jpg`} alt={`kadin ${title}`} />
+            
+             
+          </a>
+          <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
+                  <NextLink underline="hover" href={url} style={{ textTransform: 'uppercase' }} >{title}</NextLink>
+                  <div style={{textAlign:'center',color:'#9e9e9e'}}>{new Intl.NumberFormat().format(count)}</div>
+              </div>
+    </div>
 
 }
