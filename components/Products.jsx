@@ -14,6 +14,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Link from '@mui/material/Link';
+import NextLink from 'next/link'
 import Pagination from '@mui/material/Pagination';
 import Chip from '@mui/material/Chip';
 
@@ -106,22 +107,21 @@ function Keywords({ navKeywords,selectedNavIndex }) {
 
     let nextUrl;
     let selectedIndex = null
+    let locationPathname =location.pathname.substring(0,location.pathname.indexOf('sayfa'))
+    console.log('locationPathname',locationPathname)
     if (indexExist) {
       
       selectedIndex = selectedNavIndex.split('-').filter(f => f !== "" && f !== indexExist).map(m => parseInt(m)).sort((a, b) => a - b).map(m => m + "-").join('')
 
       
-       nextUrl = `${decodeURI(location.pathname).replace(`/${urlKeywords.toLowerCase()}`, '')}?page=1`
+       nextUrl = `${decodeURI(locationPathname).replace(`/${urlKeywords.toLowerCase()}`, '')}/sayfa/1`
    
     }
     else {
       
       selectedIndex = selectedNavIndex.concat(index).split('-').filter(f => f !== "").map(m => parseInt(m)).sort((a, b) => a - b).map(m => m + "-").join('')
-      nextUrl=`${location.pathname}${urlKeywords.toLowerCase()}/?page=1`
+      nextUrl=`${locationPathname}${urlKeywords.toLowerCase()}/sayfa/1`
     }
-    
-  
-   
     
     location.replace(nextUrl)
 }
@@ -146,7 +146,7 @@ function Keywords({ navKeywords,selectedNavIndex }) {
           const match =selectedNavIndex.split('-').find(f=> f===i.replace('-',''))
           if(match)
           return <div style={{display:'flex', justifyContent:'space-between'}}><Chip sx={{textTransform:'capitalize'}} label={k} size="small" onDelete= {(e)=>handleClick({index:i,event:e,keyword:k})} /> <Typography>{new Intl.NumberFormat().format(c)}</Typography></div> 
-          return <Link onClick={(e)=>handleClick({index:i,event:e,keyword:k})} href="" color="inherit" underline="hover" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor:match ? 'yellow':'' }}><Typography sx={{ textTransform: 'capitalize' }}>{k}</Typography><Typography>{new Intl.NumberFormat().format(c)}</Typography></Link>
+          return <NextLink onClick={(e)=>handleClick({index:i,event:e,keyword:k})} href="" color="inherit" underline="hover" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor:match ? 'yellow':'' }}><Typography sx={{ textTransform: 'capitalize' }}>{k}</Typography><Typography>{new Intl.NumberFormat().format(c)}</Typography></NextLink>
         })}
       </AccordionDetails>
     </Accordion>

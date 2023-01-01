@@ -8,18 +8,18 @@ import getSelectedNavIndex from './getSelectedNavIndex';
 function containsNumbers(str) {
     return /\d/.test(str);
 }
-export default function BreadCrumb({keywordgroup}) {
-   // const searchParams = new URLSearchParams(location.search);
+export default function BreadCrumb({ keywordgroup }) {
+    // const searchParams = new URLSearchParams(location.search);
 
-   let selectedNavIndex=''
-    if(location.href.includes('sayfa')){
-         selectedNavIndex =getSelectedNavIndex({keywordgroup,slug:location.href.split('/').slice(3)}) //searchParams.get('index')
+    let selectedNavIndex = ''
+    if (location.href.includes('sayfa')) {
+        selectedNavIndex = getSelectedNavIndex({ keywordgroup, slug: location.href.split('/').slice(3) }) //searchParams.get('index')
     }
- console.log('selectedNavIndex+++++',selectedNavIndex)
+    console.log('selectedNavIndex+++++', selectedNavIndex)
     function handleClick({ event, keyword }) {
         event.preventDefault()
         const index = localStorage.getItem(`${keyword}-index`)
-
+        let locationPathname =location.pathname.substring(0,location.pathname.indexOf('sayfa'))
         debugger
         const indexExist = selectedNavIndex.split('-').find(f => index !== "" && index.replace('-', "") === f)
         let selectedIndex = null
@@ -34,15 +34,16 @@ export default function BreadCrumb({keywordgroup}) {
         debugger
         const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')
         debugger
-        const nextUrl = `${decodeURI(location.pathname).replace(`/${urlKeywords}`, '')}?page=1`
+        const nextUrl = `${decodeURI(locationPathname).replace(`/${urlKeywords}`, '')}/sayfa/1`
         debugger
         location.replace(nextUrl)
     }
 
-    const bcrumbs = decodeURI(location.pathname)
+    const decodedbcrumb = decodeURI(location.pathname)
         .split("/")
         .filter((f) => f !== "");
-
+    const bcrumbs =decodedbcrumb.slice(0, decodedbcrumb.length - 2)
+    //console.log('bcrumbs---++',bcrumbs.slice(0,bcrumbs.length-1))
     return <div><Breadcrumbs separator="›" aria-label="breadcrumb" >
         <Link
             underline="hover"
@@ -63,17 +64,17 @@ export default function BreadCrumb({keywordgroup}) {
                     .replace(/ç/g, "c")
                     .replace(/ğ/g, "g")}`
 
-
             } else {
-
-                if (i === bcrumbs.length - 1) {
-                   
+                
+                if (i === bcrumbs.length-1) {
+                  
                     localStorage.setItem(m, window.location.href)
                     href = window.location.href
                 } else {
+                  
                     href = localStorage.getItem(m)
                 }
-              
+
             }
             const match = i === bcrumbs.length - 1
             if (match) {
@@ -86,7 +87,7 @@ export default function BreadCrumb({keywordgroup}) {
         })}
     </Breadcrumbs>
         <Stack direction="row" spacing={1}>
-            {bcrumbs.filter((f, i) => i >= 2).map(keyword => {
+            {bcrumbs.slice(2).map(keyword => {
                 const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')
                 debugger
                 return <Chip key={keyword} size='small' label={keyword} onDelete={(event) => handleClick({ event, keyword: urlKeywords })} />

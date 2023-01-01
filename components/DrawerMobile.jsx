@@ -30,7 +30,7 @@ export default function DrawerMobile(props) {
           >
              <DrawerList categories={categories} />
           </Drawer>
-          <Box className='cont' component="main" sx={{ flexGrow: 1, paddingTop:10 }} >
+          <Box  component="main" sx={{ flexGrow: 1, paddingTop:10 }} >
             <Container>
          
             <BreadCrumb keywordgroup={keywordgroup}/>

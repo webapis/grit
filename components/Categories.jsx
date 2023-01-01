@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import BreadCrumb from './BreadCrumb';
-import Link from '@mui/material/Link';
+//import Link from '@mui/material/Link';
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { Typography } from '@mui/material';
@@ -33,9 +33,7 @@ export default function Categories({ categories }) {
             .replace(/ç/g, "c")
             .replace(/ğ/g, "g")
         return <div key={groupName}>
-            <div style={{ marginTop: 20 }}>
-                <BreadCrumb />
-            </div>
+      
             <div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography id={groupNameId} variant="h4" gutterBottom>{groupName}</Typography><Typography style={{ color: '#bdbdbd' }} variant="h4" gutterBottom>{new Intl.NumberFormat().format(totalGroup)} adet</Typography></div>
             <Grid spacing={2} container>
                 {images.map((m, i) => {

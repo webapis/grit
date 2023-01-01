@@ -2,13 +2,14 @@ import React from 'react';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import ListItem from '@mui/material/ListItem';
-import Link from '@mui/material/Link'
+//import Link from '@mui/material/Link'
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import NextLink from 'next/link'
 export default function DrawerList({ categories }) {
     const [expanded, setExpanded] = React.useState(false);
 
@@ -38,12 +39,12 @@ export default function DrawerList({ categories }) {
             <List>
            
             { images.map(d=>{
-              const url =`/${urlGroupName}/${d.title}/?page=1`
+              const url =`/${urlGroupName}/${d.title}/sayfa/1`
             
             return <ListItem key={d.title} disablePadding           secondaryAction={
                <span style={{color:'#bdbdbd'}}>{new Intl.NumberFormat().format(d.count)}</span>
               }>
-            <ListItemButton component={Link} href={url} onClick={(e)=>handleClick({event:e,index:d.index,url})}>
+            <ListItemButton component={NextLink} href={url} onClick={(e)=>handleClick({event:e,index:d.index,url})}>
              
                 <ListItemText primary={d.title} />
             </ListItemButton>
