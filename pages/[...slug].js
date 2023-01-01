@@ -3,15 +3,16 @@ import getSelectedNavIndex from '../components/getSelectedNavIndex';
 import fetchNavKeywords from '../components/fetchNavKeywords'
 import { useRouter } from 'next/router';
 import Products from '../components/Products'
+
 function TestPage(props) {
-    const {navKeywords,products,categories,functionName,keywordgroup,selectedNavIndex,pageNumber} =props
+    const {navKeywords,products,categories,functionName,keywordgroup,selectedNavIndex,pageNumber,pageTitle} =props
     const router = useRouter();
 
     // console.log(router.pathname);
     // console.log(router.query);
     // console.log('props.....', props)
   
-        return <Products pageNumber={pageNumber} selectedNavIndex={selectedNavIndex}  keywordgroup={keywordgroup} navKeywords={navKeywords} products={products} categories={categories} functionName={functionName}/>
+        return <Products pageTitle={pageTitle} pageNumber={pageNumber} selectedNavIndex={selectedNavIndex}  keywordgroup={keywordgroup} navKeywords={navKeywords} products={products} categories={categories} functionName={functionName}/>
   
 
 }
@@ -54,9 +55,9 @@ export async function getStaticProps(context) {
         });
         debugger;
       }
-
+     const pageTitle =`Kadın ${slug.slice(0,slug.indexOf('sayfa')).join(' ').replace(/-/g,' ')}`
     return {
-        props: {navKeywords,products,categories,functionName,keywordgroup,selectedNavIndex,pageNumber:parseInt(pageNumber)}, // will be passed to the page component as props
+        props: {navKeywords,products,categories,functionName,keywordgroup,selectedNavIndex,pageNumber:parseInt(pageNumber),pageTitle}, // will be passed to the page component as props
         revalidate: 10
     }
 }

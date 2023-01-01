@@ -17,9 +17,9 @@ import Link from '@mui/material/Link';
 import NextLink from 'next/link'
 import Pagination from '@mui/material/Pagination';
 import Chip from '@mui/material/Chip';
-
+import Head from 'next/head'
 export default function Products(props) {
-  const { categories, products, selectedNavIndex, functionName,navKeywords,keywordgroup,pageNumber } = props
+  const { categories, products, selectedNavIndex, functionName,navKeywords,keywordgroup,pageNumber,pageTitle } = props
 
   const mapped = Object.entries(categories).filter((f) => f[0] !== 'diger').map((g) => {
     const groupName = g[0]
@@ -33,6 +33,9 @@ export default function Products(props) {
   })
 
   return <>
+  <Head>
+  <title>{pageTitle}</title>
+  </Head>
     <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile categories={mapped} keywordgroup={keywordgroup}><Content pageNumber={pageNumber}  navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
     <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop categories={mapped} keywordgroup={keywordgroup}><Content pageNumber={pageNumber}  navKeywords={navKeywords}  products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
   </>
@@ -42,7 +45,7 @@ function containsNumbers(str) {
   return /\d/.test(str);
 }
 
-function Content({ products, selectedNavIndex, functionName, navKeywords,keywordgroup ,pageNumber}) {
+function Content({ pageTitle,products, selectedNavIndex, functionName, navKeywords,keywordgroup ,pageNumber}) {
 
   const [selectedTab, setSelectedTab] = useState(0)
  
@@ -66,9 +69,7 @@ function Content({ products, selectedNavIndex, functionName, navKeywords,keyword
 
 function Page({products,pageNumber}){
  
- // var currentPage =parseInt( location.href.lastIndexOf('/'));
 
-  const [page, setPage] = React.useState(pageNumber);
   const {count,data}=products
 
 console.log('currentPage----',typeof( pageNumber))
@@ -77,7 +78,7 @@ console.log('currentPage----',typeof( pageNumber))
 
   function handleChange(e,pageNumber){
     const nextUrl = location.href.substring(0,location.href.indexOf('sayfa')) 
-    setPage(pageNumber)
+
     location.replace(nextUrl+'sayfa/'+pageNumber)
   }
 return <>

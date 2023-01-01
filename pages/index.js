@@ -1,8 +1,11 @@
-
+import Head from 'next/head'
 import HomeComponent from '../components/HomeComponent'
 
 function Home({data}) {
   return <>
+  <Head>
+  <title>Kadın Marka Giyim Kategorileri</title>
+  </Head>
     <HomeComponent categories={data}/>
   </>
 
