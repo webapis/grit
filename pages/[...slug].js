@@ -4,7 +4,7 @@ import fetchNavKeywords from '../components/fetchNavKeywords'
 import { useRouter } from 'next/router';
 import Products from '../components/Products'
 
-function TestPage(props) {
+function productsPage(props) {
     const {placeholder,navKeywords,products,categories,functionName,keywordgroup,selectedNavIndex,pageNumber,pageTitle} =props
     const router = useRouter();
 
@@ -83,4 +83,4 @@ export async function getStaticPaths() {
 
 
 
-export default TestPage
+export default productsPage

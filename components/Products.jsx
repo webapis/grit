@@ -34,7 +34,9 @@ export default function Products(props) {
 
   return <>
   <Head>
-  <title>{pageTitle}</title>
+  <title>{pageTitle + '-| BİRARADAMODA'}</title>
+  <meta name="description"
+          content={new Date().toLocaleDateString() + pageTitle } />
   </Head>
     <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber}  navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
     <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber}  navKeywords={navKeywords}  products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />

@@ -5,6 +5,8 @@ function Home({data,placeholder}) {
   return <>
   <Head>
   <title>Kadın Marka Giyim Kategorileri</title>
+  <meta name="description"
+          content={new Date().toLocaleDateString() + " Moda markaları tek yerde ara. İstediğin giyim ürünü hızlı ve anında bul. Fiyat karşılaştır. Markadan satın al."} />
   </Head>
     <HomeComponent categories={data} placeholder={placeholder}/>
   </>
