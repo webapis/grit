@@ -18,7 +18,6 @@ import NextLink from 'next/link'
 import Pagination from '@mui/material/Pagination';
 import Chip from '@mui/material/Chip';
 import Head from 'next/head'
-import Image from 'next/image'
 export default function Products(props) {
   const { placeholder,categories, products, selectedNavIndex, functionName,navKeywords,keywordgroup,pageNumber,pageTitle } = props
 
@@ -208,25 +207,16 @@ function ImageComponent({ title, marka, imageUrl, link, priceNew,timestamp,place
   }, []);
 
   const imageSource =
-    //placeholders[marka].imagePrefix.trim() +
+    placeholders[marka].imagePrefix.trim() +
     placeholders[marka].imageHost.trim() +
-    imageUrl //+
-   // placeholders[marka].imgPostFix;
+    imageUrl +
+    placeholders[marka].imgPostFix;
   const detailHost =
     placeholders[marka].detailHost +
     link +
     placeholders[marka].postfix;
 
-  return   <div><a href={detailHost} target="_blank"> <Image 
-   fill
-   src={imageSource} 
-   alt={title}
-   placeholder='blur'
-   blurDataURL={placeholder}
-   sizes="(max-width: 768px) 100vw,
-   (max-width: 1200px) 50vw,
-   33vw"
-    /></a><div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography style={{ textTransform: 'uppercase' }} variant="body2">{marka}</Typography><Typography variant="body2">{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{title}</Link>
+  return   <div><a href={detailHost} target="_blank"> <img   ref={imageEl} style={{ width: '100%' }} src={placeholder} data-src={imageSource} alt={title} /></a><div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography style={{ textTransform: 'uppercase' }} variant="body2">{marka}</Typography><Typography variant="body2">{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{title}</Link>
   <Typography color='#9e9e9e' style={{ textAlign: 'right', fontSize: 9 }} variant="caption" display="block" gutterBottom>{minutes <= 59 ? minutes + ' dakika önce' : hour <= 24 ? hour + ' saat önce' : days <= 31 ? days + ' gün önce' : month + ' ay önce'}</Typography>
   </div>
 }

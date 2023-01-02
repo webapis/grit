@@ -6,7 +6,7 @@ export default function getSelectedNavIndex({ keywordgroup, slug }) {
     let keywordsFromUrl = [];
     let sortedKeywords = [];
     let selectedNavIndex;
-console.log('slug----',slug)
+
     function containsNumbers(str) {
         return /\d/.test(str);
     }
@@ -26,9 +26,7 @@ console.log('slug----',slug)
             .filter((c) =>
                 decodedHrefArr.find(
                     (f) => {
-                        if (c.title.includes('cep')) {
-                            console.log(f, c.title, f === c.title)
-                        }
+    
 
                         return f === c.title
                     }
