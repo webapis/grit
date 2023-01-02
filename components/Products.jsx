@@ -223,9 +223,7 @@ function ImageComponent({ title, marka, imageUrl, link, priceNew,timestamp,place
    alt={title}
    placeholder='blur'
    blurDataURL={placeholder}
-   sizes="(max-width: 768px) 100vw,
-   (max-width: 1200px) 50vw,
-   33vw"
+
     /></a><div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography style={{ textTransform: 'uppercase' }} variant="body2">{marka}</Typography><Typography variant="body2">{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{title}</Link>
   <Typography color='#9e9e9e' style={{ textAlign: 'right', fontSize: 9 }} variant="caption" display="block" gutterBottom>{minutes <= 59 ? minutes + ' dakika önce' : hour <= 24 ? hour + ' saat önce' : days <= 31 ? days + ' gün önce' : month + ' ay önce'}</Typography>
   </div>
