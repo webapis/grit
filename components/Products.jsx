@@ -181,31 +181,31 @@ function ImageComponent({ title, marka, imageUrl, link, priceNew,timestamp,place
   var minutes = Math.floor((minutesdiff / 1000) / 60);
   var days = Math.floor(minutesdiff / (1000 * 60 * 60 * 24));
   var month = Math.round(minutesdiff / (2e3 * 3600 * 365.25));
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (window.IntersectionObserver) {
+  //   if (window.IntersectionObserver) {
 
-      let observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
+  //     let observer = new IntersectionObserver((entries, observer) => {
+  //       entries.forEach(entry => {
+  //         if (entry.isIntersecting) {
 
-            entry.target.src = entry.target.dataset.src;
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.50
-      });
-      window.obz = observer
-      window.obz.observe(imageEl.current)
-    }
-
-
+  //           entry.target.src = entry.target.dataset.src;
+  //           observer.unobserve(entry.target);
+  //         }
+  //       });
+  //     }, {
+  //       root: null,
+  //       rootMargin: "0px",
+  //       threshold: 0.50
+  //     });
+  //     window.obz = observer
+  //     window.obz.observe(imageEl.current)
+  //   }
 
 
-  }, []);
+
+
+  // }, []);
 
   const imageSource =
     //placeholders[marka].imagePrefix.trim() +
