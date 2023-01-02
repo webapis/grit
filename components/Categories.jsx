@@ -7,7 +7,7 @@ import Image from 'next/image'
 import NextLink from 'next/link'
 import { Typography } from '@mui/material';
 
-export default function Categories({ categories }) {
+export default function Categories({ categories,placeholder }) {
     useEffect(() => {
         if (location.hash !== '') {
             setTimeout(() => {
@@ -40,7 +40,7 @@ export default function Categories({ categories }) {
                     const urlGroupName = groupName.replace(' ', '-').toLowerCase()
                     const url = `/${urlGroupName}/${m.title}/sayfa/1`
                     return <Grid key={i} item xs={6} sm={3} md={3} lg={2} xg={1} ><Paper elevation={1} style={{ display: 'flex', flexDirection: 'column', padding: 2, overflow: 'hidden',height:'100%' }}>
-                        <CategoryImage title={m.title} url={url} count={m.count} />
+                        <CategoryImage title={m.title} url={url} count={m.count} placeholder={placeholder}/>
                     </Paper></Grid>
                 })}
             </Grid></div>
@@ -50,7 +50,7 @@ export default function Categories({ categories }) {
 
 
 
-function CategoryImage({ title, url, count }) {
+function CategoryImage({ title, url, count,placeholder }) {
 
     const imageEl = useRef(null);
 
@@ -82,14 +82,14 @@ function CategoryImage({ title, url, count }) {
     return <div style={{ textDecoration: 'none',height:'100%',display:'flex',flexDirection:'column', justifyContent:'space-between' }}>
  <a  href={url}>
               
-              <img  ref={imageEl} src={window.placeholder} style={{ width: '100%', borderRadius: 6 }} data-src={`https://res.cloudinary.com/codergihub/image/upload/w_200/categories/${title}.jpg`} alt={`kadin ${title}`} />
-            
-             
-          </a>
-          <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
-                  <NextLink underline="hover" href={url} style={{ textTransform: 'uppercase' }} >{title}</NextLink>
-                  <div style={{textAlign:'center',color:'#9e9e9e'}}>{new Intl.NumberFormat().format(count)}</div>
-              </div>
+            <img  ref={imageEl} src={placeholder} style={{ width: '100%', borderRadius: 6 }} data-src={`https://res.cloudinary.com/codergihub/image/upload/w_200/categories/${title}.jpg`} alt={`kadin ${title}`} />
+         
+           
+        </a>
+        <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
+                <NextLink underline="hover" href={url} style={{ textTransform: 'uppercase' }} >{title}</NextLink>
+                <div style={{textAlign:'center',color:'#9e9e9e'}}>{new Intl.NumberFormat().format(count)}</div>
+            </div>
     </div>
 
 }

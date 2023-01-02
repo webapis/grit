@@ -12,7 +12,7 @@ class HomeComponent extends React.Component {
     }
  
     render() {
-        const {categories}=this.props
+        const {categories,placeholder}=this.props
         const mapped =categories.filter((f)=>f[0]!=='diger').map((g)=>{
             const groupName = g[0]
             const images = g[1].filter(f=> f.count !==undefined)
@@ -24,8 +24,8 @@ class HomeComponent extends React.Component {
            return b.totalGroup-a.totalGroup})
        
         return <div>
-            <ResponsiveComponent maxWidth={800} render={()=><DrawerMobile categories={mapped} ><Categories categories={mapped}/></DrawerMobile>} />
-            <ResponsiveComponent minWidth={801} render={()=><DrawerDesktop categories={mapped}><Categories categories={mapped}/></DrawerDesktop>} />
+            <ResponsiveComponent maxWidth={800} render={()=><DrawerMobile categories={mapped} ><Categories categories={mapped} placeholder={placeholder}/></DrawerMobile>} />
+            <ResponsiveComponent minWidth={801} render={()=><DrawerDesktop categories={mapped}><Categories categories={mapped} placeholder={placeholder}/></DrawerDesktop>} />
         </div>
     }
 }

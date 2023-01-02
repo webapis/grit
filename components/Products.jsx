@@ -19,7 +19,7 @@ import Pagination from '@mui/material/Pagination';
 import Chip from '@mui/material/Chip';
 import Head from 'next/head'
 export default function Products(props) {
-  const { categories, products, selectedNavIndex, functionName,navKeywords,keywordgroup,pageNumber,pageTitle } = props
+  const { placeholder,categories, products, selectedNavIndex, functionName,navKeywords,keywordgroup,pageNumber,pageTitle } = props
 
   const mapped = Object.entries(categories).filter((f) => f[0] !== 'diger').map((g) => {
     const groupName = g[0]
@@ -36,8 +36,8 @@ export default function Products(props) {
   <Head>
   <title>{pageTitle}</title>
   </Head>
-    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile categories={mapped} keywordgroup={keywordgroup}><Content pageNumber={pageNumber}  navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
-    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop categories={mapped} keywordgroup={keywordgroup}><Content pageNumber={pageNumber}  navKeywords={navKeywords}  products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
+    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber}  navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
+    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber}  navKeywords={navKeywords}  products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
   </>
 }
 
@@ -45,7 +45,7 @@ function containsNumbers(str) {
   return /\d/.test(str);
 }
 
-function Content({ pageTitle,products, selectedNavIndex, functionName, navKeywords,keywordgroup ,pageNumber}) {
+function Content({placeholder, pageTitle,products, selectedNavIndex, functionName, navKeywords,keywordgroup ,pageNumber}) {
 
   const [selectedTab, setSelectedTab] = useState(0)
  
@@ -61,13 +61,13 @@ function Content({ pageTitle,products, selectedNavIndex, functionName, navKeywor
       <TabsContainer selectedTab={selectedTab} handleTabSelection={handleTabSelection} />
     </Grid>
 
-    {selectedTab === 0 && <Page pageNumber={pageNumber} products={products}/>}
+    {selectedTab === 0 && <Page placeholder={placeholder} pageNumber={pageNumber} products={products}/>}
     {selectedTab === 1 && <Grid xs={12} sm={3} md={6} lg={6} item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
   </Grid>
 }
 
 
-function Page({products,pageNumber}){
+function Page({products,pageNumber,placeholder}){
  
 
   const {count,data}=products
@@ -86,7 +86,7 @@ return <>
 <Grid item xs={12} sm={12} md={6} sx={{display:'flex',justifyContent:'end'}}>
   <Pagination count={totalPages} page={pageNumber} onChange={handleChange}/>
 </Grid>
-{data.map((m, i) => <Grid key={i} item xs={6} sm={3} md={3} lg={2} ><ImageComponent {...m} /></Grid>)}
+{data.map((m, i) => <Grid key={i} item xs={6} sm={3} md={3} lg={2} ><ImageComponent placeholder={placeholder} {...m} /></Grid>)}
 <Grid item xs={12} sx={{display:'flex',justifyContent:'end',marginBottom:10}}>
 <Pagination count={totalPages}  page={pageNumber} onChange={handleChange} /> 
 </Grid>
@@ -167,7 +167,7 @@ function TabsContainer({ selectedTab, handleTabSelection }) {
 }
 
 
-function ImageComponent({ title, marka, imageUrl, link, priceNew,timestamp }) {
+function ImageComponent({ title, marka, imageUrl, link, priceNew,timestamp,placeholder }) {
 
   const imageEl = useRef(null);
   
@@ -214,7 +214,7 @@ function ImageComponent({ title, marka, imageUrl, link, priceNew,timestamp }) {
     link +
     placeholders[marka].postfix;
 
-  return   <div><a href={detailHost} target="_blank"> <img   ref={imageEl} style={{ width: '100%' }} src={window.placeholder} data-src={imageSource} alt={title} /></a><div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography style={{ textTransform: 'uppercase' }} variant="body2">{marka}</Typography><Typography variant="body2">{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{title}</Link>
+  return   <div><a href={detailHost} target="_blank"> <img   ref={imageEl} style={{ width: '100%' }} src={placeholder} data-src={imageSource} alt={title} /></a><div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography style={{ textTransform: 'uppercase' }} variant="body2">{marka}</Typography><Typography variant="body2">{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{title}</Link>
   <Typography color='#9e9e9e' style={{ textAlign: 'right', fontSize: 9 }} variant="caption" display="block" gutterBottom>{minutes <= 59 ? minutes + ' dakika önce' : hour <= 24 ? hour + ' saat önce' : days <= 31 ? days + ' gün önce' : month + ' ay önce'}</Typography>
   </div>
 }
