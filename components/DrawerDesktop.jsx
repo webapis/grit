@@ -16,7 +16,7 @@ export default function DrawerDesktop(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ zIndex: 2 }}>
+      <AppBar position="fixed" sx={{ zIndex: 2}}>
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
             BİRARADAMODA
