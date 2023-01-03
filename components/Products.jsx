@@ -89,7 +89,7 @@ function Page({ products, pageNumber, placeholder }) {
     <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
-    {data.map((m, i) => <Grid key={i} item xs={6} sm={3} md={3} lg={2} ><ImageComponent placeholder={placeholder} {...m} /></Grid>)}
+    <Grid container>{data.map((m, i) => <Grid key={i} item xs={6} sm={3} md={3} lg={2} ><ImageComponent placeholder={placeholder} {...m} /></Grid>)}</Grid>
     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginBottom: 10 }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
@@ -219,15 +219,13 @@ function ImageComponent({ title, marka, imageUrl, link, priceNew, timestamp, pla
 
   return <div ><a href={detailHost} target="_blank" style={{ position: 'relative' }}>
     <Image
-    
-      width={150}
+      width={160}
       height={250}
       src={imageSource}
       alt={title}
       placeholder='blur'
       //  sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
       blurDataURL={placeholder}
-  
       style={{ objectFit: 'cover' }}
       quality={100}
     /></a>
