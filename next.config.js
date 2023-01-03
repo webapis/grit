@@ -88,8 +88,8 @@ const nextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'https',
-        hostname: 'lp2.hm.com/hmgoepprod',
+        protocol: 'http',
+        hostname: 'lp2.hm.com',
         port: '',
         pathname: '/**',
       },
