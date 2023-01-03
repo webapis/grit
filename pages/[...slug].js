@@ -59,7 +59,7 @@ export async function getStaticProps(context) {
      const pageTitle =`Kadın ${slug.slice(0,slug.indexOf('sayfa')).join(' ').replace(/-/g,' ')}`
     return {
         props: {placeholder,navKeywords,products,categories,functionName,keywordgroup,selectedNavIndex,pageNumber:parseInt(pageNumber),pageTitle}, // will be passed to the page component as props
-        revalidate: 10
+        revalidate: 60
     }
 }
 

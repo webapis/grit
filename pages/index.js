@@ -22,7 +22,7 @@ export async function getStaticProps(context) {
   const data = Object.entries(categories);
 
   return {
-    props: {data,placeholder}, // will be passed to the page component as props
+    props: {data,placeholder}, revalidate: 60, // will be passed to the page component as props
   }
 }
 
