@@ -217,7 +217,7 @@ function ImageComponent({ title, marka, imageUrl, link, priceNew, timestamp, pla
     link +
     placeholders[marka].postfix;
 
-  return <div ><a href={detailHost} target="_blank" style={{ position: 'relative' }}>
+  return <div><a href={detailHost} target="_blank" style={{ position: 'relative' }}>
     <Image
       width={160}
       height={250}
@@ -228,8 +228,14 @@ function ImageComponent({ title, marka, imageUrl, link, priceNew, timestamp, pla
       blurDataURL={placeholder}
       style={{ objectFit: 'cover' }}
       quality={100}
-    /></a>
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography style={{ textTransform: 'uppercase' }} variant="body2">{marka}</Typography><Typography variant="body2">{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{title}</Link>
+    />
+    
+    </a>
+    <div style={{paddingRight:20 }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between'}}><Typography style={{ textTransform: 'uppercase' }} variant="body2">{marka}</Typography><Typography variant="body2">{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{title}</Link>
     <Typography color='#9e9e9e' style={{ textAlign: 'right', fontSize: 9 }} variant="caption" display="block" gutterBottom>{minutes <= 59 ? minutes + ' dakika önce' : hour <= 24 ? hour + ' saat önce' : days <= 31 ? days + ' gün önce' : month + ' ay önce'}</Typography>
+    </div>
+
   </div>
+ 
 }
