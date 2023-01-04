@@ -18,9 +18,8 @@ import NextLink from 'next/link'
 import Pagination from '@mui/material/Pagination';
 import Chip from '@mui/material/Chip';
 import Head from 'next/head'
-import Image from 'next/image'
 export default function Products(props) {
-  const { placeholder, categories, products, selectedNavIndex, functionName, navKeywords, keywordgroup, pageNumber, pageTitle } = props
+  const { placeholder,categories, products, selectedNavIndex, functionName,navKeywords,keywordgroup,pageNumber,pageTitle } = props
 
   const mapped = Object.entries(categories).filter((f) => f[0] !== 'diger').map((g) => {
     const groupName = g[0]
@@ -34,13 +33,13 @@ export default function Products(props) {
   })
 
   return <>
-    <Head>
-      <title>{pageTitle + '-| BİRARADAMODA'}</title>
-      <meta name="description"
-        content={new Date().toLocaleDateString() + pageTitle} />
-    </Head>
-    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
-    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
+  <Head>
+  <title>{pageTitle + '-| BİRARADAMODA'}</title>
+  <meta name="description"
+          content={new Date().toLocaleDateString() + pageTitle } />
+  </Head>
+    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber}  navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
+    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber}  navKeywords={navKeywords}  products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
   </>
 }
 
@@ -48,10 +47,10 @@ function containsNumbers(str) {
   return /\d/.test(str);
 }
 
-function Content({ placeholder, pageTitle, products, selectedNavIndex, functionName, navKeywords, keywordgroup, pageNumber }) {
+function Content({placeholder, pageTitle,products, selectedNavIndex, functionName, navKeywords,keywordgroup ,pageNumber}) {
 
   const [selectedTab, setSelectedTab] = useState(0)
-
+ 
 
   function handleTabSelection(e, newvalue) {
     setSelectedTab(newvalue)
@@ -64,69 +63,69 @@ function Content({ placeholder, pageTitle, products, selectedNavIndex, functionN
       <TabsContainer selectedTab={selectedTab} handleTabSelection={handleTabSelection} />
     </Grid>
 
-    {selectedTab === 0 && <Page placeholder={placeholder} pageNumber={pageNumber} products={products} />}
+    {selectedTab === 0 && <Page placeholder={placeholder} pageNumber={pageNumber} products={products}/>}
     {selectedTab === 1 && <Grid xs={12} sm={3} md={6} lg={6} item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
   </Grid>
 }
 
 
-function Page({ products, pageNumber, placeholder }) {
+function Page({products,pageNumber,placeholder}){
+ 
 
+  const {count,data}=products
 
-  const { count, data } = products
+console.log('currentPage----',typeof( pageNumber))
+  
+  const totalPages =  Math.ceil(count/100)
 
-  console.log('currentPage----', typeof (pageNumber))
+  function handleChange(e,pageNumber){
+    const nextUrl = location.href.substring(0,location.href.indexOf('sayfa')) 
 
-  const totalPages = Math.ceil(count / 100)
-
-  function handleChange(e, pageNumber) {
-    const nextUrl = location.href.substring(0, location.href.indexOf('sayfa'))
-
-    location.replace(nextUrl + 'sayfa/' + pageNumber)
+    location.replace(nextUrl+'sayfa/'+pageNumber)
   }
-  return <>
-    <Grid item xs={12} sm={12} md={6} style={{ marginTop: 10 }}><Typography variant="body2" display="block" gutterBottom sx={{ color: '#9e9e9e' }}>Toplam bulunan ürün: {new Intl.NumberFormat().format(count)} adet</Typography></Grid>
-    <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
-      <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
-    </Grid>
-    <Grid container>{data.map((m, i) => <Grid key={i} item xs={6} sm={3} md={3} lg={2} ><ImageComponent placeholder={placeholder} {...m} /></Grid>)}</Grid>
-    <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginBottom: 10 }}>
-      <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
-    </Grid>
-  </>
+return <>
+<Grid item xs={12} sm={12} md={6} style={{marginTop:10}}><Typography variant="body2" display="block" gutterBottom sx={{color:'#9e9e9e'}}>Toplam bulunan ürün: {new Intl.NumberFormat().format(count)} adet</Typography></Grid>
+<Grid item xs={12} sm={12} md={6} sx={{display:'flex',justifyContent:'end'}}>
+  <Pagination count={totalPages} page={pageNumber} onChange={handleChange}/>
+</Grid>
+{data.map((m, i) => <Grid key={i} item xs={6} sm={3} md={3} lg={2} ><ImageComponent placeholder={placeholder} {...m} /></Grid>)}
+<Grid item xs={12} sx={{display:'flex',justifyContent:'end',marginBottom:10}}>
+<Pagination count={totalPages}  page={pageNumber} onChange={handleChange} /> 
+</Grid>
+</>
 }
 
 
-function Keywords({ navKeywords, selectedNavIndex }) {
+function Keywords({ navKeywords,selectedNavIndex }) {
   const sortByKeywordsLength = navKeywords.sort((b, a) => a['keywords'].length - b['keywords'].length)
-  function handleClick({ index, event, keyword }) {
+  function handleClick({index,event,keyword}) {
     const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')
-    localStorage.setItem(`${urlKeywords}-index`, index)
+    localStorage.setItem(`${urlKeywords}-index`,index)
     event.preventDefault()
-    // history.pushState({},"")
-
+   // history.pushState({},"")
+    
     const indexExist = selectedNavIndex.split('-').find(f => index !== "" && index.replace('-', "") === f)
 
     let nextUrl;
     let selectedIndex = null
-    let locationPathname = location.pathname.substring(0, location.pathname.indexOf('sayfa'))
-    console.log('locationPathname', locationPathname)
+    let locationPathname =location.pathname.substring(0,location.pathname.indexOf('sayfa'))
+    console.log('locationPathname',locationPathname)
     if (indexExist) {
-
+      
       selectedIndex = selectedNavIndex.split('-').filter(f => f !== "" && f !== indexExist).map(m => parseInt(m)).sort((a, b) => a - b).map(m => m + "-").join('')
 
-
-      nextUrl = `${decodeURI(locationPathname).replace(`/${urlKeywords.toLowerCase()}`, '')}/sayfa/1`
-
+      
+       nextUrl = `${decodeURI(locationPathname).replace(`/${urlKeywords.toLowerCase()}`, '')}/sayfa/1`
+   
     }
     else {
-
+      
       selectedIndex = selectedNavIndex.concat(index).split('-').filter(f => f !== "").map(m => parseInt(m)).sort((a, b) => a - b).map(m => m + "-").join('')
-      nextUrl = `${locationPathname}${urlKeywords.toLowerCase()}/sayfa/1`
+      nextUrl=`${locationPathname}${urlKeywords.toLowerCase()}/sayfa/1`
     }
-
+    
     location.replace(nextUrl)
-  }
+}
 
   return navKeywords && sortByKeywordsLength.map(m => {
     const sortByProductNumber = m.keywords.sort((a, b) => b[0] - a[0])
@@ -145,16 +144,16 @@ function Keywords({ navKeywords, selectedNavIndex }) {
           const c = m[0]
           const i = m[1]
           const k = m[2]
-          const match = selectedNavIndex.split('-').find(f => f === i.replace('-', ''))
-          if (match)
-            return <div style={{ display: 'flex', justifyContent: 'space-between' }}><Chip sx={{ textTransform: 'capitalize' }} label={k} size="small" onDelete={(e) => handleClick({ index: i, event: e, keyword: k })} /> <Typography>{new Intl.NumberFormat().format(c)}</Typography></div>
-          return <NextLink onClick={(e) => handleClick({ index: i, event: e, keyword: k })} href="" color="inherit" underline="hover" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: match ? 'yellow' : '' }}><Typography sx={{ textTransform: 'capitalize' }}>{k}</Typography><Typography>{new Intl.NumberFormat().format(c)}</Typography></NextLink>
+          const match =selectedNavIndex.split('-').find(f=> f===i.replace('-',''))
+          if(match)
+          return <div style={{display:'flex', justifyContent:'space-between'}}><Chip sx={{textTransform:'capitalize'}} label={k} size="small" onDelete= {(e)=>handleClick({index:i,event:e,keyword:k})} /> <Typography>{new Intl.NumberFormat().format(c)}</Typography></div> 
+          return <NextLink onClick={(e)=>handleClick({index:i,event:e,keyword:k})} href="" color="inherit" underline="hover" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor:match ? 'yellow':'' }}><Typography sx={{ textTransform: 'capitalize' }}>{k}</Typography><Typography>{new Intl.NumberFormat().format(c)}</Typography></NextLink>
         })}
       </AccordionDetails>
     </Accordion>
   })
 }
-
+//
 
 
 function TabsContainer({ selectedTab, handleTabSelection }) {
@@ -170,10 +169,10 @@ function TabsContainer({ selectedTab, handleTabSelection }) {
 }
 
 
-function ImageComponent({ title, marka, imageUrl, link, priceNew, timestamp, placeholder }) {
+function ImageComponent({ title, marka, imageUrl, link, priceNew,timestamp,placeholder }) {
 
   const imageEl = useRef(null);
-
+  
   const date2 = timestamp
   const date1 = Date.now()
   const hour = Math.floor(Math.abs(date1 - date2) / 36e5);
@@ -181,61 +180,43 @@ function ImageComponent({ title, marka, imageUrl, link, priceNew, timestamp, pla
   var minutes = Math.floor((minutesdiff / 1000) / 60);
   var days = Math.floor(minutesdiff / (1000 * 60 * 60 * 24));
   var month = Math.round(minutesdiff / (2e3 * 3600 * 365.25));
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if (window.IntersectionObserver) {
+    if (window.IntersectionObserver) {
 
-  //     let observer = new IntersectionObserver((entries, observer) => {
-  //       entries.forEach(entry => {
-  //         if (entry.isIntersecting) {
+      let observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
 
-  //           entry.target.src = entry.target.dataset.src;
-  //           observer.unobserve(entry.target);
-  //         }
-  //       });
-  //     }, {
-  //       root: null,
-  //       rootMargin: "0px",
-  //       threshold: 0.50
-  //     });
-  //     window.obz = observer
-  //     window.obz.observe(imageEl.current)
-  //   }
-
-
+            entry.target.src = entry.target.dataset.src;
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.50
+      });
+      window.obz = observer
+      window.obz.observe(imageEl.current)
+    }
 
 
-  // }, []);
+
+
+  }, []);
 
   const imageSource =
-    //placeholders[marka].imagePrefix.trim() +
+    placeholders[marka].imagePrefix.trim() +
     placeholders[marka].imageHost.trim() +
-    imageUrl //+
-  // placeholders[marka].imgPostFix;
+    imageUrl +
+    placeholders[marka].imgPostFix;
   const detailHost =
     placeholders[marka].detailHost +
     link +
     placeholders[marka].postfix;
 
-  return <div><a href={detailHost} target="_blank" style={{ position: 'relative' }}>
-    <Image
-      width={160}
-      height={250}
-      src={imageSource}
-      alt={title}
-      placeholder='blur'
-      //  sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
-      blurDataURL={placeholder}
-      style={{ objectFit: 'cover' }}
-      quality={100}
-    />
-    
-    </a>
-    <div style={{paddingRight:20 }}>
-    <div style={{ display: 'flex', justifyContent: 'space-between'}}><Typography style={{ textTransform: 'uppercase' }} variant="body2">{marka}</Typography><Typography variant="body2">{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{title}</Link>
-    <Typography color='#9e9e9e' style={{ textAlign: 'right', fontSize: 9 }} variant="caption" display="block" gutterBottom>{minutes <= 59 ? minutes + ' dakika önce' : hour <= 24 ? hour + ' saat önce' : days <= 31 ? days + ' gün önce' : month + ' ay önce'}</Typography>
-    </div>
-
+  return   <div><a href={detailHost} target="_blank"> <img   ref={imageEl} style={{ width: '100%' }} src={placeholder} data-src={imageSource} alt={title} /></a><div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography style={{ textTransform: 'uppercase' }} variant="body2">{marka}</Typography><Typography variant="body2">{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{title}</Link>
+  <Typography color='#9e9e9e' style={{ textAlign: 'right', fontSize: 9 }} variant="caption" display="block" gutterBottom>{minutes <= 59 ? minutes + ' dakika önce' : hour <= 24 ? hour + ' saat önce' : days <= 31 ? days + ' gün önce' : month + ' ay önce'}</Typography>
   </div>
- 
 }
