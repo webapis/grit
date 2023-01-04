@@ -147,7 +147,7 @@ function Keywords({ navKeywords,selectedNavIndex }) {
           const match =selectedNavIndex.split('-').find(f=> f===i.replace('-',''))
           if(match)
           return <div style={{display:'flex', justifyContent:'space-between'}}><Chip sx={{textTransform:'capitalize'}} label={k} size="small" onDelete= {(e)=>handleClick({index:i,event:e,keyword:k})} /> <Typography>{new Intl.NumberFormat().format(c)}</Typography></div> 
-          return <NextLink onClick={(e)=>handleClick({index:i,event:e,keyword:k})} href="" color="inherit" underline="hover" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor:match ? 'yellow':'' }}><Typography sx={{ textTransform: 'capitalize' }}>{k}</Typography><Typography>{new Intl.NumberFormat().format(c)}</Typography></NextLink>
+          return <Link component={NextLink} onClick={(e)=>handleClick({index:i,event:e,keyword:k})} href="" color="inherit" underline="hover" style={{ marginRight:20, paddingLeft:10, display: 'flex', justifyContent: 'space-between', backgroundColor:match ? 'yellow':'' }}><Typography variant='overline' sx={{ textTransform: "uppercase" }}>{k}</Typography><Typography>{new Intl.NumberFormat().format(c)}</Typography></Link>
         })}
       </AccordionDetails>
     </Accordion>
