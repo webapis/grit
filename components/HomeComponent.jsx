@@ -10,12 +10,12 @@ class HomeComponent extends React.Component {
     constructor(props) {
         super(props);
     }
- 
+ //.filter(f=> f.count !==undefined)
     render() {
-        const {categories,placeholder}=this.props
-        const mapped =categories.filter((f)=>f[0]!=='diger').map((g)=>{
+        const {categories,placeholder,role}=this.props
+        const mapped =categories.map((g)=>{
             const groupName = g[0]
-            const images = g[1].filter(f=> f.count !==undefined)
+            const images = role === 'USER' ? g[1].filter(f => f.count !== undefined) : g[1].map(m => { return { ...m, count: m.count === undefined ? 0 : m.count } })
             let totalGroup=images.reduce((prev,curr)=>{
               return prev+curr.count
             },0)

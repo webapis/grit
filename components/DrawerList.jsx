@@ -19,7 +19,7 @@ export default function DrawerList({ categories }) {
     function handleClick({url,event}) {
 
       event.preventDefault();
-      debugger
+
 
   
 
@@ -40,7 +40,7 @@ export default function DrawerList({ categories }) {
            
             { images.map(d=>{
               const url =`/${urlGroupName}/${d.title}/sayfa/1`
-            
+         
             return <ListItem key={d.title} disablePadding           secondaryAction={
                <span style={{color:'#bdbdbd'}}>{new Intl.NumberFormat().format(d.count)}</span>
               }>
