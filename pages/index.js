@@ -1,14 +1,15 @@
 import Head from 'next/head'
 import HomeComponent from '../components/HomeComponent'
 
-function Home({data,placeholder}) {
+function Home({data,placeholder,role}) {
+
   return <>
   <Head>
   <title>Kadın Marka Giyim Kategorileri</title>
   <meta name="description"
           content={new Date().toLocaleDateString() + " Moda markaları tek yerde ara. İstediğin giyim ürünü hızlı ve anında bul. Fiyat karşılaştır. Markadan satın al."} />
   </Head>
-    <HomeComponent categories={data} placeholder={placeholder}/>
+    <HomeComponent role={role} categories={data} placeholder={placeholder}/>
   </>
 
 }
@@ -18,14 +19,19 @@ export async function getStaticProps(context) {
   const categories = await fetch(
     `${process.env.HOST}/category-nav-counter.json`
   ).then((response) => response.json())
-
+  if (process.env.ROLE === 'USER') {
+    delete categories['diger']
+}
   const data = Object.entries(categories);
 
   return {
-    props: {data,placeholder}, revalidate: 60, // will be passed to the page component as props
+    props: {role:process.env.ROLE,data,placeholder}, revalidate: 60, // will be passed to the page component as props
   }
 }
 
 
 
 export default Home
+
+
+//.filter((f) => f[0] !== 'diger')
