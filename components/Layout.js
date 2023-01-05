@@ -1,4 +1,5 @@
 import Script from 'next/script'
+import ScrollButton from './ScrollToTopBtn'
 export default function Layout({children,title}){
 
     return <div >
@@ -19,6 +20,10 @@ export default function Layout({children,title}){
 				'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
 		  })(window, document, 'script', 'dataLayer', 'GTM-MMJQR6C')`}</Script>
         {children}
+
+		<div style={{position:"relative"}}>
+				<ScrollButton/>
+			</div>
     </div>
 
 }

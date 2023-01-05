@@ -18,6 +18,7 @@ import NextLink from 'next/link'
 import Pagination from '@mui/material/Pagination';
 import Chip from '@mui/material/Chip';
 import Head from 'next/head'
+
 export default function Products(props) {
   const { placeholder,categories, products, selectedNavIndex, functionName,navKeywords,keywordgroup,pageNumber,pageTitle } = props
 
