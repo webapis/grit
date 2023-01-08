@@ -10,7 +10,9 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 export default function DrawerList({ categories }) {
+  const { query: { gender } } = useRouter()
     const [expanded, setExpanded] = React.useState(false);
 
     const handleChange = (panel) => (event, isExpanded) => {
@@ -39,7 +41,7 @@ export default function DrawerList({ categories }) {
             <List>
            
             { images.map(d=>{
-              const url =`/${urlGroupName}/${d.title}/sayfa/1`
+              const url =`/${gender}/${urlGroupName}/${d.title}/sayfa/1`
          
             return <ListItem key={d.title} disablePadding           secondaryAction={
                <span style={{color:'#bdbdbd'}}>{new Intl.NumberFormat().format(d.count)}</span>

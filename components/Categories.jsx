@@ -4,23 +4,67 @@ import Paper from '@mui/material/Paper';
 
 import NextLink from 'next/link'
 import { Typography } from '@mui/material';
+import { useRouter } from 'next/router'
+export default function Categories({ categories,placeholder, offset = 200, trigger = true  }) {
+    const { query: { gender } } = useRouter()
 
-export default function Categories({ categories,placeholder }) {
+    
     useEffect(() => {
-        if (location.hash !== '') {
-            setTimeout(() => {
-                const hash = decodeURI(location.hash)
-                let groupNameId = hash.replace(' ', '-').toLowerCase().replace(/ö/g, "o")
-                    .replace(/ş/g, "s")
-                    .replace(/ı/g, "i")
-                    .replace(/ç/g, "c")
-                    .replace(/ğ/g, "g")
-                console.log('groupNameId', groupNameId)
-                document.querySelector(groupNameId).scrollIntoView({ block: "center" })
-            }, 200)
+        const scrollToHashElement = () => {
+            const { hash } = window.location;
+            const elementToScroll = document.getElementById(hash?.replace("#", ""));
 
-        }
+            if (!elementToScroll) return;
+
+            window.scrollTo({
+                top: elementToScroll.offsetTop - offset,
+                behavior: "smooth"
+            });
+        };
+
+        if (!trigger) return;
+
+        scrollToHashElement();
+        window.addEventListener("hashchange", scrollToHashElement);
+        return window.removeEventListener("hashchange", scrollToHashElement);
+    }, [trigger]);
+    useEffect(() => {
+
+
+        const headings = document.querySelectorAll('h4[id]');
+
+        window.addEventListener('scroll', (e) => {
+
+            headings.forEach(ha => {
+                const rect = ha.getBoundingClientRect();
+                if (ha.id === 'elbise') {
+                    console.log('rect.top ', rect.top, ha.id)
+                }
+
+                if (rect.top > 0 && Math.round(rect.top) < 150) {
+
+                    const location = window.location.toString().split('#')[0];
+                    history.replaceState(null, null, location + '#' + ha.id);
+                }
+            });
+        });
+
     }, [])
+    // useEffect(() => {
+    //     if (location.hash !== '') {
+    //         setTimeout(() => {
+    //             const hash = decodeURI(location.hash)
+    //             let groupNameId = hash.replace(' ', '-').toLowerCase().replace(/ö/g, "o")
+    //                 .replace(/ş/g, "s")
+    //                 .replace(/ı/g, "i")
+    //                 .replace(/ç/g, "c")
+    //                 .replace(/ğ/g, "g")
+    //             console.log('groupNameId', groupNameId)
+    //             document.querySelector(groupNameId).scrollIntoView({ block: "center" })
+    //         }, 200)
+
+    //     }
+    // }, [])
 
 
     return <div>{categories && categories.map(m => {
@@ -36,7 +80,7 @@ export default function Categories({ categories,placeholder }) {
             <Grid spacing={2} container>
                 {images.map((m, i) => {
                     const urlGroupName = groupName.replace(' ', '-').toLowerCase()
-                    const url = `/${urlGroupName}/${m.title}/sayfa/1`
+                    const url = `/${gender}/${urlGroupName}/${m.title}/sayfa/1`
                     return <Grid key={i} item xs={6} sm={3} md={3} lg={2} xg={1} ><Paper elevation={1} style={{ display: 'flex', flexDirection: 'column', padding: 2, overflow: 'hidden',height:'100%' }}>
                         <CategoryImage title={m.title} url={url} count={m.count} placeholder={placeholder}/>
                     </Paper></Grid>
