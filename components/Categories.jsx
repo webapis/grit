@@ -5,8 +5,10 @@ import Paper from '@mui/material/Paper';
 import NextLink from 'next/link'
 import { Typography } from '@mui/material';
 import { useRouter } from 'next/router'
+import placeholders from "../assets/placeholders.json";
 export default function Categories({ categories,placeholder, offset = 200, trigger = true  }) {
     const { query: { gender } } = useRouter()
+
 
     
     useEffect(() => {
@@ -82,7 +84,7 @@ export default function Categories({ categories,placeholder, offset = 200, trigg
                     const urlGroupName = groupName.replace(' ', '-').toLowerCase()
                     const url = `/${gender}/${urlGroupName}/${m.title}/sayfa/1`
                     return <Grid key={i} item xs={6} sm={3} md={3} lg={2} xg={1} ><Paper elevation={1} style={{ display: 'flex', flexDirection: 'column', padding: 2, overflow: 'hidden',height:'100%' }}>
-                        <CategoryImage title={m.title} url={url} count={m.count} placeholder={placeholder}/>
+                        <CategoryImage imageUrls={m.imageUrls} title={m.title} url={url} count={m.count} placeholder={placeholder}/>
                     </Paper></Grid>
                 })}
             </Grid></div>
@@ -92,10 +94,12 @@ export default function Categories({ categories,placeholder, offset = 200, trigg
 
 
 
-function CategoryImage({ title, url, count,placeholder }) {
+function CategoryImage({ title, url, count,placeholder,imageUrls }) {
 
     const imageEl = useRef(null);
 
+    const {marka,src:imageUrl}=imageUrls[0]
+    console.log('imageUrls[0]',imageUrls[0])
     useEffect(() => {
 
         if (window.IntersectionObserver) {
@@ -121,10 +125,20 @@ function CategoryImage({ title, url, count,placeholder }) {
 
 
     }, []);
+
+    const imageSource =
+    placeholders[marka].imagePrefix.trim() +
+    placeholders[marka].imageHost.trim() +
+    imageUrl +
+    placeholders[marka].imgPostFix;
+
+    console.log('imageSource',imageSource)
+
+
     return <div style={{ textDecoration: 'none',height:'100%',display:'flex',flexDirection:'column', justifyContent:'space-between' }}>
  <a  href={url}>
               
-            <img  ref={imageEl} src={placeholder} style={{ width: '100%', borderRadius: 6 }} data-src={`https://res.cloudinary.com/codergihub/image/upload/w_200/categories/${title}.jpg`} alt={`kadin ${title}`} />
+            <img  ref={imageEl} src={placeholder} style={{ width: '100%', borderRadius: 6 }} data-src={imageSource} />
          
            
         </a>
