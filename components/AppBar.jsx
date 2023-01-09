@@ -56,7 +56,7 @@ export default function HideAppBar(props) {
           </IconButton>
           <Typography variant="h6" noWrap component="div">
             BİRARADAMODA
-            <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın Marka Giyimler</Typography>
+            <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın ve Erkek Marka Giyimler</Typography>
           </Typography>
           
           </Toolbar>

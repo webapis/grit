@@ -1,8 +1,8 @@
 import Script from 'next/script'
 import ScrollButton from './ScrollToTopBtn'
-export default function Layout({children,title}){
+export default function Layout({children}){
 
-    return <div >
+    return <div  style={{display:'flex',flexDirection:'column'}}>
 		<Script   onLoad={() => {
           console.log('Script has loaded ads')
         }}  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1960990522971470"
@@ -24,6 +24,7 @@ export default function Layout({children,title}){
 		<div style={{position:"relative"}}>
 				<ScrollButton/>
 			</div>
+			<div style={{textAlign:'center', backgroundColor:'#eceff1', height:60,marginBottom:5, lineHeight:4,zIndex:2000}}>© 2023 biraradamoda.com Her Hakkı Saklıdır.</div>
     </div>
 
 }
