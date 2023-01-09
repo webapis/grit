@@ -1,10 +1,10 @@
 
-import getSelectedNavIndex from '../../components/getSelectedNavIndex';
-import fetchNavKeywords from '../../components/fetchNavKeywords'
-import Products from '../../components/Products'
-import { useRouter } from 'next/router'
+import getSelectedNavIndex from '../components/getSelectedNavIndex';
+import fetchNavKeywords from '../components/fetchNavKeywords'
+import Products from '../components/Products'
+
 function productsPage(props) {
-    const { query: { gender } } = useRouter()
+
 
     const { placeholder,role, navKeywords, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber, pageTitle } = props
     return <Products role={role} placeholder={placeholder} pageTitle={pageTitle} pageNumber={pageNumber} selectedNavIndex={selectedNavIndex} keywordgroup={keywordgroup} navKeywords={navKeywords} products={products} categories={categories} functionName={functionName} />

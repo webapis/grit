@@ -5,13 +5,12 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import getSelectedNavIndex from './getSelectedNavIndex';
-import { useRouter } from 'next/router'
+
 function containsNumbers(str) {
     return /\d/.test(str);
 }
-export default function BreadCrumb({ keywordgroup }) {
-    const { query: { gender } } = useRouter()
-    // const searchParams = new URLSearchParams(location.search);
+export default function BreadCrumb({ keywordgroup,gender }) {
+
 
     let selectedNavIndex = ''
     if (location.href.includes('sayfa')) {

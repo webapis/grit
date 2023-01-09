@@ -7,9 +7,9 @@ import AppBar from './AppBar'
 import DrawerList from './DrawerList';
 import Toolbar from '@mui/material/Toolbar';
 export default function DrawerMobile(props) {
-  const {categories,keywordgroup}=props
+  const {categories,keywordgroup,gender}=props
   const [state, setState] = React.useState();
-
+console.log(`gnd`,gender)
   function toggleDrawer (event)  {
  
 
@@ -33,7 +33,7 @@ export default function DrawerMobile(props) {
           <Box  component="main" sx={{ flexGrow: 1, paddingTop:10 }} >
             <Container>
          
-            <BreadCrumb keywordgroup={keywordgroup}/>
+            <BreadCrumb keywordgroup={keywordgroup} gender={gender}/>
         {props.children}
 
             </Container>

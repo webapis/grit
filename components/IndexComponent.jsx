@@ -51,7 +51,7 @@ function GenderCategoryCard({ gender, img }) {
 
 function GenderCategoryList() {
 
-    return <Container center sx={{marginTop:20}}><Grid container gap={2} sx={{ display: 'flex', justifyContent: 'center' }}>{[{ gender: 'kadın', img: 'imgs/kadin.webp' }, { gender: 'ERKEK', img: 'imgs/erkek.webp' }, { gender: ' KIZ ÇOCUK', img: 'imgs/kc.webp' }, { gender: 'ERKEK ÇOCUK', img: 'imgs/ec.webp' }].map(m => {
+    return <Container center sx={{marginTop:20}}><Grid container gap={2} sx={{ display: 'flex', justifyContent: 'center' }}>{[{ gender: 'KADIN', img: 'imgs/kadin.webp' }, { gender: 'ERKEK', img: 'imgs/erkek.webp' }, { gender: 'kiz-cocuk', img: 'imgs/kc.webp' }, { gender: 'erkek-cocuk', img: 'imgs/ec.webp' }].map(m => {
         return <Grid item xs={5} md={2}> <GenderCategoryCard gender={m.gender} img={m.img} /></Grid>
     })}
     </Grid></Container>

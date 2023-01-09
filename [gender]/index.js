@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import HomeComponent from '../../components/HomeComponent'
+import HomeComponent from '../components/HomeComponent'
 
 export default function CategoryPage({data,placeholder,role}) {
 
@@ -33,8 +33,6 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-
-
 
     const paths =[{ params: { gender: 'kadın' }},{ params: { gender: 'erkek' }},{ params: { gender: 'kız-çocuk' }},{ params: { gender: 'erkek-çocuk' }}]
     return { paths, fallback: 'blocking' }

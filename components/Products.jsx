@@ -20,7 +20,7 @@ import Chip from '@mui/material/Chip';
 import Head from 'next/head'
 
 export default function Products(props) {
-  const { role, placeholder, categories, products, selectedNavIndex, functionName, navKeywords, keywordgroup, pageNumber, pageTitle } = props
+  const { role, placeholder, categories, products, selectedNavIndex, functionName, navKeywords, keywordgroup, pageNumber, pageTitle,gender } = props
 
   const mapped = Object.entries(categories).map((g) => {
     const groupName = g[0]
@@ -39,8 +39,8 @@ export default function Products(props) {
       <meta name="description"
         content={new Date().toLocaleDateString() + pageTitle} />
     </Head>
-    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
-    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
+    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile gender={gender} categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
+    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop gender={gender} categories={mapped} keywordgroup={keywordgroup}><Content placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
   </>
 }
 

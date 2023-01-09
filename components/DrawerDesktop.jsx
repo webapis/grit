@@ -11,7 +11,7 @@ import BreadCrumb from './BreadCrumb';
 const drawerWidth = 300;
 
 export default function DrawerDesktop(props) {
-  const {categories,keywordgroup}=props
+  const {categories,keywordgroup,gender}=props
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -73,7 +73,7 @@ export default function DrawerDesktop(props) {
    
       <Container>
       <div style={{paddingTop:50}}>
-        <BreadCrumb keywordgroup={keywordgroup}/>
+        <BreadCrumb keywordgroup={keywordgroup} gender={gender}/>
       
         {props.children}
         </div>

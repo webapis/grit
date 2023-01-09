@@ -4,10 +4,11 @@ import Paper from '@mui/material/Paper';
 
 import NextLink from 'next/link'
 import { Typography } from '@mui/material';
-import { useRouter } from 'next/router'
+
 import placeholders from "../assets/placeholders.json";
-export default function Categories({ categories,placeholder, offset = 200, trigger = true  }) {
-    const { query: { gender } } = useRouter()
+import Tooltip from '@mui/material/Tooltip';
+export default function Categories({ categories,placeholder, offset = 200, trigger = true,gender }) {
+
 
 
     
@@ -52,21 +53,6 @@ export default function Categories({ categories,placeholder, offset = 200, trigg
         });
 
     }, [])
-    // useEffect(() => {
-    //     if (location.hash !== '') {
-    //         setTimeout(() => {
-    //             const hash = decodeURI(location.hash)
-    //             let groupNameId = hash.replace(' ', '-').toLowerCase().replace(/ö/g, "o")
-    //                 .replace(/ş/g, "s")
-    //                 .replace(/ı/g, "i")
-    //                 .replace(/ç/g, "c")
-    //                 .replace(/ğ/g, "g")
-    //             console.log('groupNameId', groupNameId)
-    //             document.querySelector(groupNameId).scrollIntoView({ block: "center" })
-    //         }, 200)
-
-    //     }
-    // }, [])
 
 
     return <div>{categories && categories.map(m => {
@@ -82,7 +68,7 @@ export default function Categories({ categories,placeholder, offset = 200, trigg
             <Grid spacing={2} container>
                 {images.map((m, i) => {
                     const urlGroupName = groupName.replace(' ', '-').toLowerCase()
-                    const url = `/${gender}/${urlGroupName}/${m.title}/sayfa/1`
+                    const url = `/${decodeURI(gender)}/${urlGroupName}/${m.title}/sayfa/1`
                     return <Grid key={i} item xs={6} sm={3} md={3} lg={2} xg={1} ><Paper elevation={1} style={{ display: 'flex', flexDirection: 'column', padding: 2, overflow: 'hidden',height:'100%' }}>
                         <CategoryImage imageUrls={m.imageUrls} title={m.title} url={url} count={m.count} placeholder={placeholder}/>
                     </Paper></Grid>
@@ -98,8 +84,8 @@ function CategoryImage({ title, url, count,placeholder,imageUrls }) {
 
     const imageEl = useRef(null);
 
-    const {marka,src:imageUrl}=imageUrls[0]
-    console.log('imageUrls[0]',imageUrls[0])
+    const {marka,src:imageUrl,title:prodTitle}=imageUrls[0]
+
     useEffect(() => {
 
         if (window.IntersectionObserver) {
@@ -132,10 +118,11 @@ function CategoryImage({ title, url, count,placeholder,imageUrls }) {
     imageUrl +
     placeholders[marka].imgPostFix;
 
-    console.log('imageSource',imageSource)
+ 
 
 
     return <div style={{ textDecoration: 'none',height:'100%',display:'flex',flexDirection:'column', justifyContent:'space-between' }}>
+             <div  hidden>{prodTitle}</div>   
  <a  href={url}>
               
             <img  ref={imageEl} src={placeholder} style={{ width: '100%', borderRadius: 6 }} data-src={imageSource} />
