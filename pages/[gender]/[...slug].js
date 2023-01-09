@@ -65,6 +65,7 @@ debugger
         props: {role:process.env.ROLE, placeholder, navKeywords, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber: parseInt(pageNumber), pageTitle }, // will be passed to the page component as props
         revalidate: 60
     }
+
 }
 
 
