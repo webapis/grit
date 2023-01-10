@@ -4,7 +4,7 @@ export default function ScrollToTopBtn() {
     function handleClick() {
         window.scrollTo(0, 0);
     }
-    return <Fab size='small' onClick={handleClick} color="secondary" sx={{ position: 'fixed', bottom: '10%', right: 20 }}>
+    return <Fab size='small' onClick={handleClick} color="secondary" sx={{ position: 'fixed', bottom: '7%', right: 20 }}>
         <NavigationIcon />
 
     </Fab>

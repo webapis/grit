@@ -69,7 +69,7 @@ export default function Categories({ categories,placeholder, offset = 200, trigg
                 {images.map((m, i) => {
                     const urlGroupName = groupName.replace(' ', '-').toLowerCase()
                     const url = `/${decodeURI(gender)}/${urlGroupName}/${m.title}/sayfa/1`
-                    return <Grid key={i} item xs={6} sm={3} md={3} lg={2} xg={1} ><Paper elevation={1} style={{ display: 'flex', flexDirection: 'column', padding: 2, overflow: 'hidden',height:'100%' }}>
+                    return <Grid key={i} item xs={6} sm={3} md={3} lg={2} xg={1} ><Paper elevation={0} style={{ display: 'flex', flexDirection: 'column', padding: 2, overflow: 'hidden',height:'100%' }}>
                         <CategoryImage imageUrls={m.imageUrls} title={m.title} url={url} count={m.count} placeholder={placeholder}/>
                     </Paper></Grid>
                 })}
