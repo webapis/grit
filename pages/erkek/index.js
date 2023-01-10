@@ -5,11 +5,11 @@ export default function CategoryPage({ data, placeholder, role,gender }) {
 
   return <>
     <Head>
-      <title>Erkek Marka Giyim Kategorileri</title>
+      <title>Erkek Marka Giyim Kategorileri | BİRARADAMODA</title>
       <meta name="description"
-        content={new Date().toLocaleDateString() + " Moda markaları tek yerde ara. İstediğin giyim ürünü hızlı ve anında bul. Fiyat karşılaştır. Markadan satın al."} />
+        content={new Date().toLocaleDateString() + " Erkek Marka Giyimleri tek yerde ara. İstediğin giyim ürünü hızlı ve anında bul. Fiyat karşılaştır. Markadan satın al."} />
     </Head>
-    <HomeComponent role={role} categories={data} placeholder={placeholder}gender={gender} />
+    <HomeComponent tabValue={1} role={role} categories={data} placeholder={placeholder}gender={gender} />
   </>
 
 }
@@ -21,8 +21,3 @@ export async function getStaticProps(context) {
   return getStaticCategoryPageProps({ host: 'https://erkek.netlify.app',gender:'erkek' })
 }
 
-// export async function getStaticPaths() {
-
-//   const paths = [{ params: { gender: 'kadin' } }, { params: { gender: 'erkek' } }, { params: { gender: 'kiz-cocuk' } }, { params: { gender: 'erkek-cocuk' } }]
-//   return { paths, fallback: 'blocking' }
-// }

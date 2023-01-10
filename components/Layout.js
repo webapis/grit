@@ -24,7 +24,7 @@ export default function Layout({children}){
 		<div style={{position:"relative"}}>
 				<ScrollButton/>
 			</div>
-			<div style={{textAlign:'center', backgroundColor:'#eceff1', height:60,marginBottom:5, lineHeight:4,zIndex:2000}}>© 2023 biraradamoda.com Her Hakkı Saklıdır.</div>
+			<div style={{textAlign:'center', backgroundColor:'#eceff1', height:30,marginBottom:5, lineHeight:2}}>© 2023 biraradamoda.com Her Hakkı Saklıdır.</div>
     </div>
 
 }

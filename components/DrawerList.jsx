@@ -27,7 +27,7 @@ export default function DrawerList({ categories }) {
 
       document.location.href=url
   }
-    return <List >{categories.map((m,i) => {
+    return <List sx={{width:{xs:"85vh",sm:'100%'}}}>{categories.map((m,i) => {
         const {groupName,images,totalGroup} = m
         const urlGroupName =groupName.replace(' ','-').toLowerCase()
         return  <Accordion  elevation={0}    key={groupName} expanded={expanded === groupName} onChange={handleChange(groupName)}>
