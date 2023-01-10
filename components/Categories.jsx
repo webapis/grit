@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-
+import Button from '@mui/material/Button';
 import NextLink from 'next/link'
 import { Typography } from '@mui/material';
 
 import placeholders from "../assets/placeholders.json";
-import Tooltip from '@mui/material/Tooltip';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import IconButton from '@mui/material/IconButton';
 export default function Categories({ categories,placeholder, offset = 200, trigger = true,gender }) {
 
 
@@ -40,9 +41,7 @@ export default function Categories({ categories,placeholder, offset = 200, trigg
 
             headings.forEach(ha => {
                 const rect = ha.getBoundingClientRect();
-                if (ha.id === 'elbise') {
-                    console.log('rect.top ', rect.top, ha.id)
-                }
+            
 
                 if (rect.top > 0 && Math.round(rect.top) < 150) {
 
@@ -68,9 +67,10 @@ export default function Categories({ categories,placeholder, offset = 200, trigg
             <Grid spacing={2} container>
                 {images.map((m, i) => {
                     const urlGroupName = groupName.replace(' ', '-').toLowerCase()
+                    const imageUrls=m.imageUrls? m.imageUrls:[{marka:'defacto',src:'',title:''}]
                     const url = `/${decodeURI(gender)}/${urlGroupName}/${m.title}/sayfa/1`
                     return <Grid key={i} item xs={6} sm={3} md={3} lg={2} xg={1} ><Paper elevation={0} style={{ display: 'flex', flexDirection: 'column', padding: 2, overflow: 'hidden',height:'100%' }}>
-                        <CategoryImage imageUrls={m.imageUrls} title={m.title} url={url} count={m.count} placeholder={placeholder}/>
+                        <CategoryImage imageUrls={imageUrls} title={m.title} url={url} count={m.count} placeholder={placeholder}/>
                     </Paper></Grid>
                 })}
             </Grid></div>
@@ -129,9 +129,10 @@ function CategoryImage({ title, url, count,placeholder,imageUrls }) {
          
            
         </a>
-        <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
-                <NextLink underline="hover" href={url} style={{ textTransform: 'uppercase' }} >{title}</NextLink>
-                <div style={{textAlign:'center',color:'#9e9e9e'}}>{new Intl.NumberFormat().format(count)}</div>
+        <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+        <div style={{textAlign:'center',color:'#9e9e9e',fontSize:12}}>{new Intl.NumberFormat().format(count)}</div>
+                <Button endIcon={<ArrowRightAltIcon/>} component={NextLink} underline="hover" href={url} style={{ textTransform: 'uppercase' }} ><Typography>{title}</Typography></Button>
+               
             </div>
     </div>
 

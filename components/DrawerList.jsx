@@ -27,7 +27,7 @@ export default function DrawerList({ categories }) {
 
       document.location.href=url
   }
-    return <List sx={{width:{xs:"85vh",sm:'100%'}}}>{categories.map((m,i) => {
+    return <List sx={{width:{xs:"80vw",sm:'100%'}}}>{categories.map((m,i) => {
         const {groupName,images,totalGroup} = m
         const urlGroupName =groupName.replace(' ','-').toLowerCase()
         return  <Accordion  elevation={0}    key={groupName} expanded={expanded === groupName} onChange={handleChange(groupName)}>
@@ -36,7 +36,7 @@ export default function DrawerList({ categories }) {
           aria-controls="panel1a-content"
           id={groupName}
         >
-          <Typography sx={{textTransform:'uppercase'}}>{groupName}</Typography>
+          <Typography sx={{textTransform:'uppercase', width:'100%',display:'flex',justifyContent:'space-between'}}><span>{groupName}</span><span style={{opacity:0.3}}>{new Intl.NumberFormat().format(totalGroup)}</span></Typography>
         </AccordionSummary> <AccordionDetails>
             <List>
            
