@@ -18,6 +18,6 @@ export default function CategoryPage({ data, placeholder, role,gender }) {
 
 
 export async function getStaticProps(context) {
-  return getStaticCategoryPageProps({ host: 'https://erkek.netlify.app',gender:'erkek' })
+  return getStaticCategoryPageProps({ host: process.env.HOST_E,gender:'erkek' })
 }
 

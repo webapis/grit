@@ -68,7 +68,7 @@ export default function DrawerDesktop(props) {
             background: '#cfd8dc'
           }, 
           }} >
-         <DrawerList categories={categories} />
+         <DrawerList categories={categories} gender={gender}/>
       
         </Box>
       </Drawer>

@@ -10,9 +10,9 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NextLink from 'next/link'
-import { useRouter } from 'next/router'
-export default function DrawerList({ categories }) {
-  const { query: { gender } } = useRouter()
+
+export default function DrawerList({ categories,gender }) {
+
     const [expanded, setExpanded] = React.useState(false);
 
     const handleChange = (panel) => (event, isExpanded) => {

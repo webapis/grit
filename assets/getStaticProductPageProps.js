@@ -8,12 +8,12 @@ export default async function getStaticProductPageProps({context,host,gender}){
  
     const category = slug[1]
 debugger
-    const keywordgroup = await fetch(`${process.env.HOST}/keywords.json`).then(
+    const keywordgroup = await fetch(`${host}/keywords.json`).then(
         (response) => response.json()
     );
 
     const categories = await fetch(
-        `${process.env.HOST}/category-nav-counter.json`
+        `${host}/category-nav-counter.json`
     ).then((response) => response.json())
     debugger
     if (process.env.ROLE === 'USER') {

@@ -15,14 +15,14 @@ function productsPage(props) {
 
 export async function getStaticProps(context) {
 
-    return getStaticPageProps({context,host: 'https://kiz-cocuk.netlify.app',gender:'kiz-cocuk'})
+    return getStaticPageProps({context,host: process.env.HOST_KC,gender:'kiz-cocuk'})
 
 }
 
 
 export async function getStaticPaths() {
 
-    return getStaticPagePaths({GENDER:'kiz-cocuk',host: 'https://kiz-cocuk.netlify.app'})
+    return getStaticPagePaths({GENDER:'kiz-cocuk',host: process.env.HOST_KC})
 }
 
 
