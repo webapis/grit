@@ -1,12 +1,12 @@
 import Script from 'next/script'
+import Head from 'next/head'
 import ScrollButton from './ScrollToTopBtn'
 export default function Layout({children,title}){
 
     return <div >
-		<Script   onLoad={() => {
-          console.log('Script has loaded ads')
-        }}  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1960990522971470"
-		crossorigin="anonymous"/>
+		<Head>
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1960990522971470" crossorigin="anonymous"></script>
+		</Head>
 
 
 		<Script   onLoad={() => {
