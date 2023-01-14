@@ -8,22 +8,25 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container'
 import DrawerList from './DrawerList'
 import BreadCrumb from './BreadCrumb';
+import GenderTabs from './GenderTabs'
 const drawerWidth = 300;
 
 export default function DrawerDesktop(props) {
-  const {categories,keywordgroup}=props
+  const {categories,keywordgroup,gender,tabValue}=props
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" sx={{ zIndex: 2}}>
-        <Toolbar>
+        <Toolbar sx={{display:'flex',justifyContent:'space-between'}}>
           <Typography variant="h6" noWrap component="div">
             BİRARADAMODA
-            <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın Marka Giyimler</Typography>
+            <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın ve Erkek Marka Giyimler</Typography>
           </Typography>
-          
+          <GenderTabs tabValue={tabValue}/>
+          <div></div>
         </Toolbar>
+  
       </AppBar>
       <Drawer 
         variant="permanent"
@@ -65,7 +68,7 @@ export default function DrawerDesktop(props) {
             background: '#cfd8dc'
           }, 
           }} >
-         <DrawerList categories={categories} />
+         <DrawerList categories={categories} gender={gender}/>
       
         </Box>
       </Drawer>
@@ -73,7 +76,7 @@ export default function DrawerDesktop(props) {
    
       <Container>
       <div style={{paddingTop:50}}>
-        <BreadCrumb keywordgroup={keywordgroup}/>
+        <BreadCrumb keywordgroup={keywordgroup} gender={gender}/>
       
         {props.children}
         </div>

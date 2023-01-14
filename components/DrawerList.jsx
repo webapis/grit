@@ -10,7 +10,9 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NextLink from 'next/link'
-export default function DrawerList({ categories }) {
+
+export default function DrawerList({ categories,gender }) {
+
     const [expanded, setExpanded] = React.useState(false);
 
     const handleChange = (panel) => (event, isExpanded) => {
@@ -25,7 +27,7 @@ export default function DrawerList({ categories }) {
 
       document.location.href=url
   }
-    return <List >{categories.map((m,i) => {
+    return <List sx={{width:{xs:"80vw",sm:'100%'}}}>{categories.map((m,i) => {
         const {groupName,images,totalGroup} = m
         const urlGroupName =groupName.replace(' ','-').toLowerCase()
         return  <Accordion  elevation={0}    key={groupName} expanded={expanded === groupName} onChange={handleChange(groupName)}>
@@ -34,12 +36,12 @@ export default function DrawerList({ categories }) {
           aria-controls="panel1a-content"
           id={groupName}
         >
-          <Typography sx={{textTransform:'uppercase'}}>{groupName}</Typography>
+          <Typography sx={{textTransform:'uppercase', width:'100%',display:'flex',justifyContent:'space-between'}}><span>{groupName}</span><span style={{opacity:0.3}}>{new Intl.NumberFormat().format(totalGroup)}</span></Typography>
         </AccordionSummary> <AccordionDetails>
             <List>
            
             { images.map(d=>{
-              const url =`/${urlGroupName}/${d.title}/sayfa/1`
+              const url =`/${gender}/${urlGroupName}/${d.title}/sayfa/1`
          
             return <ListItem key={d.title} disablePadding           secondaryAction={
                <span style={{color:'#bdbdbd'}}>{new Intl.NumberFormat().format(d.count)}</span>

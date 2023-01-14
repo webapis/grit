@@ -5,11 +5,12 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import getSelectedNavIndex from './getSelectedNavIndex';
+
 function containsNumbers(str) {
     return /\d/.test(str);
 }
-export default function BreadCrumb({ keywordgroup }) {
-    // const searchParams = new URLSearchParams(location.search);
+export default function BreadCrumb({ keywordgroup,gender }) {
+
 
     let selectedNavIndex = ''
     if (location.href.includes('sayfa')) {
@@ -19,7 +20,7 @@ export default function BreadCrumb({ keywordgroup }) {
     function handleClick({ event, keyword }) {
         event.preventDefault()
         const index = localStorage.getItem(`${keyword}-index`)
-        let locationPathname =location.pathname.substring(0,location.pathname.indexOf('sayfa'))
+        let locationPathname = location.pathname.substring(0, location.pathname.indexOf('sayfa'))
         debugger
         const indexExist = selectedNavIndex.split('-').find(f => index !== "" && index.replace('-', "") === f)
         let selectedIndex = null
@@ -42,8 +43,15 @@ export default function BreadCrumb({ keywordgroup }) {
     const decodedbcrumb = decodeURI(location.pathname)
         .split("/")
         .filter((f) => f !== "");
-    const bcrumbs =decodedbcrumb.slice(0, decodedbcrumb.length - 2)
+    let bcrumbs = []
+    console.log('decodedbcrumb', decodedbcrumb)
+    if (decodedbcrumb.length === 1) {
+        bcrumbs = decodedbcrumb
+    }
+    else {
 
+        bcrumbs = decodedbcrumb.slice(0, decodedbcrumb.length - 2)
+    }
     return <div><Breadcrumbs separator="›" aria-label="breadcrumb" >
         <Link
             underline="hover"
@@ -58,24 +66,28 @@ export default function BreadCrumb({ keywordgroup }) {
         {bcrumbs.map((m, i) => {
             let href = ''
             if (i === 0) {
-                href = `/#${m.replace(/ö/g, "o")
-                    .replace(/ş/g, "s")
-                    .replace(/ı/g, "i")
-                    .replace(/ç/g, "c")
-                    .replace(/ğ/g, "g")}`
-
-            } else {
-                
-                if (i === bcrumbs.length-1) {
-                  
-                    localStorage.setItem(m, window.location.href)
-                    href = window.location.href
-                } else {
-                  
-                    href = localStorage.getItem(m)
-                }
-
+                href = `/${gender}`
             }
+            else
+                if (i === 1) {
+                    href = `/${gender}/#${m.replace(/ö/g, "o")
+                        .replace(/ş/g, "s")
+                        .replace(/ı/g, "i")
+                        .replace(/ç/g, "c")
+                        .replace(/ğ/g, "g")}`
+
+                } else {
+
+                    if (i === bcrumbs.length - 1) {
+
+                        localStorage.setItem(m, window.location.href)
+                        href = window.location.href
+                    } else {
+
+                        href = localStorage.getItem(m)
+                    }
+
+                }
             const match = i === bcrumbs.length - 1
             if (match) {
                 return <Typography key={i} color="text.primary">{m}</Typography>
@@ -87,7 +99,7 @@ export default function BreadCrumb({ keywordgroup }) {
         })}
     </Breadcrumbs>
         <Stack direction="row" spacing={1}>
-            {bcrumbs.slice(2).map(keyword => {
+            {bcrumbs.slice(3).map(keyword => {
                 const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')
                 debugger
                 return <Chip key={keyword} size='small' label={keyword} onDelete={(event) => handleClick({ event, keyword: urlKeywords })} />

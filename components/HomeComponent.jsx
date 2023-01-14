@@ -12,7 +12,8 @@ class HomeComponent extends React.Component {
     }
  //.filter(f=> f.count !==undefined)
     render() {
-        const {categories,placeholder,role}=this.props
+        const {categories,placeholder,role,gender,tabValue,genderTitle}=this.props
+        console.log(`gender--`,gender)
         const mapped =categories.map((g)=>{
             const groupName = g[0]
             const images = role === 'USER' ? g[1].filter(f => f.count !== undefined) : g[1].map(m => { return { ...m, count: m.count === undefined ? 0 : m.count } })
@@ -24,8 +25,8 @@ class HomeComponent extends React.Component {
            return b.totalGroup-a.totalGroup})
        
         return <div>
-            <ResponsiveComponent maxWidth={800} render={()=><DrawerMobile categories={mapped} ><Categories categories={mapped} placeholder={placeholder}/></DrawerMobile>} />
-            <ResponsiveComponent minWidth={801} render={()=><DrawerDesktop categories={mapped}><Categories categories={mapped} placeholder={placeholder}/></DrawerDesktop>} />
+            <ResponsiveComponent maxWidth={800} render={()=><DrawerMobile genderTitle={genderTitle} tabValue={tabValue} gender={gender} categories={mapped} ><Categories gender={gender} categories={mapped} placeholder={placeholder}/></DrawerMobile>} />
+            <ResponsiveComponent minWidth={801} render={()=><DrawerDesktop genderTitle={genderTitle} tabValue={tabValue} gender={gender} categories={mapped}><Categories gender={gender} categories={mapped} placeholder={placeholder}/></DrawerDesktop>} />
         </div>
     }
 }

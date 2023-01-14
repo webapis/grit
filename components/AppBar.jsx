@@ -35,16 +35,17 @@ HideOnScroll.propTypes = {
 };
 
 export default function HideAppBar(props) {
-  const {toggleDrawer}=props
+  const {toggleDrawer,showmenu}=props
 
   debugger
   return (
     <React.Fragment>
       <CssBaseline />
       <HideOnScroll {...props}>
-        <AppBar>
+   
+        <AppBar sx={{ zIndex: 2}}>
           <Toolbar>
-          <IconButton
+        <IconButton
           onClick={toggleDrawer}
             size="large"
             edge="start"
@@ -54,9 +55,10 @@ export default function HideAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
+         
           <Typography variant="h6" noWrap component="div">
             BİRARADAMODA
-            <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın Marka Giyimler</Typography>
+            <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın ve Erkek Marka Giyimler</Typography>
           </Typography>
           
           </Toolbar>

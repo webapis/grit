@@ -5,13 +5,13 @@ import BreadCrumb from './BreadCrumb';
 import Container from '@mui/material/Container'
 import AppBar from './AppBar'
 import DrawerList from './DrawerList';
-import Toolbar from '@mui/material/Toolbar';
+import GenderTabs from './GenderTabs';
 export default function DrawerMobile(props) {
-  const {categories,keywordgroup}=props
+  const { categories, keywordgroup, gender,tabValue } = props
   const [state, setState] = React.useState();
+  console.log(`gnd`, gender)
+  function toggleDrawer(event) {
 
-  function toggleDrawer (event)  {
- 
 
     setState(!state);
   };
@@ -19,29 +19,30 @@ export default function DrawerMobile(props) {
 
 
   return (
- 
-        <React.Fragment >
-        <AppBar toggleDrawer={toggleDrawer}/>
-          <Drawer
-     
-            anchor="left"
-            open={state}
-           onClose={toggleDrawer}
-          >
-             <DrawerList categories={categories} />
-          </Drawer>
-          <Box  component="main" sx={{ flexGrow: 1, paddingTop:10 }} >
-            <Container>
-         
-            <BreadCrumb keywordgroup={keywordgroup}/>
-        {props.children}
 
-            </Container>
-     
-       
+    <React.Fragment >
+      <AppBar toggleDrawer={toggleDrawer} />
+      <Drawer
+
+        anchor="left"
+        open={state}
+        onClose={toggleDrawer}
+      >
+        <GenderTabs tabValue={tabValue}/>
+        <DrawerList categories={categories} />
+      </Drawer>
+      <Box component="main" sx={{ flexGrow: 1, paddingTop: 10 }} >
+        <Container>
+
+          <BreadCrumb keywordgroup={keywordgroup} gender={gender} />
+          {props.children}
+
+        </Container>
+
+
       </Box>
-        </React.Fragment>
-     
-  
+    </React.Fragment>
+
+
   );
 }
