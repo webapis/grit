@@ -1,7 +1,8 @@
 import Script from 'next/script'
 import Head from 'next/head'
 import ScrollButton from './ScrollToTopBtn'
-export default function Layout({children,title}){
+
+export default function Layout({children}){
 
     return <div >
 		<Head>
@@ -24,6 +25,7 @@ export default function Layout({children,title}){
 		<div style={{position:"relative"}}>
 				<ScrollButton/>
 			</div>
+		
     </div>
 
 }

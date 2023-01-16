@@ -4,10 +4,10 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import NextLink from 'next/link'
 import { Typography } from '@mui/material';
-
+import Footer from './Footer';
 import placeholders from "../assets/placeholders.json";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import IconButton from '@mui/material/IconButton';
+
 export default function Categories({ categories,placeholder, offset = 200, trigger = true,gender }) {
 
 
@@ -76,7 +76,9 @@ export default function Categories({ categories,placeholder, offset = 200, trigg
                     </Paper></Grid>
                 })}
             </Grid></div>
-    })}</div>
+    })}
+    <Grid item><Footer/></Grid>
+    </div>
 }
 
 

@@ -18,7 +18,7 @@ import NextLink from 'next/link'
 import Pagination from '@mui/material/Pagination';
 import Chip from '@mui/material/Chip';
 import Head from 'next/head'
-
+import Footer from './Footer';
 export default function Products(props) {
   const { role, placeholder, categories, products, selectedNavIndex, functionName, navKeywords, keywordgroup, pageNumber, pageTitle,gender,tabValue } = props
 
@@ -93,6 +93,7 @@ function Page({ products, pageNumber, placeholder }) {
     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginBottom: 10 }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
+    <Grid item><Footer/></Grid>
   </>
 }
 
