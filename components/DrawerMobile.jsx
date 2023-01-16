@@ -7,7 +7,7 @@ import AppBar from './AppBar'
 import DrawerList from './DrawerList';
 import GenderTabs from './GenderTabs';
 export default function DrawerMobile(props) {
-  const { categories, keywordgroup, gender,tabValue } = props
+  const { categories, keywordgroup, gender,tabValue,role } = props
   const [state, setState] = React.useState();
   console.log(`gnd`, gender)
   function toggleDrawer(event) {
@@ -29,7 +29,7 @@ export default function DrawerMobile(props) {
         onClose={toggleDrawer}
       >
         <GenderTabs tabValue={tabValue}/>
-        <DrawerList categories={categories} />
+        <DrawerList categories={categories} role={role}/>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, paddingTop: 10 }} >
         <Container>

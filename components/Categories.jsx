@@ -61,6 +61,8 @@ export default function Categories({ categories,placeholder, offset = 200, trigg
             .replace(/ı/g, "i")
             .replace(/ç/g, "c")
             .replace(/ğ/g, "g")
+            if (totalGroup===0)
+            return null
         return <div key={groupName}>
       
             <div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography id={groupNameId} variant="h4" gutterBottom>{groupName}</Typography><Typography style={{ color: '#bdbdbd' }} variant="h4" gutterBottom>{new Intl.NumberFormat().format(totalGroup)} adet</Typography></div>
