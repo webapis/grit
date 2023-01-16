@@ -10,7 +10,7 @@ class HomeComponent extends React.Component {
     constructor(props) {
         super(props);
     }
- //.filter(f=> f.count !==undefined)
+
     render() {
         const {categories,placeholder,role,gender,tabValue,genderTitle}=this.props
         console.log(`gender--`,gender)
