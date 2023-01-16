@@ -30,7 +30,7 @@ sx={{ [`& .MuiDrawer-paper`]: { width: '80%', boxSizing: 'border-box' }}}
       >
         <div>
         <GenderTabs tabValue={tabValue}/>
-        <DrawerList categories={categories} role={role}/>
+        <DrawerList categories={categories} role={role} gender={gender}/>
         </div>
     
       </Drawer>
