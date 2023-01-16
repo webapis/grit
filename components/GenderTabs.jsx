@@ -8,7 +8,10 @@ export default function GenderTabs({tabValue=0}) {
  
 
     return (
-        <Tabs textColor='inherit' indicatorColor='secondary'
+        <Tabs textColor='inherit' indicatorColor='secondary' 
+        variant="scrollable"
+        scrollButtons
+        allowScrollButtonsMobile
         value={tabValue}  aria-label="disabled tabs example">
             <Tab href="/kadin" component={Link} label="KADIN" />
              <Tab href="/erkek"  component={Link} label="ERKEK" />
