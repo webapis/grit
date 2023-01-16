@@ -9,7 +9,7 @@ import GenderTabs from './GenderTabs';
 export default function DrawerMobile(props) {
   const { categories, keywordgroup, gender,tabValue,role } = props
   const [state, setState] = React.useState();
-  console.log(`gnd`, gender)
+
   function toggleDrawer(event) {
 
 
@@ -23,13 +23,16 @@ export default function DrawerMobile(props) {
     <React.Fragment >
       <AppBar toggleDrawer={toggleDrawer} />
       <Drawer
-
+sx={{ [`& .MuiDrawer-paper`]: { width: '80%', boxSizing: 'border-box' }}}
         anchor="left"
         open={state}
         onClose={toggleDrawer}
       >
+        <div>
         <GenderTabs tabValue={tabValue}/>
         <DrawerList categories={categories} role={role}/>
+        </div>
+    
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, paddingTop: 10 }} >
         <Container>

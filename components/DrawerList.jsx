@@ -27,7 +27,7 @@ export default function DrawerList({ categories,gender }) {
 
       document.location.href=url
   }
-    return <List sx={{width:{xs:"80vw",sm:'100%'}}}>{categories.map((m,i) => {
+    return <List >{categories.map((m,i) => {
         const {groupName,images,totalGroup} = m
         const urlGroupName =groupName.replace(' ','-').toLowerCase()
         if (totalGroup===0)

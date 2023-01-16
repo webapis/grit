@@ -12,6 +12,7 @@ export default function GenderTabs({tabValue=0}) {
         variant="scrollable"
         scrollButtons
         allowScrollButtonsMobile
+        style={{width:'100%'}}
         value={tabValue}  aria-label="disabled tabs example">
             <Tab href="/kadin" component={Link} label="KADIN" />
              <Tab href="/erkek"  component={Link} label="ERKEK" />
