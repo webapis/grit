@@ -1,12 +1,12 @@
 import Script from 'next/script'
+import Head from 'next/head'
 import ScrollButton from './ScrollToTopBtn'
-export default function Layout({children}){
+export default function Layout({children,title}){
 
-    return <div  style={{display:'flex',flexDirection:'column'}}>
-		<Script   onLoad={() => {
-          console.log('Script has loaded ads')
-        }}  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1960990522971470"
-		crossorigin="anonymous"/>
+    return <div >
+		<Head>
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1960990522971470" crossorigin="anonymous"></script>
+		</Head>
 
 
 		<Script   onLoad={() => {
@@ -24,7 +24,6 @@ export default function Layout({children}){
 		<div style={{position:"relative"}}>
 				<ScrollButton/>
 			</div>
-			<div style={{textAlign:'center', backgroundColor:'#eceff1', height:30,marginBottom:5, lineHeight:2}}>© 2023 biraradamoda.com Her Hakkı Saklıdır.</div>
     </div>
 
 }
