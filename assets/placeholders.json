@@ -558,5 +558,45 @@
         "detailHost": "https://www.yargici.com/",
         "postfix": "",
         "imgPostFix": "?tr=w-400"
+    },
+
+    "network": {
+        "logo": {
+            "image": "./logo/manuka.webp",
+            "width": "40%",
+            "height": "auto"
+        },
+        "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
+        "placeholder": "./placeholder-img/placeholder.jpg",
+        "imageHost": "https://img-network.mncdn.com/mnresize/",
+        "detailHost": "https://www.network.com.tr/",
+        "postfix": "",
+        "imgPostFix": "?tr=w-400"
+    },
+    "sementa": {
+        "logo": {
+            "image": "./logo/manuka.webp",
+            "width": "40%",
+            "height": "auto"
+        },
+        "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
+        "placeholder": "./placeholder-img/placeholder.jpg",
+        "imageHost": "https://cdn.sementa.com/",
+        "detailHost": "https://www.sementa.com/",
+        "postfix": "",
+        "imgPostFix": "?tr=w-400"
+    },
+    "tiffanytomato": {
+        "logo": {
+            "image": "./logo/manuka.webp",
+            "width": "40%",
+            "height": "auto"
+        },
+        "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
+        "placeholder": "./placeholder-img/placeholder.jpg",
+        "imageHost": "https://www.tiffanytomato.com.tr/",
+        "detailHost": "https://www.tiffanytomato.com.tr/",
+        "postfix": "",
+        "imgPostFix": "?tr=w-400"
     }
 }
