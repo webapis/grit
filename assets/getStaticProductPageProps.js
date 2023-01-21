@@ -52,7 +52,7 @@ debugger
     const response = await fetch(url);
     const products = await response.json()
     let navKeywords = []
-    if (selectedNavIndex) {
+    if (selectedNavIndex !=='-') {
         navKeywords = await fetchNavKeywords({
             functionName,
             selectedNavIndex,
