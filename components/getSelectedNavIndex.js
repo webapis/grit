@@ -47,5 +47,5 @@ console.log('decodedHref',decodedHref)
     console.log('keywordsFromUrl',keywordsFromUrl)
     console.log('sortedKeywords',sortedKeywords)
       debugger;
-    return selectedNavIndex
+    return sortedKeywords
 }
