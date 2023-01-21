@@ -65,7 +65,7 @@ debugger
             });
             debugger;
         } catch (error) {
-            console.log('some error',error)
+            console.log('fetchNavKeywords error')
         }
       
     }
