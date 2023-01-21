@@ -23,7 +23,7 @@ export default async  function fetchNavKeywords({functionName,selectedNavIndex,h
    debugger
 
    const { keywords } = keywordsData;
-console.log('selectedNavIndex......',selectedNavIndex)
+
    const grouped = {};
 
    for (let kw of keywords) {
