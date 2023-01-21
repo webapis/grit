@@ -96,7 +96,7 @@ function Page({ products, pageNumber, placeholder }) {
     <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
-    {data.map((m, i) => <Grid key={i} item xs={6} sm={3} md={3} lg={2} ><ImageComponent placeholder={placeholder} {...m} /></Grid>)}
+    {data && data.length>0 && data.map((m, i) => <Grid key={i} item xs={6} sm={3} md={3} lg={2} ><ImageComponent placeholder={placeholder} {...m} /></Grid>)}
     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginBottom: 10 }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>

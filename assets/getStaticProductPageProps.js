@@ -7,13 +7,13 @@ export default async function getStaticProductPageProps({context,host,gender}){
     const { params: { slug } } = context
 
     const category = slug[0].replace('-',' ')
-    if(typeof(category) !=='[...slug]'){
+    // if(typeof(category) !=='[...slug]'){
 
-        return {
-            props: {gender,role:process.env.ROLE, placeholder, navKeywords:[], products:[], categories:[] }, // will be passed to the page component as props
-            revalidate: 60
-        }
-    }
+    //     return {
+    //         props: {gender,role:process.env.ROLE, placeholder, navKeywords:[], products:[], categories:[] }, // will be passed to the page component as props
+    //         revalidate: 60
+    //     }
+    // }
     console.log('category-----',category)
     console.log('slug',slug[0])
     console.log('context',context)
