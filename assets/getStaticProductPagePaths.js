@@ -9,5 +9,5 @@ export default async function getStaticProductPagePaths({ GENDER, host }) {
         return { params: { slug: [m.groupName.toLowerCase().replace(' ', '-'), m.title, 'sayfa', '1'], gender: GENDER } }
     })
 
-    return { paths, fallback: false }
+    return { paths, fallback: 'blocking' }
 }
