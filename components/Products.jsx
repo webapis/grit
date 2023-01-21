@@ -19,8 +19,15 @@ import Pagination from '@mui/material/Pagination';
 import Chip from '@mui/material/Chip';
 import Head from 'next/head'
 import Footer from './Footer';
+import { useRouter } from 'next/router'
 export default function Products(props) {
-  const { role, placeholder, categories, products, selectedNavIndex, functionName, navKeywords, keywordgroup, pageNumber, pageTitle,gender,tabValue } = props
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
+  const { role, placeholder, categories, products, selectedNavIndex, functionName, navKeywords, keywordgroup, pageNumber, pageTitle, gender, tabValue } = props
 
   const mapped = Object.entries(categories).map((g) => {
     const groupName = g[0]
@@ -93,7 +100,7 @@ function Page({ products, pageNumber, placeholder }) {
     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginBottom: 10 }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
-    <Grid item><Footer/></Grid>
+    <Grid item><Footer /></Grid>
   </>
 }
 
@@ -217,7 +224,7 @@ function ImageComponent({ title, marka, imageUrl, link, priceNew, timestamp, pla
     placeholders[marka].detailHost +
     link +
     placeholders[marka].postfix;
- const trimmedTitle =(title.lastIndexOf("_")>0) ? title.substr(0,title.lastIndexOf("_")).trim(): title
+  const trimmedTitle = (title.lastIndexOf("_") > 0) ? title.substr(0, title.lastIndexOf("_")).trim() : title
   return <div><a href={detailHost} target="_blank"> <img ref={imageEl} style={{ width: '100%' }} src={placeholder} data-src={imageSource} alt={title} /></a><div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography style={{ textTransform: 'uppercase' }} variant="body2">{marka}</Typography><Typography variant="body2">{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{trimmedTitle}</Link>
     <Typography color='#9e9e9e' style={{ textAlign: 'right', fontSize: 9 }} variant="caption" display="block" gutterBottom>{minutes <= 59 ? minutes + ' dakika önce' : hour <= 24 ? hour + ' saat önce' : days <= 31 ? days + ' gün önce' : month + ' ay önce'}</Typography>
   </div>
