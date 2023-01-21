@@ -12,9 +12,9 @@ export default function getSelectedNavIndex({ keywordgroup, slug }) {
     }
 
         const keywordIndexs = Object.entries(keywordgroup).map((m) => { return { index: m[0], ...m[1] } })
-        console.log('keywordIndexs',keywordIndexs.length)
+ 
         decodedHref = unicodeReplacer(slug);
-console.log('decodedHref',decodedHref)
+
         decodedHrefArr = decodedHref
             
             .slice(1, decodedHref.length - 1)
@@ -43,9 +43,7 @@ console.log('decodedHref',decodedHref)
 
         selectedNavIndex = keywordsFromUrl.join('-') + '-';
 
-    console.log('selectedNavIndex>>>>>',selectedNavIndex)
-    console.log('keywordsFromUrl',keywordsFromUrl)
-    console.log('sortedKeywords',sortedKeywords)
+
       debugger;
     return sortedKeywords
 }
