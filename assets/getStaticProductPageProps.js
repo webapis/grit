@@ -7,7 +7,7 @@ export default async function getStaticProductPageProps({context,host,gender}){
     const { params: { slug } } = context
 
     const category = slug[0].replace('-',' ')
-    if(typeof(category) !=='string'){
+    if(typeof(category) !=='[...slug]'){
 
         return {
             props: {gender,role:process.env.ROLE, placeholder, navKeywords:[], products:[], categories:[] }, // will be passed to the page component as props
