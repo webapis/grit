@@ -31,7 +31,7 @@ debugger
     const data = Object.values(categories).flat(2);
     const selectedCat = data.find(f => f.groupName.toLowerCase() === category.toLowerCase())
     debugger
-    const functionName = selectedCat.functionName
+    const functionName = selectedCat.functionName ? selectedCat.functionName :''
     const fnName = functionName
         .replace(/ö/g, "o")
         .replace(/ş/g, "s")
