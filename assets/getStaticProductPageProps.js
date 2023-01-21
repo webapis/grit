@@ -7,7 +7,7 @@ export default async function getStaticProductPageProps({context,host,gender}){
     const { params: { slug } } = context
  
     const category = slug[0].replace('-',' ')
-    console.log('category-----',category)
+    console.log('category-----',slug)
     console.log('slug',slug[0])
 debugger
     const keywordgroup = await fetch(`${host}/keywords.json`).then(
