@@ -6,7 +6,13 @@ import Container from '@mui/material/Container'
 import AppBar from './AppBar'
 import DrawerList from './DrawerList';
 import GenderTabs from './GenderTabs';
+import { useRouter } from 'next/router'
 export default function DrawerMobile(props) {
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
   const { categories, keywordgroup, gender,tabValue,role } = props
   const [state, setState] = React.useState();
 

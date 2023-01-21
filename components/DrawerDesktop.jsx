@@ -9,9 +9,15 @@ import Container from '@mui/material/Container'
 import DrawerList from './DrawerList'
 import BreadCrumb from './BreadCrumb';
 import GenderTabs from './GenderTabs'
+import { useRouter } from 'next/router'
 const drawerWidth = 300;
 
 export default function DrawerDesktop(props) {
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
   const {categories,keywordgroup,gender,tabValue}=props
 
   return (
