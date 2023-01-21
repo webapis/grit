@@ -53,13 +53,18 @@ debugger
     const products = await response.json()
     let navKeywords = []
     if (selectedNavIndex !=='-') {
-        navKeywords = await fetchNavKeywords({
-            functionName,
-            selectedNavIndex,
-            host,
-            keywordgroup,
-        });
-        debugger;
+        try {
+            navKeywords = await fetchNavKeywords({
+                functionName,
+                selectedNavIndex,
+                host,
+                keywordgroup,
+            });
+            debugger;
+        } catch (error) {
+            console.log('some error',error)
+        }
+      
     }
     const pageTitle = `Kadın ${slug.slice(0, slug.indexOf('sayfa')).join(' ').replace(/-/g, ' ')}`
     return {
