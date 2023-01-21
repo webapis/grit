@@ -20,7 +20,7 @@ export default async  function fetchNavKeywords({functionName,selectedNavIndex,h
   
    const keywordsData =  await   fetch(url).then((response) => response.json())
    debugger
-   console.log('keywordsData......',keywordsData)
+
    const { keywords } = keywordsData;
 console.log('selectedNavIndex......',selectedNavIndex)
    const grouped = {};
