@@ -11,7 +11,9 @@ function containsNumbers(str) {
 }
 export default function BreadCrumb({ keywordgroup,gender }) {
 
-
+if(!keywordgroup){
+    return null
+}
     let selectedNavIndex = ''
     if (location.href.includes('sayfa')) {
         selectedNavIndex = getSelectedNavIndex({ keywordgroup, slug: location.href.split('/').slice(3) }) //searchParams.get('index')
