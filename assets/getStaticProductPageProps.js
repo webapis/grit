@@ -11,11 +11,11 @@ export default async function getStaticProductPageProps({context,host,gender}){
     console.log('slug',slug[0])
     console.log('context',context)
 debugger
-    const keywordgroup = await fetch(`${host}/keywords.json`).then(
-        (response) => response.json()
-    );
+    const keywordgroupResponse = await fetch(`${host}/keywords.json`)
+    const keywordgroup =await keywordgroupResponse.json()
 
-    const categories = await fetch(`${host}/category-nav-counter.json`).then((response) => response.json())
+    const responseCat = await fetch(`${host}/category-nav-counter.json`)
+    const categories = await responseCat.json()
     debugger
     if (process.env.ROLE === 'USER') {
         delete categories['diger']
