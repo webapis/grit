@@ -18,7 +18,8 @@ export default async  function fetchNavKeywords({functionName,selectedNavIndex,h
           url = `${host}/.netlify/functions/${fnName}-navfirst?navindex=${selectedNavIndex}`;
         }
   
-   const keywordsData =  await   fetch(url).then((response) => response.json())
+   const keywordsDataResponse =  await   fetch(url)
+   const keywordsData= await keywordsDataResponse.json()
    debugger
 
    const { keywords } = keywordsData;
