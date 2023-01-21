@@ -43,6 +43,8 @@ console.log('decodedHref',decodedHref)
         selectedNavIndex = keywordsFromUrl.join('-') + '-';
 
     console.log('selectedNavIndex>>>>>',selectedNavIndex)
+    console.log('keywordsFromUrl',keywordsFromUrl)
+    console.log('keywordIndexs',keywordIndexs)
       
     return selectedNavIndex
 }
