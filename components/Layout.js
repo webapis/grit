@@ -6,9 +6,8 @@ export default function Layout({children}){
 
     return <div >
 		<Head>
-		
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9521301536686282"
-     crossorigin="anonymous"></script>
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1960990522971470" crossorigin="anonymous"></script>
+
 		</Head>
 
 
