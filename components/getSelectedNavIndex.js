@@ -44,6 +44,6 @@ export default function getSelectedNavIndex({ keywordgroup, slug }) {
         selectedNavIndex = keywordsFromUrl.join('-') + '-';
 
 
-      debugger;
+
     return sortedKeywords
 }
