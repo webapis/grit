@@ -1,6 +1,6 @@
 
 export default async  function fetchNavKeywords({functionName,selectedNavIndex,host,keywordgroup}){
-
+debugger
         let url;
  
         var fnName = functionName
@@ -27,11 +27,16 @@ export default async  function fetchNavKeywords({functionName,selectedNavIndex,h
    const grouped = {};
 
    for (let kw of keywords) {
+    try {
+      
+   
      const keywordIndex = kw[1];
 
-     const groupName = keywordgroup[keywordIndex]["groupName"];
-     const keywordType = keywordgroup[keywordIndex]['keywordType']
-
+ 
+      if(keywordgroup[keywordIndex]){
+        const groupName = keywordgroup[keywordIndex]["groupName"];
+        const keywordType = keywordgroup[keywordIndex]['keywordType']
+     
      if (keywordType === 'keyword') {
 
        const keywordTitle = keywordgroup[keywordIndex]["title"];
@@ -48,9 +53,17 @@ export default async  function fetchNavKeywords({functionName,selectedNavIndex,h
        }
 
      }
+    }
+
+    } catch (error) {
+      console.log('error',error)
+
+      
+    }
+
    }
 
-
+debugger
    const navKeywords = Object.entries(grouped)
      .map((m) => {
        return { groupName: m[0], keywords: m[1].keywords };

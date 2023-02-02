@@ -4,8 +4,10 @@ export default async function getStaticCategoryPagePaths({host,gender}){
       `${host}/category-nav-counter.json`
   )
   const categories = await categoriesResponse.json()
+  debugger
   if (process.env.ROLE === 'USER') {
-    delete categories['diger']
+    debugger
+    delete categories['Diger']
 }
   const data = Object.entries(categories);
 

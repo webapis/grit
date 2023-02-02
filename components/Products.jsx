@@ -56,7 +56,7 @@ function containsNumbers(str) {
 }
 
 function Content({ placeholder, products, selectedNavIndex, functionName, navKeywords, keywordgroup, pageNumber }) {
-
+debugger
   const [selectedTab, setSelectedTab] = useState(0)
 
 
@@ -106,6 +106,7 @@ function Page({ products, pageNumber, placeholder }) {
 
 
 function Keywords({ navKeywords, selectedNavIndex }) {
+
   const sortByKeywordsLength = navKeywords.sort((b, a) => a['keywords'].length - b['keywords'].length)
   function handleClick({ index, event, keyword }) {
     const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')

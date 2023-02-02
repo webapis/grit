@@ -41,17 +41,13 @@ debugger
     }
     debugger
     var url = `${host}/.netlify/functions/${fnName}/?start=${pageNumber}&selectedNavIndex=${selectedNavIndex}&search=`;
-    try {
-        
-    } catch (error) {
-        
-    }
+
     let products=[]
     try {
         const response = await fetch(url);
         products = await response.json()
     } catch (error) {
-        console.log('product fetch error')
+        console.log('product fetch error',error)
     }
  
     let navKeywords = []
@@ -65,7 +61,7 @@ debugger
             });
             debugger;
         } catch (error) {
-            console.log('fetchNavKeywords error')
+            console.log('fetchNavKeywords error',error)
         }
       
     }
