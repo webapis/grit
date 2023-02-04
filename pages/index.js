@@ -19,9 +19,9 @@ export async function getStaticProps(context) {
   const categoriesResponse = await fetch(
     `${process.env.HOST_K}/category-nav-counter.json`
   )
-debugger
+
   const categories =await categoriesResponse.json()
-  debugger
+
   if (process.env.ROLE === 'USER') {
     delete categories['diger']
   }
