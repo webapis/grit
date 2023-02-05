@@ -84,13 +84,16 @@ debugger
   console.log('groupName',groupName)
 debugger
   //const reducedData = 
-  const kwds =keywordsIndexImages[0].keywords
-  kwds.forEach(k=>{
-    const random = getRandomArbitrary(2, products.data.length)
-    debugger
-    products.data.splice(random,0,k)
-      
-  })
+  if(keywordsIndexImages.length>0){
+    const kwds =keywordsIndexImages[0].keywords
+    kwds.forEach(k=>{
+      const random = getRandomArbitrary(2, products.data.length)
+      debugger
+      products.data.splice(random,0,k)
+        
+    })
+  }
+
 debugger
     return {
         props: {selectedNavKeywords,groupName:groupName.replace(' ','-'),selectedCat, gender, role: process.env.ROLE, placeholder, navKeywords, keywordsIndexImages, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber: parseInt(pageNumber), pageTitle }, // will be passed to the page component as props
