@@ -81,36 +81,36 @@ function Content({selectedNavKeywords,groupName, selectedCat, gender, placeholde
 
 function Page({selectedNavKeywords,keywordgroup,groupName,selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages }) {
 debugger
-  const [mergeData, setMergeData] = useState([])
+
 
   const { count, data } = products
 
-  useEffect(() => {
+//   useEffect(() => {
 
-    function getRandomArbitrary(min, max) {
-      return Math.ceil( Math.random() * (max - min) + min);
-  }
-    if (keywordsIndexImages.length > 0 && products  && pageNumber) {
+//     function getRandomArbitrary(min, max) {
+//       return Math.ceil( Math.random() * (max - min) + min);
+//   }
+//     if (keywordsIndexImages.length > 0 && products  && pageNumber) {
 
-      const { keywords } = keywordsIndexImages[0]
-debugger
-if(pageNumber===1){
-  debugger
-  keywords.forEach(k=>{
-    const random = getRandomArbitrary(2, data.length)
-    debugger
-    data.splice(random,0,k)
+//       const { keywords } = keywordsIndexImages[0]
+// debugger
+// if(pageNumber===1){
+//   debugger
+//   keywords.forEach(k=>{
+//     const random = getRandomArbitrary(2, data.length)
+//     debugger
+//     data.splice(random,0,k)
       
-  })
-}
+//   })
+// }
    
 
-      setMergeData(data)
+//       setMergeData(data)
 
-    }
+//     }
 
 
-  }, [pageNumber,keywordsIndexImages,products])
+//   }, [pageNumber,keywordsIndexImages,products])
   // useEffect(() => {
   //   if (keywordsIndexImages && keywordsIndexImages.length === 0 && products) {
 
@@ -136,7 +136,7 @@ if(pageNumber===1){
     <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
-    {mergeData && mergeData.length > 0 && mergeData.map((m, i) => {
+    {data && data.length > 0 && data.map((m, i) => {
    
       return <Grid key={i} item xs={6} sm={3} md={3} lg={2} > {!m.total && <ImageComponent selectedNavKeywords={selectedNavKeywords} selectedCat={selectedCat} placeholder={placeholder} {...m} />}{m.total && <GroupImage groupName={groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} />}</Grid>
     })}

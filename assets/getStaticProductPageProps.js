@@ -9,7 +9,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     const groupName = slug[0].replace('-', ' ')
 
-    debugger
+
     const keywordgroupResponse = await fetch(`${host}/keywords.json`)
     const keywordgroup = await keywordgroupResponse.json()
     const keywordsArray = Object.entries(keywordgroup)
@@ -82,8 +82,22 @@ debugger
     const pageTitle = `Kadın ${slug.slice(0, slug.indexOf('sayfa')).join(' ').replace(/-/g, ' ')}`
     debugger
   console.log('groupName',groupName)
+debugger
+  //const reducedData = 
+  const kwds =keywordsIndexImages[0].keywords
+  kwds.forEach(k=>{
+    const random = getRandomArbitrary(2, products.data.length)
+    debugger
+    products.data.splice(random,0,k)
+      
+  })
+debugger
     return {
         props: {selectedNavKeywords,groupName:groupName.replace(' ','-'),selectedCat, gender, role: process.env.ROLE, placeholder, navKeywords, keywordsIndexImages, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber: parseInt(pageNumber), pageTitle }, // will be passed to the page component as props
         revalidate: 60
     }
+}
+
+function getRandomArbitrary(min, max) {
+    return Math.ceil( Math.random() * (max - min) + min);
 }

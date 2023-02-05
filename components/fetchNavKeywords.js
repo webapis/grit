@@ -1,6 +1,6 @@
 import placeholders from '../assets/placeholders.json'
 export default async function fetchNavKeywords({selectedCatIndex, functionName, selectedNavIndex, host, keywordgroup }) {
-  debugger
+
   let productImgIndexes = {}
   if (selectedNavIndex !== '0-') {
 
@@ -16,7 +16,7 @@ export default async function fetchNavKeywords({selectedCatIndex, functionName, 
         return currentIndex.includes(f)
       })
      // if (indexFound) {
-        debugger
+    
         const imageIndexesResponse = await fetch(`${host}/image-indexes/${selectedCatIndex.replace('-','')}.json`)
         productImgIndexes = await imageIndexesResponse.json()
    //   }
