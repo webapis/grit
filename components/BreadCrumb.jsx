@@ -9,7 +9,7 @@ import getSelectedNavIndex from './getSelectedNavIndex';
 function containsNumbers(str) {
     return /\d/.test(str);
 }
-export default function BreadCrumb({ keywordgroup,gender }) {
+export default function BreadCrumb({ keywordgroup,gender}) {
 
 if(!keywordgroup){
     return null
@@ -103,7 +103,7 @@ if(!keywordgroup){
         <Stack direction="row" spacing={1}>
             {bcrumbs.slice(3).map(keyword => {
                 const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')
-                debugger
+        
                 return <Chip key={keyword} size='small' label={keyword} onDelete={(event) => handleClick({ event, keyword: urlKeywords })} />
             })}
 

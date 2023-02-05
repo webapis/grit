@@ -107,24 +107,31 @@ export default async function fetchNavKeywords({ functionName, selectedNavIndex,
     const bkeywords = b['keywords']
 
     return bkeywords.length - akeywords.length;
-  }).filter(d=>d.groupName==='Seçenekler').map((m, a) => {
+  }).filter(d => d.groupName === 'Seçenekler').map((m, a) => {
     const { groupName, keywords } = m
-    return {groupName,
+    return {
+      groupName,
       keywords: keywords.map((m) => {
+        if (productImgIndexes[m[1]]) {
 
-        const { keywordTitle, imageUrl: { title, src: imageSrc, marka } } = productImgIndexes[m[1]]
+          const { keywordTitle, imageUrl: { title, src: imageSrc, marka } } = productImgIndexes[m[1]]
 
-        const total = m[0]
-        const index = m[1]
-        const imageSource = placeholders[marka].imagePrefix.trim() + placeholders[marka].imageHost.trim() + imageSrc + placeholders[marka].imgPostFix
-        const groupNameTitle = keywordTitle.toLowerCase() === groupName.toLowerCase() ? (keywordTitle).toLowerCase() : (keywordTitle).toLowerCase()
+          const total = m[0]
+          const index = m[1]
+          const imageSource = placeholders[marka].imagePrefix.trim() + placeholders[marka].imageHost.trim() + imageSrc + placeholders[marka].imgPostFix
+          const groupNameTitle = keywordTitle.toLowerCase() === groupName.toLowerCase() ? (keywordTitle).toLowerCase() : (keywordTitle).toLowerCase()
 
-        return { total, index, imageSource, groupNameTitle, title, keywordTitle }
-      })
+          return { total, index, imageSource, groupNameTitle, title, keywordTitle }
+        }
+        else {
+          return null
+        }
+
+      }).filter(f=>f!==null)
     }
 
   })
   debugger
-  return {navKeywords,keywordsIndexImages}
+  return { navKeywords, keywordsIndexImages }
 
 }

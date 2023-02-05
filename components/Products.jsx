@@ -19,15 +19,17 @@ import Pagination from '@mui/material/Pagination';
 import Chip from '@mui/material/Chip';
 import Head from 'next/head'
 import Footer from './Footer';
+import BreadCrumb from './BreadCrumb';
 import { useRouter } from 'next/router'
 export default function Products(props) {
+
   const router = useRouter()
 
   if (router.isFallback) {
     return <div>Loading...</div>
   }
 
-  const { role, placeholder, categories, products, selectedNavIndex, functionName, keywordsIndexImages, navKeywords, keywordgroup, pageNumber, pageTitle, gender, tabValue } = props
+  const {groupName, selectedCat, role, placeholder, categories, products, selectedNavIndex, functionName, keywordsIndexImages, navKeywords, keywordgroup, pageNumber, pageTitle, gender, tabValue } = props
 
   const mapped = Object.entries(categories).map((g) => {
     const groupName = g[0]
@@ -46,8 +48,8 @@ export default function Products(props) {
       <meta name="description"
         content={new Date().toLocaleDateString() + pageTitle} />
     </Head>
-    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile tabValue={tabValue} gender={gender} categories={mapped} keywordgroup={keywordgroup}><Content keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
-    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop tabValue={tabValue} gender={gender} categories={mapped} keywordgroup={keywordgroup}><Content keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
+    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile tabValue={tabValue} gender={gender} categories={mapped} keywordgroup={keywordgroup}><Content keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
+    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop tabValue={tabValue} gender={gender} categories={mapped} keywordgroup={keywordgroup}><Content keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
   </>
 }
 
@@ -55,7 +57,7 @@ function containsNumbers(str) {
   return /\d/.test(str);
 }
 
-function Content({ placeholder, products, selectedNavIndex, functionName, keywordsIndexImages, navKeywords, keywordgroup, pageNumber }) {
+function Content({groupName, selectedCat, gender, placeholder, products, selectedNavIndex, functionName, keywordsIndexImages, navKeywords, keywordgroup, pageNumber }) {
 
   const [selectedTab, setSelectedTab] = useState(0)
 
@@ -71,20 +73,21 @@ function Content({ placeholder, products, selectedNavIndex, functionName, keywor
       <TabsContainer selectedTab={selectedTab} handleTabSelection={handleTabSelection} />
     </Grid>
 
-    {selectedTab === 0 && <Page keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} products={products} />}
+    {selectedTab === 0 && <Page keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} products={products} />}
     {selectedTab === 1 && <Grid xs={12} sm={3} md={6} lg={6} item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
   </Grid>
 }
 
 
-function Page({ products, pageNumber, placeholder, keywordsIndexImages }) {
-  debugger
+function Page({keywordgroup,groupName,selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages }) {
+debugger
   const [mergeData, setMergeData] = useState([])
 
   const { count, data } = products
 
   useEffect(() => {
-    if (keywordsIndexImages && products) {
+    if (keywordsIndexImages.length > 0 && products) {
+
       const { keywords } = keywordsIndexImages[0]
 
       const mergeData = keywords.reduce((prev, curr, i, arr) => {
@@ -93,7 +96,7 @@ function Page({ products, pageNumber, placeholder, keywordsIndexImages }) {
 
           return [...prev, curr, data[i]]
         } else {
-          debugger
+    
           return [...prev, curr, ...data.slice(i)]
         }
 
@@ -105,10 +108,20 @@ function Page({ products, pageNumber, placeholder, keywordsIndexImages }) {
 
 
   }, [keywordsIndexImages, products])
+  useEffect(() => {
+    if (keywordsIndexImages && keywordsIndexImages.length === 0 && products) {
 
+      setMergeData(data)
+
+    }
+
+
+  }, [keywordsIndexImages, products])
   console.log('currentPage----', typeof (pageNumber))
 
   const totalPages = Math.ceil(count / 100)
+  console.log('totalPages',totalPages)
+  console.log('pageNumber',pageNumber)
 
   function handleChange(e, pageNumber) {
     const nextUrl = location.href.substring(0, location.href.indexOf('sayfa'))
@@ -121,12 +134,15 @@ function Page({ products, pageNumber, placeholder, keywordsIndexImages }) {
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
     {mergeData && mergeData.length > 0 && mergeData.map((m, i) => {
-      debugger
-      return <Grid key={i} item xs={6} sm={3} md={3} lg={2} > {!m.total && <ImageComponent placeholder={placeholder} {...m} />}{m.total && <GroupImage placeholder={placeholder}  {...m} />}</Grid>
+   
+      return <Grid key={i} item xs={6} sm={3} md={3} lg={2} > {!m.total && <ImageComponent placeholder={placeholder} {...m} />}{m.total && <GroupImage groupName={groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} />}</Grid>
     })}
     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginBottom: 10 }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
+    {pageNumber===totalPages && <Grid item xs={12}><BreadCrumb gender={gender} keywordgroup={keywordgroup}/></Grid>}
+    {pageNumber===totalPages && <Grid item xs={12}>Son Sayfa</Grid>}
+    
     <Grid item><Footer /></Grid>
   </>
 }
@@ -261,10 +277,11 @@ function ImageComponent({ title, marka, imageUrl, link, priceNew, timestamp, pla
 
 
 
-function GroupImage({ placeholder, groupNameTitle, imageSource, index, keywordTitle, title, total}) {
-debugger
+function GroupImage({groupName, selectedCat,gender, placeholder, groupNameTitle, imageSource, index, keywordTitle, title, total }) {
+  debugger
 
   const imageElm = useRef(null);
+  const url=`/${gender}/${groupName}/${selectedCat}/${keywordTitle}/sayfa/1`
   useEffect(() => {
 
     if (window.IntersectionObserver) {
@@ -292,7 +309,7 @@ debugger
   }, []);
 
 
-  return<div><img  ref={imageElm} style={{ width: '100%',borderRadius:20 }} src={placeholder} data-src={imageSource} />
-  <div style={{backgroundColor:'yellow',display:'flex',justifyContent:'space-around'}}><span>{keywordTitle}</span><span>{total}</span></div>
-  </div> 
+  return <div><img ref={imageElm} style={{ width: '100%', borderRadius: 20 }} src={placeholder} data-src={imageSource} />
+    <div style={{ backgroundColor: 'yellow', display: 'flex', justifyContent: 'space-around' }}><NextLink href={url}>{keywordTitle}</NextLink><span>{total}</span></div>
+  </div>
 }
