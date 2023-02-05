@@ -45,9 +45,14 @@ debugger
     } else {
         selectedNavIndex = getSelectedNavIndex({ keywordgroup, slug })
     }
+    let selectedNavKeywords=''
     let selectedNavIndexArr =selectedNavIndex.split('-').filter(f=>f!=='')
-    let selectedNavKeywords =keywordsArray.filter(f=>selectedNavIndexArr.find(d=>d===f[0].replace('-','')) ).map(m=>m[1].keywords).reduce((p,c,i)=>[...p,c.split(',')],[]).flat(1)
     debugger
+    if(selectedNavIndex.length>2){
+        selectedNavKeywords =keywordsArray.filter(f=>selectedNavIndexArr.find(d=>d===f[0].replace('-','')) ).map(m=>m[1].keywords).reduce((p,c,i)=>[...p,c.split(',')],[]).flat(1)
+        debugger
+    }
+   
     var url = `${host}/.netlify/functions/${fnName}/?start=${pageNumber}&selectedNavIndex=${selectedNavIndex}&search=`;
 
     let products = []

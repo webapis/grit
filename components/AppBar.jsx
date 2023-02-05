@@ -8,6 +8,7 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Slide from '@mui/material/Slide';
+import GenderTabs from './GenderTabs';
 import BreadCrumb from './BreadCrumb';
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -61,7 +62,9 @@ export default function HideAppBar(props) {
             BİRARADAMODA
             <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın ve Erkek Marka Giyimler</Typography>
           </Typography>
-    
+          {!toggleDrawer &&  <GenderTabs/>}
+   
+   
       
           </Toolbar>
           <Toolbar>
