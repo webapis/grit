@@ -54,7 +54,7 @@ if(!keywordgroup){
 
         bcrumbs = decodedbcrumb.slice(0, decodedbcrumb.length - 2)
     }
-    return <div><Breadcrumbs separator="›" aria-label="breadcrumb" >
+    return <div id='bread-crumb' ><Breadcrumbs separator="›" aria-label="breadcrumb" >
         <Link
             underline="hover"
             sx={{ display: 'flex', alignItems: 'center' }}
@@ -104,7 +104,7 @@ if(!keywordgroup){
             {bcrumbs.slice(3).map(keyword => {
                 const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')
         
-                return <Chip key={keyword} size='small' label={keyword} onDelete={(event) => handleClick({ event, keyword: urlKeywords })} />
+                return <Chip style={{margin:5}} key={keyword} size='small' label={keyword} onDelete={(event) => handleClick({ event, keyword: urlKeywords })} />
             })}
 
         </Stack>

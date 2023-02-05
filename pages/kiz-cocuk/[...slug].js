@@ -1,6 +1,6 @@
 
-import getSelectedNavIndex from '../../components/getSelectedNavIndex';
-import fetchNavKeywords from '../../components/fetchNavKeywords'
+// import getSelectedNavIndex from '../../components/getSelectedNavIndex';
+// import fetchNavKeywords from '../../components/fetchNavKeywords'
 import Products from '../../components/Products'
 import getStaticPagePaths from '../../assets/getStaticProductPagePaths';
 import getStaticPageProps from '../../assets/getStaticProductPageProps'
@@ -8,8 +8,8 @@ import getStaticPageProps from '../../assets/getStaticProductPageProps'
 function productsPage(props) {
 
 
-    const {groupName, selectedCat, placeholder,role, navKeywords, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber, pageTitle,gender } = props
-    return <Products groupName={groupName} selectedCat={selectedCat}  tabValue={2} gender={gender} role={role} placeholder={placeholder} pageTitle={pageTitle} pageNumber={pageNumber} selectedNavIndex={selectedNavIndex} keywordgroup={keywordgroup} navKeywords={navKeywords} products={products} categories={categories} functionName={functionName} />
+    const {selectedNavKeywords,groupName, selectedCat, placeholder,role, navKeywords, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber, pageTitle,gender } = props
+    return <Products selectedNavKeywords={selectedNavKeywords} groupName={groupName} selectedCat={selectedCat}  tabValue={2} gender={gender} role={role} placeholder={placeholder} pageTitle={pageTitle} pageNumber={pageNumber} selectedNavIndex={selectedNavIndex} keywordgroup={keywordgroup} navKeywords={navKeywords} products={products} categories={categories} functionName={functionName} />
 }
 
 

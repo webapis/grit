@@ -8,7 +8,7 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Slide from '@mui/material/Slide';
-
+import BreadCrumb from './BreadCrumb';
 function HideOnScroll(props) {
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
@@ -35,7 +35,7 @@ HideOnScroll.propTypes = {
 };
 
 export default function HideAppBar(props) {
-  const {toggleDrawer,showmenu}=props
+  const {toggleDrawer,showmenu,keywordgroup,gender}=props
 
   debugger
   return (
@@ -43,9 +43,9 @@ export default function HideAppBar(props) {
       <CssBaseline />
       <HideOnScroll {...props}>
    
-        <AppBar sx={{ zIndex: 2}}>
-          <Toolbar>
-        <IconButton
+        <AppBar sx={{ zIndex: 2,backgroundColor:'white',color:'inherit'}} elevation={0}>
+          <Toolbar style={{backgroundColor:'orange'}}>
+            {toggleDrawer &&      <IconButton
           onClick={toggleDrawer}
             size="large"
             edge="start"
@@ -54,18 +54,38 @@ export default function HideAppBar(props) {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton>}
+   
          
           <Typography variant="h6" noWrap component="div">
             BİRARADAMODA
             <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın ve Erkek Marka Giyimler</Typography>
           </Typography>
-          
+    
+      
+          </Toolbar>
+          <Toolbar>
+          <BreadCrumb keywordgroup={keywordgroup} gender={gender} />
           </Toolbar>
         </AppBar>
+   
       </HideOnScroll>
   
 
     </React.Fragment>
+  );
+}
+
+
+
+function TabsContainer({ selectedTab, handleTabSelection }) {
+  return (
+    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+      <Tabs value={selectedTab} onChange={handleTabSelection}>
+        <Tab label="Bulunan" />
+        <Tab label="Seçenekler" />
+
+      </Tabs>
+    </Box>
   );
 }

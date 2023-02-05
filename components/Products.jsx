@@ -29,7 +29,7 @@ export default function Products(props) {
     return <div>Loading...</div>
   }
 
-  const {groupName, selectedCat, role, placeholder, categories, products, selectedNavIndex, functionName, keywordsIndexImages, navKeywords, keywordgroup, pageNumber, pageTitle, gender, tabValue } = props
+  const {selectedNavKeywords,groupName, selectedCat, role, placeholder, categories, products, selectedNavIndex, functionName, keywordsIndexImages, navKeywords, keywordgroup, pageNumber, pageTitle, gender, tabValue } = props
 
   const mapped = Object.entries(categories).map((g) => {
     const groupName = g[0]
@@ -48,8 +48,8 @@ export default function Products(props) {
       <meta name="description"
         content={new Date().toLocaleDateString() + pageTitle} />
     </Head>
-    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile tabValue={tabValue} gender={gender} categories={mapped} keywordgroup={keywordgroup}><Content keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
-    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop tabValue={tabValue} gender={gender} categories={mapped} keywordgroup={keywordgroup}><Content keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
+    <ResponsiveComponent maxWidth={800} render={() => <DrawerMobile tabValue={tabValue} gender={gender} categories={mapped} keywordgroup={keywordgroup}><Content selectedNavKeywords={selectedNavKeywords} keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerMobile>} />
+    <ResponsiveComponent minWidth={801} render={() => <DrawerDesktop tabValue={tabValue} gender={gender} categories={mapped} keywordgroup={keywordgroup}><Content selectedNavKeywords={selectedNavKeywords}  keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} navKeywords={navKeywords} products={products} selectedNavIndex={selectedNavIndex} functionName={functionName} /></DrawerDesktop>} />
   </>
 }
 
@@ -57,7 +57,7 @@ function containsNumbers(str) {
   return /\d/.test(str);
 }
 
-function Content({groupName, selectedCat, gender, placeholder, products, selectedNavIndex, functionName, keywordsIndexImages, navKeywords, keywordgroup, pageNumber }) {
+function Content({selectedNavKeywords,groupName, selectedCat, gender, placeholder, products, selectedNavIndex, functionName, keywordsIndexImages, navKeywords, keywordgroup, pageNumber }) {
 
   const [selectedTab, setSelectedTab] = useState(0)
 
@@ -73,50 +73,53 @@ function Content({groupName, selectedCat, gender, placeholder, products, selecte
       <TabsContainer selectedTab={selectedTab} handleTabSelection={handleTabSelection} />
     </Grid>
 
-    {selectedTab === 0 && <Page keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} products={products} />}
+    {selectedTab === 0 && <Page selectedNavKeywords={selectedNavKeywords}  keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} products={products} />}
     {selectedTab === 1 && <Grid xs={12} sm={3} md={6} lg={6} item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
   </Grid>
 }
 
 
-function Page({keywordgroup,groupName,selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages }) {
+function Page({selectedNavKeywords,keywordgroup,groupName,selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages }) {
 debugger
   const [mergeData, setMergeData] = useState([])
 
   const { count, data } = products
 
   useEffect(() => {
-    if (keywordsIndexImages.length > 0 && products) {
+
+    function getRandomArbitrary(min, max) {
+      return Math.ceil( Math.random() * (max - min) + min);
+  }
+    if (keywordsIndexImages.length > 0 && products  && pageNumber) {
 
       const { keywords } = keywordsIndexImages[0]
-
-      const mergeData = keywords.reduce((prev, curr, i, arr) => {
-
-        if (i < arr.length - 1) {
-
-          return [...prev, curr, data[i]]
-        } else {
-    
-          return [...prev, curr, ...data.slice(i)]
-        }
-
-      }, [])
-
-      setMergeData(mergeData)
-
-    }
-
-
-  }, [keywordsIndexImages, products])
-  useEffect(() => {
-    if (keywordsIndexImages && keywordsIndexImages.length === 0 && products) {
+debugger
+if(pageNumber===1){
+  debugger
+  keywords.forEach(k=>{
+    const random = getRandomArbitrary(2, data.length)
+    debugger
+    data.splice(random,0,k)
+      
+  })
+}
+   
 
       setMergeData(data)
 
     }
 
 
-  }, [keywordsIndexImages, products])
+  }, [pageNumber,keywordsIndexImages,products])
+  // useEffect(() => {
+  //   if (keywordsIndexImages && keywordsIndexImages.length === 0 && products) {
+
+  //     setMergeData(data)
+
+  //   }
+
+
+  // }, [keywordsIndexImages, products])
   console.log('currentPage----', typeof (pageNumber))
 
   const totalPages = Math.ceil(count / 100)
@@ -135,7 +138,7 @@ debugger
     </Grid>
     {mergeData && mergeData.length > 0 && mergeData.map((m, i) => {
    
-      return <Grid key={i} item xs={6} sm={3} md={3} lg={2} > {!m.total && <ImageComponent placeholder={placeholder} {...m} />}{m.total && <GroupImage groupName={groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} />}</Grid>
+      return <Grid key={i} item xs={6} sm={3} md={3} lg={2} > {!m.total && <ImageComponent selectedNavKeywords={selectedNavKeywords} selectedCat={selectedCat} placeholder={placeholder} {...m} />}{m.total && <GroupImage groupName={groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} />}</Grid>
     })}
     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginBottom: 10 }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
@@ -222,7 +225,8 @@ function TabsContainer({ selectedTab, handleTabSelection }) {
 }
 
 
-function ImageComponent({ title, marka, imageUrl, link, priceNew, timestamp, placeholder }) {
+function ImageComponent({selectedNavKeywords, title, marka, imageUrl, link, priceNew, timestamp, placeholder }) {
+  
 
   const imageEl = useRef(null);
 
@@ -269,7 +273,16 @@ function ImageComponent({ title, marka, imageUrl, link, priceNew, timestamp, pla
     link +
     placeholders[marka].postfix;
   const trimmedTitle = (title.lastIndexOf("_") > 0) ? title.substr(0, title.lastIndexOf("_")).trim() : title
-  return <div><a href={detailHost} target="_blank"> <img ref={imageEl} style={{ width: '100%' }} src={placeholder} data-src={imageSource} alt={title} /></a><div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography style={{ textTransform: 'uppercase' }} variant="body2">{marka}</Typography><Typography variant="body2">{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{trimmedTitle}</Link>
+  const titleWithselectedKeywords =trimmedTitle.replace(marka,'').split(' ').map((m,i)=>{
+    const matches=  (selectedNavKeywords.includes(m.toLowerCase()))
+    if(matches){
+return <span key={i} style={{fontSize:11,marginLeft:2,textTransform:'capitalize',fontWeight:700,color:'#ff7043'}}>{m.charAt(0).toUpperCase() + m.slice(1)}{' '} </span>
+    }
+      return <span style={{textTransform:'capitalize',fontSize:11}} key={i}>{' '} {m.charAt(0).toUpperCase() + m.slice(1)}</span>
+    
+  
+  })
+  return <div><a href={detailHost} target="_blank"> <img ref={imageEl} style={{ width: '100%' }} src={placeholder} data-src={imageSource} alt={title} /></a><div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography style={{ textTransform: 'uppercase',fontSize:11 }} variant="body2">{marka}</Typography><Typography variant="body2" style={{fontSize:11}}>{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{titleWithselectedKeywords}</Link>
     <Typography color='#9e9e9e' style={{ textAlign: 'right', fontSize: 9 }} variant="caption" display="block" gutterBottom>{minutes <= 59 ? minutes + ' dakika önce' : hour <= 24 ? hour + ' saat önce' : days <= 31 ? days + ' gün önce' : month + ' ay önce'}</Typography>
   </div>
 }
@@ -309,7 +322,7 @@ function GroupImage({groupName, selectedCat,gender, placeholder, groupNameTitle,
   }, []);
 
 
-  return <div><img ref={imageElm} style={{ width: '100%', borderRadius: 20 }} src={placeholder} data-src={imageSource} />
-    <div style={{ backgroundColor: 'yellow', display: 'flex', justifyContent: 'space-around' }}><NextLink href={url}>{keywordTitle}</NextLink><span>{total}</span></div>
+  return <div><NextLink href={url}><img ref={imageElm} style={{ width: '100%', borderRadius: 20 }} src={placeholder} data-src={imageSource} /></NextLink>
+    <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link underline="hover" component={NextLink} href={url} style={{textTransform:'capitalize',fontSize:12}}>{keywordTitle} {selectedCat} Seçenekleri</Link><span style={{color:'#00897b',fontWeight:700,opacity:0.5}}>{total}</span></div>
   </div>
 }

@@ -27,7 +27,7 @@ export default function DrawerMobile(props) {
   return (
 
     <React.Fragment >
-      <AppBar toggleDrawer={toggleDrawer} />
+      <AppBar toggleDrawer={toggleDrawer} keywordgroup={keywordgroup} gender={gender}/>
       <Drawer
 sx={{ [`& .MuiDrawer-paper`]: { width: '80%', boxSizing: 'border-box' }}}
         anchor="left"
@@ -40,10 +40,10 @@ sx={{ [`& .MuiDrawer-paper`]: { width: '80%', boxSizing: 'border-box' }}}
         </div>
     
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, paddingTop: 10 }} >
+      <Box component="main" sx={{ flexGrow: 1, paddingTop: 15 }} >
         <Container>
 
-          <BreadCrumb keywordgroup={keywordgroup} gender={gender} />
+    
           {props.children}
 
         </Container>

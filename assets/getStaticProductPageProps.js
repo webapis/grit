@@ -8,12 +8,18 @@ export default async function getStaticProductPageProps({ context, host, gender 
     const { params: { slug } } = context
 
     const groupName = slug[0].replace('-', ' ')
-    const selectedCat=slug[1]
-console.log('selectedCat',selectedCat)
+
     debugger
     const keywordgroupResponse = await fetch(`${host}/keywords.json`)
     const keywordgroup = await keywordgroupResponse.json()
+    const keywordsArray = Object.entries(keywordgroup)
+    debugger
+    const selectedCat=slug[1]
 
+console.log('selectedCat',selectedCat)
+let  selectedCatIndex =keywordsArray.find(f=> f[1].title ===selectedCat)[0]
+
+debugger
     const responseCat = await fetch(`${host}/category-nav-counter.json`)
     const categories = await responseCat.json()
     debugger
@@ -39,6 +45,8 @@ console.log('selectedCat',selectedCat)
     } else {
         selectedNavIndex = getSelectedNavIndex({ keywordgroup, slug })
     }
+    let selectedNavIndexArr =selectedNavIndex.split('-').filter(f=>f!=='')
+    let selectedNavKeywords =keywordsArray.filter(f=>selectedNavIndexArr.find(d=>d===f[0].replace('-','')) ).map(m=>m[1].keywords).reduce((p,c,i)=>[...p,c.split(',')],[]).flat(1)
     debugger
     var url = `${host}/.netlify/functions/${fnName}/?start=${pageNumber}&selectedNavIndex=${selectedNavIndex}&search=`;
 
@@ -59,6 +67,7 @@ console.log('selectedCat',selectedCat)
                 selectedNavIndex,
                 host,
                 keywordgroup,
+                selectedCatIndex
             });
 
             navKeywords = navKeywordsResponse.navKeywords
@@ -74,7 +83,7 @@ console.log('selectedCat',selectedCat)
     debugger
   console.log('groupName',groupName)
     return {
-        props: {groupName:groupName.replace(' ','-'),selectedCat, gender, role: process.env.ROLE, placeholder, navKeywords, keywordsIndexImages, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber: parseInt(pageNumber), pageTitle }, // will be passed to the page component as props
+        props: {selectedNavKeywords,groupName:groupName.replace(' ','-'),selectedCat, gender, role: process.env.ROLE, placeholder, navKeywords, keywordsIndexImages, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber: parseInt(pageNumber), pageTitle }, // will be passed to the page component as props
         revalidate: 60
     }
 }

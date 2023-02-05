@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import AppBar from '@mui/material/AppBar';
+import AppBar from './AppBar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -23,17 +23,7 @@ export default function DrawerDesktop(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ zIndex: 2}}>
-        <Toolbar sx={{display:'flex',justifyContent:'space-between'}}>
-          <Typography variant="h6" noWrap component="div">
-            BİRARADAMODA
-            <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın ve Erkek Marka Giyimler</Typography>
-          </Typography>
-          <GenderTabs tabValue={tabValue}/>
-          <div></div>
-        </Toolbar>
-  
-      </AppBar>
+      <AppBar  keywordgroup={keywordgroup} gender={gender}/>
       <Drawer 
         variant="permanent"
         PaperProps={{style: {border: 'none'}}}
@@ -81,8 +71,8 @@ export default function DrawerDesktop(props) {
       <Box component="main" sx={{ flexGrow: 1, paddingTop:4 }}>
    
       <Container>
-      <div style={{paddingTop:50}}>
-        <BreadCrumb keywordgroup={keywordgroup} gender={gender}/>
+      <div style={{paddingTop:100}}>
+      
       
         {props.children}
         </div>

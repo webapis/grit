@@ -1,5 +1,5 @@
 import placeholders from '../assets/placeholders.json'
-export default async function fetchNavKeywords({ functionName, selectedNavIndex, host, keywordgroup }) {
+export default async function fetchNavKeywords({selectedCatIndex, functionName, selectedNavIndex, host, keywordgroup }) {
   debugger
   let productImgIndexes = {}
   if (selectedNavIndex !== '0-') {
@@ -15,10 +15,11 @@ export default async function fetchNavKeywords({ functionName, selectedNavIndex,
 
         return currentIndex.includes(f)
       })
-      if (indexFound) {
-        const imageIndexesResponse = await fetch(`${host}/image-indexes/${indexFound}.json`)
+     // if (indexFound) {
+        debugger
+        const imageIndexesResponse = await fetch(`${host}/image-indexes/${selectedCatIndex.replace('-','')}.json`)
         productImgIndexes = await imageIndexesResponse.json()
-      }
+   //   }
 
 
     }
@@ -112,7 +113,7 @@ export default async function fetchNavKeywords({ functionName, selectedNavIndex,
     return {
       groupName,
       keywords: keywords.map((m) => {
-        if (productImgIndexes[m[1]]) {
+
 
           const { keywordTitle, imageUrl: { title, src: imageSrc, marka } } = productImgIndexes[m[1]]
 
@@ -122,12 +123,9 @@ export default async function fetchNavKeywords({ functionName, selectedNavIndex,
           const groupNameTitle = keywordTitle.toLowerCase() === groupName.toLowerCase() ? (keywordTitle).toLowerCase() : (keywordTitle).toLowerCase()
 
           return { total, index, imageSource, groupNameTitle, title, keywordTitle }
-        }
-        else {
-          return null
-        }
+       
 
-      }).filter(f=>f!==null)
+      })
     }
 
   })
