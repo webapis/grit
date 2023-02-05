@@ -48,7 +48,7 @@ debugger
     let selectedNavKeywords=''
     let selectedNavIndexArr =selectedNavIndex.split('-').filter(f=>f!=='')
     debugger
-    if(selectedNavIndex.length>2){
+    if(selectedNavIndex.length>2 && selectedNavIndexArr.length>0){
         selectedNavKeywords =keywordsArray.filter(f=>selectedNavIndexArr.find(d=>d===f[0].replace('-','')) ).map(m=>m[1].keywords).reduce((p,c,i)=>[...p,c.split(',')],[]).flat(1)
         debugger
     }
