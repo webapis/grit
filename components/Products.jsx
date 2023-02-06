@@ -208,7 +208,7 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
   var days = Math.floor(minutesdiff / (1000 * 60 * 60 * 24));
   var month = Math.round(minutesdiff / (2e3 * 3600 * 365.25));
   useEffect(() => {
-
+    imageEl.current.src=placeholder
     if (window.IntersectionObserver) {
 
       let observer = new IntersectionObserver((entries, observer) => {

@@ -14,12 +14,12 @@ export default async function getStaticProductPageProps({ context, host, gender 
     const keywordgroup = await keywordgroupResponse.json()
     const keywordsArray = Object.entries(keywordgroup)
     debugger
-    const selectedCat=slug[1]
+    const selectedCat = slug[1]
 
-console.log('selectedCat',selectedCat)
-let  selectedCatIndex =keywordsArray.find(f=> f[1].title ===selectedCat)[0]
+    console.log('selectedCat', selectedCat)
+    let selectedCatIndex = keywordsArray.find(f => f[1].title === selectedCat)[0]
 
-debugger
+    debugger
     const responseCat = await fetch(`${host}/category-nav-counter.json`)
     const categories = await responseCat.json()
     debugger
@@ -45,20 +45,22 @@ debugger
     } else {
         selectedNavIndex = getSelectedNavIndex({ keywordgroup, slug })
     }
-    let selectedNavKeywords=''
-    let selectedNavIndexArr =selectedNavIndex.split('-').filter(f=>f!=='')
+    let selectedNavKeywords = ''
+    let selectedNavIndexArr = selectedNavIndex.split('-').filter(f => f !== '')
     debugger
-    if(selectedNavIndex.length>2 && selectedNavIndexArr&& selectedNavIndexArr.length>0){
+    if (selectedNavIndex.length > 2 && selectedNavIndexArr && selectedNavIndexArr.length > 0) {
         debugger
-        selectedNavKeywords =keywordsArray.filter(f=>selectedNavIndexArr.find(d=>{return d===f[0].replace('-','')}) )
-        .map(m=>{
-            debugger
-            return m[1].keywords}).reduce((p,c,i,arr)=>{
-            debugger
-            return [...p,c.split(',')]},[]).flat(1)
+        selectedNavKeywords = keywordsArray.filter(f => selectedNavIndexArr.find(d => { return d === f[0].replace('-', '') }))
+            .map(m => {
+                debugger
+                return m[1].keywords
+            }).reduce((p, c, i, arr) => {
+                debugger
+                return [...p, c.split(',')]
+            }, []).flat(1)
         debugger
     }
-   
+
     var url = `${host}/.netlify/functions/${fnName}/?start=${pageNumber}&selectedNavIndex=${selectedNavIndex}&search=`;
 
     let products = []
@@ -73,7 +75,7 @@ debugger
     let keywordsIndexImages = []
     if (selectedNavIndex !== '-') {
         try {
-         const  navKeywordsResponse = await fetchNavKeywords({
+            const navKeywordsResponse = await fetchNavKeywords({
                 functionName,
                 selectedNavIndex,
                 host,
@@ -91,27 +93,31 @@ debugger
 
     }
     const pageTitle = `Kadın ${slug.slice(0, slug.indexOf('sayfa')).join(' ').replace(/-/g, ' ')}`
+  console.log('slug--------------',slug)
+    console.log('groupName', groupName)
     debugger
-  console.log('groupName',groupName)
-debugger
-  //const reducedData = 
-  if(keywordsIndexImages.length>0){
-    const kwds =keywordsIndexImages[0].keywords
-    kwds.forEach(k=>{
-      const random = getRandomArbitrary(2, products.data.length)
-      debugger
-      products.data.splice(random,0,k)
-        
-    })
-  }
 
-debugger
+    if (keywordsIndexImages.length > 0) {
+        const kwds = keywordsIndexImages[0].keywords
+        debugger
+        const subkwd =slug[2]
+        debugger
+        kwds.filter(f=> f.
+            keywordTitle !==subkwd).forEach(k => {
+            const random = getRandomArbitrary(2, products.data.length)
+            debugger
+            products.data.splice(random, 0, k)
+
+        })
+    }
+
+    debugger
     return {
-        props: {selectedNavKeywords,groupName:groupName.replace(' ','-'),selectedCat, gender, role: process.env.ROLE, placeholder, navKeywords, keywordsIndexImages, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber: parseInt(pageNumber), pageTitle }, // will be passed to the page component as props
+        props: { selectedNavKeywords, groupName: groupName.replace(' ', '-'), selectedCat, gender, role: process.env.ROLE, placeholder, navKeywords, keywordsIndexImages, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber: parseInt(pageNumber), pageTitle }, // will be passed to the page component as props
         revalidate: 60
     }
 }
 
 function getRandomArbitrary(min, max) {
-    return Math.ceil( Math.random() * (max - min) + min);
+    return Math.ceil(Math.random() * (max - min) + min);
 }
