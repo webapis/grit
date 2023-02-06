@@ -10,7 +10,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
     const groupName = slug[0].replace('-', ' ')
 
 
-    const keywordgroupResponse = await fetch(`${host}/keywords.json`)
+    const keywordgroupResponse = await fetch(`${host}/keywords.json`,{ next: { revalidate: 3600 } })
     const keywordgroup = await keywordgroupResponse.json()
     const keywordsArray = Object.entries(keywordgroup)
     debugger
@@ -20,7 +20,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
     let selectedCatIndex = keywordsArray.find(f => f[1].title === selectedCat)[0]
 
     debugger
-    const responseCat = await fetch(`${host}/category-nav-counter.json`)
+    const responseCat = await fetch(`${host}/category-nav-counter.json`,{ next: { revalidate: 3600 } })
     const categories = await responseCat.json()
     debugger
     if (process.env.ROLE === 'USER') {
@@ -65,7 +65,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     let products = []
     try {
-        const response = await fetch(url);
+        const response = await fetch(url,{ next: { revalidate: 3600 } });
         products = await response.json()
     } catch (error) {
         console.log('product fetch error', error)

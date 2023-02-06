@@ -17,7 +17,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
       })
       // if (indexFound) {
 
-      const imageIndexesResponse = await fetch(`${host}/image-indexes/${selectedCatIndex.replace('-', '')}.json`)
+      const imageIndexesResponse = await fetch(`${host}/image-indexes/${selectedCatIndex.replace('-', '')}.json`,{ next: { revalidate: 3600 } })
       productImgIndexes = await imageIndexesResponse.json()
       //   }
 
@@ -45,7 +45,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
     url = `${host}/.netlify/functions/${fnName}-navfirst?navindex=${selectedNavIndex}`;
   }
 
-  const keywordsDataResponse = await fetch(url)
+  const keywordsDataResponse = await fetch(url,{ next: { revalidate: 3600 } })
   const keywordsData = await keywordsDataResponse.json()
   debugger
 
