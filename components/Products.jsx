@@ -107,7 +107,7 @@ function Page({ selectedNavKeywords, keywordgroup, groupName, selectedCat, gende
     <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
-    <Grid key="adfeed" item xs={6} sm={3} md={3} lg={2}><AdFeed /></Grid>
+ 
     {pageData && pageData.length > 0 && pageData.map((m, i) => {
 
       return <Grid key={i} item xs={6} sm={3} md={3} lg={2} > {!m.total && <ImageComponent selectedNavKeywords={selectedNavKeywords} selectedCat={selectedCat} placeholder={placeholder} {...m} />}{m.total && <GroupImage groupName={groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} />}</Grid>
