@@ -15,11 +15,11 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
 
         return currentIndex.includes(f)
       })
-      // if (indexFound) {
+   
 
       const imageIndexesResponse = await fetch(`${host}/image-indexes/${selectedCatIndex.replace('-', '')}.json`,{ next: { revalidate: 3600 } })
       productImgIndexes = await imageIndexesResponse.json()
-      //   }
+ 
 
 
     }

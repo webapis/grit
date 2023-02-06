@@ -4,11 +4,10 @@ import Drawer from '@mui/material/Drawer';
 import AppBar from './AppBar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+
 import Container from '@mui/material/Container'
 import DrawerList from './DrawerList'
-import BreadCrumb from './BreadCrumb';
-import GenderTabs from './GenderTabs'
+
 import { useRouter } from 'next/router'
 const drawerWidth = 300;
 
@@ -23,7 +22,7 @@ export default function DrawerDesktop(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar  keywordgroup={keywordgroup} gender={gender}/>
+      <AppBar  keywordgroup={keywordgroup} gender={gender} tabValue={tabValue}/>
       <Drawer 
         variant="permanent"
         PaperProps={{style: {border: 'none'}}}

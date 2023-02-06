@@ -36,7 +36,7 @@ HideOnScroll.propTypes = {
 };
 
 export default function HideAppBar(props) {
-  const {toggleDrawer,showmenu,keywordgroup,gender}=props
+  const {toggleDrawer,showmenu,keywordgroup,gender,tabValue}=props
 
   debugger
   return (
@@ -62,7 +62,7 @@ export default function HideAppBar(props) {
             BİRARADAMODA
             <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın ve Erkek Marka Giyimler</Typography>
           </Typography>
-          {!toggleDrawer &&  <GenderTabs/>}
+          {!toggleDrawer &&  <GenderTabs tabValue={tabValue}/>}
    
    
       
