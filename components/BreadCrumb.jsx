@@ -21,7 +21,9 @@ if(!keywordgroup){
 
     function handleClick({ event, keyword }) {
         event.preventDefault()
+        debugger
         const index = localStorage.getItem(`${keyword}-index`)
+        debugger
         let locationPathname = location.pathname.substring(0, location.pathname.indexOf('sayfa'))
         debugger
         const indexExist = selectedNavIndex.split('-').find(f => index !== "" && index.replace('-', "") === f)
@@ -102,6 +104,7 @@ if(!keywordgroup){
     </Breadcrumbs>
         <Stack direction="row" spacing={1}>
             {bcrumbs.slice(3).map(keyword => {
+            
                 const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')
         
                 return <Chip style={{margin:5}} key={keyword} size='small' label={keyword} onDelete={(event) => handleClick({ event, keyword: urlKeywords })} />

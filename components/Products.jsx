@@ -261,7 +261,6 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
 
 
 function GroupImage({ groupName, selectedCat, gender, placeholder, groupNameTitle, imageSource, index, keywordTitle, title, total }) {
-  debugger
 
   const imageElm = useRef(null);
   const url = `/${gender}/${groupName}/${selectedCat}/${keywordTitle}/sayfa/1`
@@ -291,8 +290,13 @@ function GroupImage({ groupName, selectedCat, gender, placeholder, groupNameTitl
 
   }, [imageSource]);
 
-
-  return <div><NextLink href={url}><img ref={imageElm} style={{ width: '100%', borderRadius: 20 }} src={placeholder} data-src={imageSource} /></NextLink>
-    <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link underline="hover" component={NextLink} href={url} style={{ textTransform: 'capitalize', fontSize: 12 }}>{keywordTitle} {selectedCat} Seçenekleri</Link><span style={{ color: '#00897b', fontWeight: 700, opacity: 0.5 }}>{total}</span></div>
+  function handleClick(e){
+    e.preventDefault()
+    localStorage.setItem(`${keywordTitle}-index`, index)
+    debugger
+    location.replace(url)
+  }
+  return <div><Link onClick={handleClick}><img ref={imageElm} style={{ width: '100%', borderRadius: 20 }} src={placeholder} data-src={imageSource} /></Link>
+    <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link underline="hover"  onClick={handleClick} style={{ textTransform: 'capitalize', fontSize: 12 }}>{keywordTitle} {selectedCat} Seçenekleri</Link></div>
   </div>
 }

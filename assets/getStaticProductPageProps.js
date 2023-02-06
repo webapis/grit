@@ -93,8 +93,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     }
     const pageTitle = `Kadın ${slug.slice(0, slug.indexOf('sayfa')).join(' ').replace(/-/g, ' ')}`
-  console.log('slug--------------',slug)
-    console.log('groupName', groupName)
+
     debugger
 
     if (keywordsIndexImages.length > 0) {
