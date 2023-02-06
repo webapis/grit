@@ -297,6 +297,6 @@ function GroupImage({ groupName, selectedCat, gender, placeholder, groupNameTitl
     location.replace(url)
   }
   return <div><Link onClick={handleClick}><img ref={imageElm} style={{ width: '100%', borderRadius: 20 }} src={placeholder} data-src={imageSource} /></Link>
-    <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link underline="hover"  onClick={handleClick} style={{ textTransform: 'capitalize', fontSize: 12 }}>{keywordTitle} {selectedCat} Seçenekleri</Link></div>
+    <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link href='' underline="hover"  onClick={handleClick} style={{ textTransform: 'capitalize', fontSize: 12, cursor: "pointer" }}>{keywordTitle} {selectedCat} Seçenekleri</Link></div>
   </div>
 }
