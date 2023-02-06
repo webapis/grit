@@ -12,16 +12,6 @@ export default function App({ Component, pageProps, emotionCache = clientSideEmo
 
   return <CacheProvider value={emotionCache}>
     <Script strategy="beforeInteractive" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1960990522971470" crossorigin="anonymous" />
-
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-format="fluid"
-      data-ad-layout-key="+25+rt+1u-1z-35"
-      data-ad-client="ca-pub-1960990522971470"
-      data-ad-slot="7255740112"></ins>
-    <Script strategy="beforeInteractive" onLoad={() => {
-      console.log('Script has loaded ads')
-    }} >{`    (adsbygoogle = window.adsbygoogle || []).push({});`}</Script>
     <Script strategy="beforeInteractive" src="./adapter.js" />
     <Script strategy="beforeInteractive" src="./intersection-observer.js" />
     <Script strategy="beforeInteractive" onLoad={() => {
