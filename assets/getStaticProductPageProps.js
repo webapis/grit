@@ -114,7 +114,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
     debugger
     return {
         props: { selectedNavKeywords, groupName: groupName.replace(' ', '-'), selectedCat, gender, role: process.env.ROLE, placeholder, navKeywords, keywordsIndexImages, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber: parseInt(pageNumber), pageTitle }, // will be passed to the page component as props
-        revalidate: 60
+        revalidate: 3600
     }
 }
 

@@ -28,7 +28,7 @@ export async function getStaticProps(context) {
   const data = Object.entries(categories);
 
   return {
-    props: { gender: 'kadin', role: process.env.ROLE, data, placeholder }, revalidate: 60, // will be passed to the page component as props
+    props: { gender: 'kadin', role: process.env.ROLE, data, placeholder }, revalidate: 3600, // will be passed to the page component as props
   }
 }
 

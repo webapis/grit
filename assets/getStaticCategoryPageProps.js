@@ -12,6 +12,6 @@ export default async function getStaticCategoryPagePaths({host,gender}){
   const data = Object.entries(categories);
 
   return {
-    props: {role:process.env.ROLE,data,placeholder,gender}, revalidate: 60, // will be passed to the page component as props
+    props: {role:process.env.ROLE,data,placeholder,gender}, revalidate: 3600, // will be passed to the page component as props
   }
 }
