@@ -45,7 +45,7 @@ export default function HideAppBar(props) {
       <HideOnScroll {...props}>
    
         <AppBar sx={{ zIndex: 2,backgroundColor:'white',color:'inherit'}} elevation={0}>
-          <Toolbar style={{backgroundColor:'orange'}}>
+          <Toolbar style={{backgroundColor:'#1976d2',color:'white'}}>
             {toggleDrawer &&      <IconButton
           onClick={toggleDrawer}
             size="large"

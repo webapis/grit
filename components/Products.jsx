@@ -299,25 +299,6 @@ function GroupImage({ groupName, selectedCat, gender, placeholder, groupNameTitl
     location.replace(url)
   }
   return <div><Link onClick={handleClick}><img ref={imageElm} style={{ width: '100%', borderRadius: 20 }} src={placeholder} data-src={imageSource} /></Link>
-    <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link underline="hover" onClick={handleClick} style={{ textTransform: 'capitalize', fontSize: 12 }}>{keywordTitle} {selectedCat} Seçenekleri</Link></div>
-  </div>
-}
-
-
-
-function AdFeed() {
-
-  return <div style={{ width: '100%' }}>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1960990522971470"
-      crossorigin="anonymous"></script>
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-format="fluid"
-      data-ad-layout-key="+25+rt+1u-1z-35"
-      data-ad-client="ca-pub-1960990522971470"
-      data-ad-slot="7255740112"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({ });
-    </script>
+    <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link href='' underline="hover"  onClick={handleClick} style={{ textTransform: 'capitalize', fontSize: 12, cursor: "pointer" }}>{keywordTitle} {selectedCat} Seçenekleri</Link></div>
   </div>
 }
