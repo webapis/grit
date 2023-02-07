@@ -1,7 +1,9 @@
 import placeholders from '../assets/placeholders.json'
 export default async function fetchNavKeywords({ selectedCatIndex, functionName, selectedNavIndex, host, keywordgroup }) {
 
-  let productImgIndexes = {}
+
+  const imageIndexesResponse = await fetch(`${host}/image-indexes/${selectedCatIndex.replace('-', '')}.json`, { next: { revalidate: 3600 } })
+  let productImgIndexes = await imageIndexesResponse.json()
   if (selectedNavIndex !== '0-') {
 
     const indexes = selectedNavIndex.split('-').filter(f => f !== '')
@@ -15,11 +17,9 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
 
         return currentIndex.includes(f)
       })
-   
 
-      const imageIndexesResponse = await fetch(`${host}/image-indexes/${selectedCatIndex.replace('-', '')}.json`,{ next: { revalidate: 3600 } })
-      productImgIndexes = await imageIndexesResponse.json()
- 
+
+
 
 
     }
@@ -45,7 +45,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
     url = `${host}/.netlify/functions/${fnName}-navfirst?navindex=${selectedNavIndex}`;
   }
 
-  const keywordsDataResponse = await fetch(url,{ next: { revalidate: 3600 } })
+  const keywordsDataResponse = await fetch(url, { next: { revalidate: 3600 } })
   const keywordsData = await keywordsDataResponse.json()
   debugger
 
