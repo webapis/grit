@@ -1,7 +1,13 @@
 import placeholders from '../assets/placeholders.json'
+import { promises as fs } from 'fs';
+import path from 'path';
 export default async function fetchNavKeywords({ selectedCatIndex, functionName, selectedNavIndex, host, keywordgroup,gender }) {
-
-  let productImgIndexes = {}
+  const jsonDirectory = path.join(process.cwd(), gender);
+  //Read the json data file data.json
+  const productImgIndexesRaw = await fs.readFile(jsonDirectory + `/image-indexes/${selectedCatIndex.replace('-', '')}.json`, 'utf8')
+  const productImgIndexes= JSON.parse(productImgIndexesRaw)
+  //let productImgIndexes = require(`../${gender}/image-indexes/${selectedCatIndex.replace('-', '')}.json`)
+  debugger
   if (selectedNavIndex !== '0-') {
 
     const indexes = selectedNavIndex.split('-').filter(f => f !== '')
@@ -15,15 +21,8 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
 
         return currentIndex.includes(f)
       })
-
-
-       productImgIndexes = require(`../${gender}/image-indexes/${selectedCatIndex.replace('-', '')}.json`)
-      //const imageIndexesResponse = require()
-     // productImgIndexes = await imageIndexesResponse.json()
-
-
-
     }
+
 
     debugger
   } else {
@@ -46,7 +45,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
     url = `${host}/.netlify/functions/${fnName}-navfirst?navindex=${selectedNavIndex}`;
   }
 
-  const keywordsDataResponse = await fetch(url, { next: { revalidate: 3600 } })
+  const keywordsDataResponse = await fetch(url)
   const keywordsData = await keywordsDataResponse.json()
   debugger
 
@@ -127,8 +126,6 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
         } else {
           return null
         }
-
-
 
       }).filter(f => f !== null)
     }
