@@ -2,7 +2,7 @@ name: build
 on:
    workflow_dispatch:
 env:
-  REPO: webapis/coll2030
+  REPO: codergihub/fasion
   GH_TOKEN: ${{secrets.GH_TOKEN}}
 
 jobs:
