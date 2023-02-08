@@ -87,7 +87,8 @@ async function getContent(filepath,gender1) {
 
 
 (async () => {
-    const genders =[{gender:'kadin',gender1:'kadin'},{gender:'erkek',gender1:'erkek'},{gender:'kcocuk',gender1:'kiz-cocuk'},{gender:'ecocuk',gender1:'erkek-cocuk'}]
+    const genders =[{gender:'ecocuk',gender1:'erkek-cocuk'}]
+ //  const genders =[{gender:'kadin',gender1:'kadin'},{gender:'erkek',gender1:'erkek'},{gender:'kcocuk',gender1:'kiz-cocuk'},{gender:'ecocuk',gender1:'erkek-cocuk'}]
  
     for (let g of genders){
         const {gender,gender1}=g
