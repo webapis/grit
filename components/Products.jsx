@@ -295,7 +295,7 @@ function GroupImage({ groupName, selectedCat, gender, placeholder, groupNameTitl
   function handleClick(e) {
     e.preventDefault()
     localStorage.setItem(`${keywordTitle}-index`, index)
-    debugger
+    
     location.replace(url)
   }
   return <div><Link onClick={handleClick}><img ref={imageElm} style={{ width: '100%', borderRadius: 20 }} src={placeholder} data-src={imageSource} /></Link>

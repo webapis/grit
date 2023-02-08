@@ -14,32 +14,31 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     const groupName = slug[0].replace('-', ' ')
 
-    const jsonDirectory = path.join(process.cwd(), 'assets');
-    //Read the json data file data.json
+    const jsonDirectory = path.join(process.cwd(), `assets/${gender}`);
+debugger
     const categoriesRaw = await fs.readFile(jsonDirectory + '/category-nav-counter.json', 'utf8');
     const keywordgroupRaw = await fs.readFile(jsonDirectory + '/keywords.json', 'utf8');
-    //let productImgIndexes = require(`../${gender}/image-indexes/${selectedCatIndex.replace('-', '')}.json`)
+debugger
     const categories =JSON.parse(categoriesRaw)
     const keywordgroup= JSON.parse(keywordgroupRaw)
-    // const keywordgroupResponse = await fetch(`${host}/keywords.json`,{ next: { revalidate: 3600 } })
-    // const keywordgroup = await keywordgroupResponse.json()
+
     const keywordsArray = Object.entries (keywordgroup)
-    debugger
+    
     const selectedCat = slug[1]
 
     console.log('selectedCat', selectedCat)
     let selectedCatIndex = keywordsArray.find(f => f[1].title === selectedCat)[0]
 
-    debugger
+    
     // const responseCat = await fetch(`${host}/category-nav-counter.json`,{ next: { revalidate: 3600 } })
     // const categories = await responseCat.json()
-    debugger
+    
     if (process.env.ROLE === 'USER') {
         delete categories['diger']
     }
     const data = Object.values(categories).flat(2);
     const selectedGroup = data.find(f => f.groupName.toLowerCase() === groupName.toLowerCase())
-    debugger
+    
     const functionName = selectedGroup ? selectedGroup.functionName : ''
     const fnName = functionName
         .replace(/ö/g, "o")
@@ -49,7 +48,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
         .replace(/ğ/g, "g");
     //const host = process.env.SERVERLESS
     const pageNumber = slug[slug.length - 1].toString()
-    debugger
+    
     let selectedNavIndex = ''
     if (groupName === 'diger') {
         selectedNavIndex = '0-'
@@ -58,18 +57,18 @@ export default async function getStaticProductPageProps({ context, host, gender 
     }
     let selectedNavKeywords = ''
     let selectedNavIndexArr = selectedNavIndex.split('-').filter(f => f !== '')
-    debugger
+    
     if (selectedNavIndex.length > 2 && selectedNavIndexArr && selectedNavIndexArr.length > 0) {
-        debugger
+        
         selectedNavKeywords = keywordsArray.filter(f => selectedNavIndexArr.find(d => { return d === f[0].replace('-', '') }))
             .map(m => {
-                debugger
+                
                 return m[1].keywords
             }).reduce((p, c, i, arr) => {
-                debugger
+                
                 return [...p, c.split(',')]
             }, []).flat(1)
-        debugger
+        
     }
 
     var url = `${host}/.netlify/functions/${fnName}/?start=${pageNumber}&selectedNavIndex=${selectedNavIndex}&search=`;
@@ -98,7 +97,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
             navKeywords = navKeywordsResponse.navKeywords
             keywordsIndexImages = navKeywordsResponse.keywordsIndexImages
 
-            debugger;
+            ;
         } catch (error) {
             console.log('fetchNavKeywords error', error)
         }
@@ -106,23 +105,23 @@ export default async function getStaticProductPageProps({ context, host, gender 
     }
     const pageTitle = `Kadın ${slug.slice(0, slug.indexOf('sayfa')).join(' ').replace(/-/g, ' ')}`
 
-    debugger
+    
 
     if (keywordsIndexImages.length > 0) {
         const kwds = keywordsIndexImages[0].keywords
-        debugger
+        
         const subkwd =slug[2]
-        debugger
+        
         kwds.filter(f=> f.
             keywordTitle !==subkwd).forEach(k => {
             const random = getRandomArbitrary(2, products.data.length)
-            debugger
+            
             products.data.splice(random, 0, k)
 
         })
     }
 
-    debugger
+    
     return {
         props: { selectedNavKeywords, groupName: groupName.replace(' ', '-'), selectedCat, gender, role: process.env.ROLE, placeholder, navKeywords, keywordsIndexImages, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber: parseInt(pageNumber), pageTitle }, // will be passed to the page component as props
         revalidate: 60

@@ -7,16 +7,16 @@ const path = require('path')
 const decompress = require('decompress');
 const decompressTargz = require('decompress-targz');
 
-async function downloadIndexFolder() {
+async function downloadIndexFolder({gender,gender1}) {
 
-    const gender = process.env.GENDER
+    await makeDir(`assets/${gender1}`)
 
-    debugger
+    
     const response = await fetch(`https://github.com/${process.env.REPO}/blob/${gender}/public/indexes.tar.gz?raw=true`, { method: 'get' })
 
-    debugger
-    var file = fs.createWriteStream('assets/indexes.tar.gz');
-    debugger
+    
+    var file = fs.createWriteStream(`assets/${gender1}/indexes.tar.gz`);
+    
     return new Promise((resolve, reject) => {
         file.on('close', () => {
             console.log('fetched')
@@ -33,11 +33,11 @@ async function downloadIndexFolder() {
 
 }
 
-function decompressIndexFolder() {
-
+async function decompressIndexFolder({gender1}) {
+    await makeDir(`assets/${gender1}`)
     return new Promise((resolve, reject) => {
-
-        decompress('assets/indexes.tar.gz', process.env.GENDER, {
+  
+        decompress(`assets/${gender1}/indexes.tar.gz`, gender1, {
             plugins: [
                 decompressTargz()
             ]
@@ -57,13 +57,13 @@ function decompressIndexFolder() {
 
 
 
-async function getContent(filepath) {
+async function getContent(filepath,gender1) {
     const fileName = path.basename(filepath)
     debugger
-    await makeDir(`assets/${process.env.gender}`)
+    await makeDir(`assets/${gender1}`)
     const response = await fetch(filepath, { method: 'get', headers: { Accept: "application/vnd.github.raw", authorization: `token ${process.env.GH_TOKEN}`, "X-GitHub-Api-Version": "2022-11-28" } })
 
-    var file = fs.createWriteStream(`assets/${fileName}`);
+    var file = fs.createWriteStream(`assets/${gender1}/${fileName}`);
 
 
 
@@ -75,7 +75,7 @@ async function getContent(filepath) {
         })
         response.body.on('error', (error) => {
             reject(error)
-
+ 
         })
 
         response.body.pipe(file)
@@ -87,8 +87,15 @@ async function getContent(filepath) {
 
 
 (async () => {
-    await downloadIndexFolder()
-    await decompressIndexFolder()
-    await getContent(`https://raw.githubusercontent.com/${process.env.REPO}/${process.env.GENDER}/public/category-nav-counter.json`)
-    await getContent(`https://raw.githubusercontent.com/${process.env.REPO}/${process.env.GENDER}public/keywords.json`)
+    const genders =[{gender:'kadin',gender1:'kadin'},{gender:'erkek',gender1:'erkek'},{gender:'kcocuk',gender1:'kiz-cocuk'},{gender:'ecocuk',gender1:'erkek-cocuk'}]
+ 
+    for (let g of genders){
+        const {gender,gender1}=g
+        
+        await downloadIndexFolder({gender,gender1})
+        await decompressIndexFolder({gender1})
+        await getContent(`https://raw.githubusercontent.com/${process.env.REPO}/${gender}/public/category-nav-counter.json`,gender1)
+        await getContent(`https://raw.githubusercontent.com/${process.env.REPO}/${gender}/public/keywords.json`,gender1)
+    }
+
 })()

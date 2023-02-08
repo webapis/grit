@@ -2,12 +2,16 @@ import placeholders from '../assets/placeholders.json'
 import { promises as fs } from 'fs';
 import path from 'path';
 export default async function fetchNavKeywords({ selectedCatIndex, functionName, selectedNavIndex, host, keywordgroup,gender }) {
+  debugger
   const jsonDirectory = path.join(process.cwd(), gender);
   //Read the json data file data.json
+  debugger 
   const productImgIndexesRaw = await fs.readFile(jsonDirectory + `/image-indexes/${selectedCatIndex.replace('-', '')}.json`, 'utf8')
-  const productImgIndexes= JSON.parse(productImgIndexesRaw)
-  //let productImgIndexes = require(`../${gender}/image-indexes/${selectedCatIndex.replace('-', '')}.json`)
   debugger
+  const productImgIndexes= JSON.parse(productImgIndexesRaw)
+  debugger
+  //let productImgIndexes = require(`../${gender}/image-indexes/${selectedCatIndex.replace('-', '')}.json`)
+  
   if (selectedNavIndex !== '0-') {
 
     const indexes = selectedNavIndex.split('-').filter(f => f !== '')
@@ -24,7 +28,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
     }
 
 
-    debugger
+    
   } else {
 
   }
@@ -47,7 +51,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
 
   const keywordsDataResponse = await fetch(url)
   const keywordsData = await keywordsDataResponse.json()
-  debugger
+  
 
   const { keywords } = keywordsData;
 
@@ -90,7 +94,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
 
   }
 
-  debugger
+  
   const navKeywords = Object.entries(grouped)
     .map((m) => {
       return { groupName: m[0], keywords: m[1].keywords };
@@ -131,7 +135,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
     }
 
   })
-  debugger
+  
   return { navKeywords, keywordsIndexImages }
 
 }

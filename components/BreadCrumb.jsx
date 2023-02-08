@@ -21,26 +21,26 @@ if(!keywordgroup){
 
     function handleClick({ event, keyword }) {
         event.preventDefault()
-        debugger
+        
         const index = localStorage.getItem(`${keyword}-index`)
-        debugger
+        
         let locationPathname = location.pathname.substring(0, location.pathname.indexOf('sayfa'))
-        debugger
+        
         const indexExist = selectedNavIndex.split('-').find(f => index !== "" && index.replace('-', "") === f)
         let selectedIndex = null
         if (indexExist) {
-            debugger
+            
             selectedIndex = selectedNavIndex.split('-').filter(f => f !== "" && f !== indexExist).map(m => parseInt(m)).sort((a, b) => a - b).map(m => m + "-").join('')
         }
         else {
-            debugger
+            
             selectedIndex = selectedNavIndex.concat(index).split('-').filter(f => f !== "").map(m => parseInt(m)).sort((a, b) => a - b).map(m => m + "-").join('')
         }
-        debugger
+        
         const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')
-        debugger
+        
         const nextUrl = `${decodeURI(locationPathname).replace(`/${urlKeywords}`, '')}/sayfa/1`
-        debugger
+        
         location.replace(nextUrl)
     }
 
