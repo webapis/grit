@@ -6,7 +6,7 @@ const path = require('path')
 
 const decompress = require('decompress');
 const decompressTargz = require('decompress-targz');
-
+console.log('process.env.REPO',process.env.REPO)
 async function downloadIndexFolder({gender,gender1}) {
 
     await makeDir(`assets/${gender1}`)
@@ -92,7 +92,7 @@ async function getContent(filepath,gender1) {
  
     for (let g of genders){
         const {gender,gender1}=g
-        
+        console.log('gender',gender,gender1)
         await downloadIndexFolder({gender,gender1})
         await decompressIndexFolder({gender1})
         await getContent(`https://raw.githubusercontent.com/${process.env.REPO}/${gender}/public/category-nav-counter.json`,gender1)

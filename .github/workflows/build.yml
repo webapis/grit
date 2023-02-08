@@ -1,7 +1,6 @@
 name: build
 on:
    workflow_dispatch:
-  
 env:
   REPO: webapis/coll2030
   GH_TOKEN: ${{secrets.GH_TOKEN}}
