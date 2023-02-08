@@ -12,8 +12,8 @@ export default function App({ Component, pageProps, emotionCache = clientSideEmo
 
   return <CacheProvider value={emotionCache}>
     <Script strategy="beforeInteractive" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1960990522971470" crossorigin="anonymous" />
-    <Script strategy="beforeInteractive" src="./adapter.js" />
-    <Script strategy="beforeInteractive" src="./intersection-observer.js" />
+    <Script strategy="beforeInteractive" src="/adapter.js" />
+    <Script strategy="beforeInteractive" src="/intersection-observer.js" />
     <Script strategy="beforeInteractive" onLoad={() => {
       console.log('Script has loaded analitics')
     }} id="show-banner">{`(function (w, d, s, l, i) {
