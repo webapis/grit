@@ -44,7 +44,7 @@ export default function Products(props) {
 
   return <>
     <Head>
-      <title>{pageTitle + '-| BİRARADAMODA'}</title>
+      <title style={{textTransform:'capitalize'}}>{pageTitle + '-| BİRARADAMODA'}</title>
       <meta name="description"
         content={new Date().toLocaleDateString() + pageTitle} />
     </Head>
