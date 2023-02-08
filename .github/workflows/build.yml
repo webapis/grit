@@ -32,6 +32,8 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+      - name: Install dependencies
+        run: 'npm install'
       - name: download assets
         run: node utils/downloadCollection.js
       - name: Commit report
