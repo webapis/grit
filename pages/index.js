@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import HomeComponent from '../components/HomeComponent'
-import categories from '../assets/kadin/category-nav-counter.json'
+import categories from '../kadin/category-nav-counter.json'
 function Home({ role, data, placeholder, gender,genderTitle }) {
 
   return <>

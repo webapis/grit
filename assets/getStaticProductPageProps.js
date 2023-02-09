@@ -14,10 +14,11 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     const groupName = slug[0].replace('-', ' ')
 
-    const jsonDirectory = path.join(process.cwd(), `assets/${gender}`);
-    
+    const jsonDirectory = path.join(process.cwd(), gender);
+    const keywordsDirectory = path.join(process.cwd(), `assets`);
+
     const categoriesRaw = await fs.readFile(jsonDirectory + '/category-nav-counter.json', 'utf8');
-    const keywordgroupRaw = await fs.readFile(jsonDirectory + '/keywords.json', 'utf8');
+    const keywordgroupRaw = await fs.readFile(keywordsDirectory + '/keywords.json', 'utf8');
     
     const categories = JSON.parse(categoriesRaw)
     const keywordgroup = JSON.parse(keywordgroupRaw)
@@ -54,6 +55,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
         selectedNavIndex = '0-'
     } else {
         selectedNavIndex = getSelectedNavIndex({ keywordgroup, slug })
+        debugger
     }
     let selectedNavKeywords = ''
     let selectedNavIndexArr = selectedNavIndex.split('-').filter(f => f !== '')
@@ -76,7 +78,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
     let products = []
     try {
         products = await commonDataHandler({ start: pageNumber, search: '', subcategory: fnName, selectedNavIndex,gender })
-        debugger
+ 
         // products = await response.json()
     } catch (error) {
         console.log('product fetch error', error)

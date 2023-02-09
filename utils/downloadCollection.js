@@ -11,9 +11,7 @@ async function downloadIndexFolder({ gender, gender1 }) {
 
     await makeDir(`assets/${gender1}`)
 
-
     const response = await fetch(`https://github.com/${process.env.REPO}/blob/${gender}/public/indexes.tar.gz?raw=true`, { method: 'get' })
-
 
     var file = fs.createWriteStream(`assets/${gender1}/indexes.tar.gz`);
 

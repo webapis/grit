@@ -1,9 +1,10 @@
 var TAFFY = require('taffy');
 
-import productTitleMatch from './productTitleMatch'
+
 import orderData from './orderData'
 import { promises as fss } from 'fs';
 import path from 'path';
+const { productTitleMatch } = require('./productTitleMatch')
 const fs = require('fs')
 
 
@@ -11,8 +12,8 @@ async function commonDataHandler({ start, search, selectedNavIndex, subcategory,
 
     //const allkeywords = require( path.join(process.cwd(),`${gender}/_files/nav/keywords.json`))
     const data = []
-    const jsonDirectory = path.join(process.cwd(), `${gender}/_files/nav`);
-    
+    const jsonDirectory = path.join(process.cwd(), `assets`);
+
     const dataRaw = await fss.readFile(jsonDirectory + `/keywords.json`, 'utf8');
     const allkeywords = JSON.parse(dataRaw)
     //const dirPath = path.join(`./api/_files/data/${subcategory}`)
@@ -34,7 +35,7 @@ async function commonDataHandler({ start, search, selectedNavIndex, subcategory,
     const startAt = parseInt(start) === 1 ? 0 : (parseInt(start) - 1) * 100
     console.log('startAt----', startAt)
     var products = TAFFY(data);
-    
+
     const filterByKeyword = selectedNavIndex === '' ? function () { return true } : function filterByKeyword() {
 
         let splittedKeywordsIndex = selectedNavIndex.split('-').filter(f => f !== '')
@@ -88,7 +89,7 @@ async function commonDataHandler({ start, search, selectedNavIndex, subcategory,
 
                     }
                 } catch (error) {
-                    
+
                 }
 
             } else {
@@ -130,7 +131,7 @@ async function commonDataHandler({ start, search, selectedNavIndex, subcategory,
     console.log('startAt', startAt)
     console.log('count1', count)
 
-    return { data:d, count }
+    return { data: d, count }
 }
 
 export default commonDataHandler 

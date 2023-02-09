@@ -6,6 +6,10 @@
     "dev": "next dev -p 8080",
     "build": "next build",
     "download": "node utils/downloadCollection.js",
+    "genKeywords": "node utils/generateKeywords.js",
+    "downloadData": "node utils/downloadData.js",
+    "mergefiles": "node utils/mergefiles.js",
+    "generateNavigation": "node utils/genNav/NavGenRunner.js",
     "start": "next start -p 8080",
     "lint": "next lint"
   },
@@ -19,11 +23,16 @@
     "decompress": "^4.2.1",
     "decompress-targz": "^4.1.1",
     "dotenv": "^16.0.3",
+    "graceful-fs": "^4.2.10",
     "make-dir": "^3.1.0",
+    "mongodb": "^5.0.1",
     "next": "13.1.1",
     "node-fetch": "2.6.1",
+    "p-limit": "^2.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "taffy": "^2.6.2"
+    "taffy": "^2.6.2",
+    "tar.gz": "^1.0.7",
+    "zlib": "^1.0.5"
   }
 }

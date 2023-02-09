@@ -3,13 +3,16 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import commonNavHandler  from '../assets/commonNavHandler'
 export default async function fetchNavKeywords({ selectedCatIndex, functionName, selectedNavIndex, host, keywordgroup, gender }) {
-  
+  console.log('selectedNavIndex__------',selectedNavIndex)
   const jsonDirectory = path.join(process.cwd(), gender);
   //Read the json data file data.json
-  
-  const productImgIndexesRaw = await fs.readFile(jsonDirectory + `/image-indexes/${selectedCatIndex.replace('-', '')}.json`, 'utf8')
-  
-  const productImgIndexes = JSON.parse(productImgIndexesRaw)
+
+  let productImgIndexes=[]
+
+    const productImgIndexesRaw = await fs.readFile(jsonDirectory + `/image-indexes/${selectedNavIndex.replace('-', '')}.json`, 'utf8')
+    debugger
+     productImgIndexes = JSON.parse(productImgIndexesRaw)
+
   
   //let productImgIndexes = require(`../${gender}/image-indexes/${selectedCatIndex.replace('-', '')}.json`)
 
@@ -49,29 +52,30 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
   } else {
     url = `${host}/.netlify/functions/${fnName}-navfirst?navindex=${selectedNavIndex}`;
   }
-
-  const keywordsData = await commonNavHandler({subcategory:fnName,gender,navindex:selectedCatIndex,keyOrder:fn})
+debugger
+  const keywordsData = await commonNavHandler({subcategory:fnName,gender,navindex:selectedNavIndex,keyOrder:fn})
+  debugger
   //const keywordsData = await keywordsDataResponse.json()
 
 
   const { keywords } = keywordsData;
-
+console.log('keywords',keywords)
   const grouped = {};
 
   for (let kw of keywords) {
-    try {
+
 
 
       const keywordIndex = kw[1];
-
-
-      if (keywordgroup[keywordIndex]) {
-        const groupName = keywordgroup[keywordIndex]["groupName"];
-        const keywordType = keywordgroup[keywordIndex]['keywordType']
+    const matchFound =keywordgroup.find(f=>f.index===keywordIndex.replace('-',''))
+debugger
+      if (matchFound) {
+        const groupName = matchFound.groupName;
+        const keywordType = matchFound.keywordType
 
         if (keywordType === 'keyword') {
 
-          const keywordTitle = keywordgroup[keywordIndex]["title"];
+          const keywordTitle = matchFound["title"];
 
           const keywordWithTitle = [...kw, keywordTitle];
 
@@ -87,11 +91,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
         }
       }
 
-    } catch (error) {
-      console.log('error', error)
 
-
-    }
 
   }
 
@@ -136,7 +136,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
     }
 
   })
-
+debugger
   return { navKeywords, keywordsIndexImages }
 
 }

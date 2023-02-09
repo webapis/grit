@@ -1,9 +1,9 @@
 
 import { promises as fs } from 'fs';
 import path from 'path';
-export default async function getStaticProductPagePaths({ GENDER, host }) {
+export default async function getStaticProductPagePaths({ GENDER }) {
 
-    const jsonDirectory = path.join(process.cwd(),  `assets/${GENDER}`);
+    const jsonDirectory = path.join(process.cwd(),  GENDER);
     
     //Read the json data file data.json
     const categoriesRaw = await fs.readFile(jsonDirectory + '/category-nav-counter.json', 'utf8');
