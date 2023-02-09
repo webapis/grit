@@ -13,14 +13,14 @@ function productsPage(props) {
 
 
 export async function getStaticProps(context) {
-debugger
+
     return getStaticPageProps({context,host: process.env.HOST_K,gender:'kadin'})
 
 }
 
 
 export async function getStaticPaths() {
-    debugger
+    
     return getStaticPagePaths({GENDER:'kadin',host: process.env.HOST_K})
 }
 

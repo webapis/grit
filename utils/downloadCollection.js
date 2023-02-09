@@ -60,7 +60,7 @@ async function decompressIndexFolder({ gender1 }) {
 async function getContent(filepath, gender1) {
     console.log('filepath', filepath)
     const fileName = path.basename(filepath)
-    debugger
+    
     await makeDir(`assets/${gender1}`)
     const response = await fetch(filepath, { method: 'get', headers: { Accept: "application/vnd.github.raw", authorization: `token ${process.env.GH_TOKEN}`, "X-GitHub-Api-Version": "2022-11-28" } })
 

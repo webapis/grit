@@ -2,8 +2,8 @@
 
 import getSelectedNavIndex from '../components/getSelectedNavIndex';
 import fetchNavKeywords from '../components/fetchNavKeywords'
-//import keywordgroup from './keywords.json'
-//import categories from './category-nav-counter.json'
+import commonDataHandler from './commonDataHandler'
+
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -15,30 +15,30 @@ export default async function getStaticProductPageProps({ context, host, gender 
     const groupName = slug[0].replace('-', ' ')
 
     const jsonDirectory = path.join(process.cwd(), `assets/${gender}`);
-debugger
+    
     const categoriesRaw = await fs.readFile(jsonDirectory + '/category-nav-counter.json', 'utf8');
     const keywordgroupRaw = await fs.readFile(jsonDirectory + '/keywords.json', 'utf8');
-debugger
-    const categories =JSON.parse(categoriesRaw)
-    const keywordgroup= JSON.parse(keywordgroupRaw)
-
-    const keywordsArray = Object.entries (keywordgroup)
     
+    const categories = JSON.parse(categoriesRaw)
+    const keywordgroup = JSON.parse(keywordgroupRaw)
+
+    const keywordsArray = Object.entries(keywordgroup)
+
     const selectedCat = slug[1]
 
     console.log('selectedCat', selectedCat)
     let selectedCatIndex = keywordsArray.find(f => f[1].title === selectedCat)[0]
 
-    
+
     // const responseCat = await fetch(`${host}/category-nav-counter.json`,{ next: { revalidate: 3600 } })
     // const categories = await responseCat.json()
-    
+
     if (process.env.ROLE === 'USER') {
         delete categories['diger']
     }
     const data = Object.values(categories).flat(2);
     const selectedGroup = data.find(f => f.groupName.toLowerCase() === groupName.toLowerCase())
-    
+
     const functionName = selectedGroup ? selectedGroup.functionName : ''
     const fnName = functionName
         .replace(/ö/g, "o")
@@ -48,7 +48,7 @@ debugger
         .replace(/ğ/g, "g");
     //const host = process.env.SERVERLESS
     const pageNumber = slug[slug.length - 1].toString()
-    
+
     let selectedNavIndex = ''
     if (groupName === 'diger') {
         selectedNavIndex = '0-'
@@ -57,26 +57,27 @@ debugger
     }
     let selectedNavKeywords = ''
     let selectedNavIndexArr = selectedNavIndex.split('-').filter(f => f !== '')
-    
+
     if (selectedNavIndex.length > 2 && selectedNavIndexArr && selectedNavIndexArr.length > 0) {
-        
+
         selectedNavKeywords = keywordsArray.filter(f => selectedNavIndexArr.find(d => { return d === f[0].replace('-', '') }))
             .map(m => {
-                
+
                 return m[1].keywords
             }).reduce((p, c, i, arr) => {
-                
+
                 return [...p, c.split(',')]
             }, []).flat(1)
-        
+
     }
 
     var url = `${host}/.netlify/functions/${fnName}/?start=${pageNumber}&selectedNavIndex=${selectedNavIndex}&search=`;
 
     let products = []
     try {
-        const response = await fetch(url);
-        products = await response.json()
+        products = await commonDataHandler({ start: pageNumber, search: '', subcategory: fnName, selectedNavIndex,gender })
+        debugger
+        // products = await response.json()
     } catch (error) {
         console.log('product fetch error', error)
     }
@@ -97,7 +98,7 @@ debugger
             navKeywords = navKeywordsResponse.navKeywords
             keywordsIndexImages = navKeywordsResponse.keywordsIndexImages
 
-            ;
+                ;
         } catch (error) {
             console.log('fetchNavKeywords error', error)
         }
@@ -105,23 +106,23 @@ debugger
     }
     const pageTitle = `${gender} ${slug.slice(0, slug.indexOf('sayfa')).join(' ').replace(/-/g, ' ')}`
 
-    
+
 
     if (keywordsIndexImages.length > 0) {
         const kwds = keywordsIndexImages[0].keywords
-        
-        const subkwd =slug[2]
-        
-        kwds.filter(f=> f.
-            keywordTitle !==subkwd).forEach(k => {
-            const random = getRandomArbitrary(2, products.data.length)
-            
-            products.data.splice(random, 0, k)
 
-        })
+        const subkwd = slug[2]
+
+        kwds.filter(f => f.
+            keywordTitle !== subkwd).forEach(k => {
+                const random = getRandomArbitrary(2, products.data.length)
+
+                products.data.splice(random, 0, k)
+
+            })
     }
 
-    
+
     return {
         props: { selectedNavKeywords, groupName: groupName.replace(' ', '-'), selectedCat, gender, role: process.env.ROLE, placeholder, navKeywords, keywordsIndexImages, products, categories, functionName, keywordgroup, selectedNavIndex, pageNumber: parseInt(pageNumber), pageTitle }, // will be passed to the page component as props
         revalidate: 60
