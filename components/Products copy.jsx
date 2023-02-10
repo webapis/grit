@@ -236,10 +236,10 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
   }, [imageUrl]);
 
   const imageSource =
-   // placeholders[marka].imagePrefix.trim() +
+    placeholders[marka].imagePrefix.trim() +
     placeholders[marka].imageHost.trim() +
-    imageUrl //+
-  //  placeholders[marka].imgPostFix;
+    imageUrl +
+    placeholders[marka].imgPostFix;
   const detailHost =
     placeholders[marka].detailHost +
     link +
