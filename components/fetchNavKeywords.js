@@ -9,7 +9,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
 
   let productImgIndexes=[]
 
-    const productImgIndexesRaw = await fs.readFile(jsonDirectory + `/image-indexes/${selectedNavIndex.replace('-', '')}.json`, 'utf8')
+    const productImgIndexesRaw = await fs.readFile(jsonDirectory + `/image-indexes/${selectedCatIndex.replace('-', '')}.json`, 'utf8')
     debugger
      productImgIndexes = JSON.parse(productImgIndexesRaw)
 

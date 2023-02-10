@@ -23,13 +23,13 @@ export default async function getStaticProductPageProps({ context, host, gender 
     const categories = JSON.parse(categoriesRaw)
     const keywordgroup = JSON.parse(keywordgroupRaw)
 
-    const keywordsArray = Object.entries(keywordgroup)
+    const keywordsArray = keywordgroup
 
     const selectedCat = slug[1]
 
     console.log('selectedCat', selectedCat)
-    let selectedCatIndex = keywordsArray.find(f => f[1].title === selectedCat)[0]
-
+    let selectedCatIndex = keywordsArray.find(f => f.title === selectedCat).index
+debugger
 
     // const responseCat = await fetch(`${host}/category-nav-counter.json`,{ next: { revalidate: 3600 } })
     // const categories = await responseCat.json()
@@ -61,11 +61,11 @@ export default async function getStaticProductPageProps({ context, host, gender 
     let selectedNavIndexArr = selectedNavIndex.split('-').filter(f => f !== '')
 
     if (selectedNavIndex.length > 2 && selectedNavIndexArr && selectedNavIndexArr.length > 0) {
-
-        selectedNavKeywords = keywordsArray.filter(f => selectedNavIndexArr.find(d => { return d === f[0].replace('-', '') }))
+debugger
+        selectedNavKeywords = keywordsArray.filter(f => selectedNavIndexArr.find(d => { return d === f.index.replace('-', '') }))
             .map(m => {
 
-                return m[1].keywords
+                return m.keywords
             }).reduce((p, c, i, arr) => {
 
                 return [...p, c.split(',')]
