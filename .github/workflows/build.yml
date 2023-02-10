@@ -5,6 +5,7 @@ env:
   REPO: codergihub/fasion
   GH_TOKEN: ${{secrets.GH_TOKEN}}
   GH_TOKEN_2: ${{secrets.GH_TOKEN_2}}
+  MONGODB_URL:${{secrets.MONGODB_URL}}
 jobs:
   aggregator:
     runs-on: ubuntu-latest
