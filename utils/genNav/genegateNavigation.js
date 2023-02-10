@@ -44,7 +44,7 @@ async function genNav({ functionName,gender }) {
 
   const allkeywords = require("../../assets/keywords.json")
   const categoryKeywords = allkeywords.filter(f => f.keywordType === 'category' && f.groupName !== 'Fiyat' && f.functionName === functionName)
-  debugger
+
   let navKeys = { ['0-']: { matchingKeywords: [], keywords: {} } }
   let navKeysWithCatKeys = {}
   let catImages = {}
@@ -234,7 +234,7 @@ async function genNav({ functionName,gender }) {
 
 
     for (let f in navKeysWithCatKeys) {
-      debugger
+  
       //find category index
       const categoryIndexes = f.split('-').filter(f => f !== '')
       const fnd = categoryKeywords.find(fd => categoryIndexes.includes(fd.index.toString()))
@@ -276,7 +276,7 @@ async function genNav({ functionName,gender }) {
   let regrouped = []
 
 
-  debugger
+
 
   for (let nk in navKeys) {
 

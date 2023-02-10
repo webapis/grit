@@ -38,7 +38,7 @@ async function navGenRunner(gender) {
         }, {})
         debugger
 
-        const categoryNav = require(path.join(process.cwd(), `assets/category-nav.json`))
+        const categoryNav = require(path.join(process.cwd(), `${gender}/category-nav.json`))
         debugger
         for (let c in catCounter) {
 
@@ -128,7 +128,7 @@ async function navGenRunner(gender) {
 
 
         }
-
+debugger
         fs.appendFileSync(path.join(process.cwd(), `${gender}/category-nav-counter.json`), JSON.stringify(categoryNav));
        // fs.appendFileSync(path.join(process.cwd(), `public/category-nav-counter.json`), JSON.stringify(categoryNav));
         const catImages = result.filter(f => f !== null).reduce((prev, curr, i) => {
@@ -189,9 +189,9 @@ async function navGenRunner(gender) {
 
 
 (async () => {
- const genders = [{ gender: 'kadin', gender1: 'kadin' }, { gender: 'erkek', gender1: 'erkek' }, { gender: 'kcocuk', gender1: 'kiz-cocuk' }, { gender: 'ecocuk', gender1: 'erkek-cocuk' }]
+const genders = [{ gender: 'kadin', gender1: 'kadin' }, { gender: 'erkek', gender1: 'erkek' }, { gender: 'kcocuk', gender1: 'kiz-cocuk' }, { gender: 'ecocuk', gender1: 'erkek-cocuk' }]
 
-   // const genders = [{ gender: 'kadin', gender1: 'kadin' }]
+   //const genders = [{ gender: 'kcocuk', gender1: 'kiz-cocuk' }]
 
     for (let g of genders) {
         const { gender1 } = g

@@ -3,7 +3,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import commonNavHandler  from '../assets/commonNavHandler'
 export default async function fetchNavKeywords({ selectedCatIndex, functionName, selectedNavIndex, host, keywordgroup, gender }) {
-  console.log('selectedNavIndex__------',selectedNavIndex)
+
   const jsonDirectory = path.join(process.cwd(), gender);
   //Read the json data file data.json
 
@@ -14,7 +14,6 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
      productImgIndexes = JSON.parse(productImgIndexesRaw)
 
   
-  //let productImgIndexes = require(`../${gender}/image-indexes/${selectedCatIndex.replace('-', '')}.json`)
 
   if (selectedNavIndex !== '0-') {
 
@@ -59,7 +58,7 @@ debugger
 
 
   const { keywords } = keywordsData;
-console.log('keywords',keywords)
+
   const grouped = {};
 
   for (let kw of keywords) {
