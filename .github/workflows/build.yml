@@ -33,8 +33,14 @@ jobs:
             ${{ runner.os }}-
       - name: Install dependencies
         run: 'npm install'
-      - name: download assets
-        run: node utils/downloadCollection.js
+      - name: generateKeywords
+        run: node utils/generateKeywords.js
+      - name: downloadData
+        run: node utils/downloadData.js
+      - name: mergefiles
+        run: node utils/mergefiles.js
+      - name: generateNavigation
+        run: node utils/genNav/NavGenRunner.js
       - name: Commit report
         run: |
           git config --global user.name 'Serdar Ashirov'
