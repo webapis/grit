@@ -541,7 +541,7 @@
         },
         "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
         "placeholder": "./placeholder-img/placeholder.jpg",
-        "imageHost": "",
+        "imageHost": "https://images.patirti.com/",
         "detailHost": "https://www.patirti.com/",
         "postfix": "",
         "imgPostFix": "?tr=w-400"
