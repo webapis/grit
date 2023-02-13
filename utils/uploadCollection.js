@@ -55,18 +55,18 @@ async function compressFile({ fileName, data }) {
 
 }
 
-async function downloadCollection(gender,gender1) {
+async function downloadCollection(gender, gender1) {
 
 
     console.log('gender', gender)
 
-    await getZipFiles(gender,gender1)
+    await getZipFiles(gender, gender1)
 
-    await unzipFiles(gender,gender1)
+    await unzipFiles(gender, gender1)
 }
 
 
-async function unzipFiles(gender,gender1) {
+async function unzipFiles(gender, gender1) {
 
     const promises = []
     try {
@@ -78,7 +78,7 @@ async function unzipFiles(gender,gender1) {
         console.log('uzip file length', promises.length)
         for (let a of promises) {
             debugger
-            await unzipSingleFile(a,gender1)
+            await unzipSingleFile(a, gender1)
         }
 
     } catch (error) {
@@ -112,32 +112,40 @@ async function unzipSingleFile(zippedfilePath) {
 
 }
 
-async function getZipFiles(gender,gender1) {
+async function getZipFiles(gender, gender1) {
     // Retrieve source code for project
     //Retrieved source code will be copied to project branch of forked agregators repo
     //---- List branches endpoint----
     /*required for the next endoint*/
     const response = await fetch(`https://api.github.com/repos/webapis/keyword-editor/branches`, { method: 'get', headers: { Accept: "application/vnd.github.raw", authorization: `token ${process.env.GH_TOKEN_2}`, "X-GitHub-Api-Version": "2022-11-28" } })
-    const data = await response.json()
-    debugger
-    const mainSha = data.find(d => d.name === 'main')
-    const { commit: { sha } } = mainSha
+    if (response.ok) {
 
-    //------Git database / Get a tree endpoint------
-    /*required to retrieve list of file and folder into*/
-    const treeResponse = await fetch(`https://api.github.com/repos/webapis/keyword-editor/git/trees/${sha}?recursive=1`, { method: 'get', headers: { Accept: "application/vnd.github.raw", authorization: `token ${process.env.GH_TOKEN_2}`, "X-GitHub-Api-Version": "2022-11-28" } })
-    const treeData = await treeResponse.json()
-    const { tree } = treeData
-        ;
-    const dataFolderTrees = tree.filter(f => f.type === 'blob' && f.path.includes(`${gender}/`))
-    debugger
 
-    for (let t of dataFolderTrees) {
-        await getContent(t.path,gender,gender1)
+        const data = await response.json()
+        debugger
+        const mainSha = data.find(d => d.name === 'main')
+        const { commit: { sha } } = mainSha
+
+        //------Git database / Get a tree endpoint------
+        /*required to retrieve list of file and folder into*/
+        const treeResponse = await fetch(`https://api.github.com/repos/webapis/keyword-editor/git/trees/${sha}?recursive=1`, { method: 'get', headers: { Accept: "application/vnd.github.raw", authorization: `token ${process.env.GH_TOKEN_2}`, "X-GitHub-Api-Version": "2022-11-28" } })
+        const treeData = await treeResponse.json()
+        const { tree } = treeData
+            ;
+        const dataFolderTrees = tree.filter(f => f.type === 'blob' && f.path.includes(`${gender}/`))
+        debugger
+
+        for (let t of dataFolderTrees) {
+            await getContent(t.path, gender, gender1)
+        }
+    }
+    else {
+        console.log('response', response)
+        throw 'Error'
     }
 }
 
-async function getContent(filepath,gender,gender1) {
+async function getContent(filepath, gender, gender1) {
     const fileName = path.basename(filepath)
     debugger
     await makeDir(`${gender1}/zipped-files`)
