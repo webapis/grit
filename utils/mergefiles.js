@@ -1,5 +1,5 @@
 
-function mergeFiles(gender){
+function mergeFiles(gender) {
 
 
     require('dotenv').config()
@@ -11,14 +11,14 @@ function mergeFiles(gender){
     const path = require('path')
     const makeDir = require('make-dir');
     const { walkSync } = require('./walkSync')
-  
+
     const fs = require('graceful-fs')
     const limit = plimit(5);
 
     console.log('--------------------------------------------------------------')
 
 
- 
+
 
     const keywords = require(path.join(process.cwd(), `assets/keywords.json`))
     fs.rmSync(path.join(process.cwd(), `${gender}/_files/data`), { recursive: true, force: true });
@@ -119,18 +119,18 @@ function mergeFiles(gender){
 
 
 
- 
+
 }
 
 
 (async () => {
-//    const genders = [{ gender: 'kadin', gender1: 'kadin' }, { gender: 'erkek', gender1: 'erkek' }, { gender: 'kcocuk', gender1: 'kiz-cocuk' }, { gender: 'ecocuk', gender1: 'erkek-cocuk' }]
+    const genders = [{ gender: 'kadin', gender1: 'kadin' }, { gender: 'erkek', gender1: 'erkek' }, { gender: 'kcocuk', gender1: 'kiz-cocuk' }, { gender: 'ecocuk', gender1: 'erkek-cocuk' }]
 
-    const genders = [{ gender: 'kadin', gender1: 'kadin' }]
+    //    const genders = [{ gender: 'kadin', gender1: 'kadin' }]
 
     for (let g of genders) {
-        const { gender1} = g
+        const { gender1 } = g
         await mergeFiles(gender1)
     }
- 
+
 })()
