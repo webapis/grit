@@ -489,7 +489,7 @@
         },
         "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
         "placeholder": "./placeholder-img/placeholder.jpg",
-        "imageHost": "https://cdn3.sorsware.com/",
+        "imageHost": "https://cdn3.sorsware.com",
         "detailHost": "https://www.addax.com.tr/",
         "postfix": "",
         "imgPostFix": "?tr=w-400"
