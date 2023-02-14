@@ -397,7 +397,7 @@
         },
         "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
         "placeholder": "./placeholder-img/placeholder.jpg",
-        "imageHost": "https://www.saygigiyim.com/",
+        "imageHost": "",
         "detailHost": "https://www.saygigiyim.com/",
         "postfix": "",
         "imgPostFix": "?tr=w-400"
