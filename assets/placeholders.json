@@ -59,7 +59,7 @@
         },
         "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
         "placeholder": "./placeholder-img/placeholder.jpg",
-        "imageHost": "https://image.machka.com.tr/unsafe/660x0/10.116.1.50:8000//Machka/products/",
+        "imageHost": "https://machka.mncdn.com/",
         "detailHost": "https://www.machka.com.tr/urun/",
         "postfix": "",
         "imgPostFix": ""
