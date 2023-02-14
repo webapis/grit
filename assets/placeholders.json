@@ -59,7 +59,7 @@
         },
         "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
         "placeholder": "./placeholder-img/placeholder.jpg",
-        "imageHost": "https://machka.mncdn.com/",
+        "imageHost": "https://machka.mncdn.com/mnresize/660/-//Machka/products/",
         "detailHost": "https://www.machka.com.tr/urun/",
         "postfix": "",
         "imgPostFix": ""
@@ -447,7 +447,7 @@
             "width": "40%",
             "height": "auto"
         },
-        "imagePrefix": "https://res.cloudinary.com/codergihub/image/fetch/w_400/",
+        "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
         "imagePrefixImageKit": "https://ik.imagekit.io/mumrjdehaou/",
         "placeholder": "./placeholder-img/placeholder.jpg",
         "imageHost": "https://cdn.sorsware.com/",
