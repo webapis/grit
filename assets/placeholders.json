@@ -447,8 +447,8 @@
             "width": "40%",
             "height": "auto"
         },
-        "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
-        "imagePrefixImageKit": "https://ik.imagekit.io/mumrjdehaou/",
+        "imagePrefix": "",
+        "imagePrefixImageKit": "",
         "placeholder": "./placeholder-img/placeholder.jpg",
         "imageHost": "https://cdn.sorsware.com/",
         "detailHost": "https://www.perspective.com.tr/",
