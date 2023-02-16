@@ -1,6 +1,7 @@
 name: build-prod
 on:
-   workflow_dispatch:
+  schedule:
+    - cron:  0 3 * * *
 env:
   REPO: codergihub/fasion
   GH_TOKEN: ${{secrets.GH_TOKEN}}
