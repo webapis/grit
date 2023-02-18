@@ -45,12 +45,13 @@ function mergeFiles(gender) {
         i++
         const { title, marka } = mp
         const categoryKeywords = keywords.filter(f => f.keywordType === 'category')
+        debugger
         var machfound = false
         for (let k of categoryKeywords) {
 
 
             const nws = k.exclude !== '' ? k.exclude.split(',') : []
-
+   
             const match = productTitleMatch({ kw: k.keywords, nws, title })
             if (match) {
 

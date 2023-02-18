@@ -1,6 +1,6 @@
 
 function productTitleMatch({ kw, title, nws }) {
-
+    if(kw.includes('ayakkabı'))
 
     if (title) {
 
