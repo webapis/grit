@@ -20,6 +20,10 @@ async function generateKeyword() {
     debugger
     const client = new MongoClient(uri, { useUnifiedTopology: true });
     await client.connect()
+    await makeDir("erkek")
+    await makeDir("kadin")
+    await makeDir("erkek-cocuk")
+    await makeDir("kiz-cocuk")
     const db = client.db("biraradamoda");
 
     let collection = db.collection('keywords');
@@ -55,9 +59,9 @@ async function generateKeyword() {
     // if (fs.existsSync(`public/keywords.json`)) {
     //     fs.unlinkSync(`public/keywords.json`)
     // }
-    if (fs.existsSync(`assets/category-nav.json`)) {
-        fs.unlinkSync(`assets/category-nav.json`)
-    }
+    // if (fs.existsSync(`assets/category-nav.json`)) {
+    //     fs.unlinkSync(`assets/category-nav.json`)
+    // }
 
     const reduced = data.reduce((prev, curr) => {
 
