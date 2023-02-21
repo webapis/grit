@@ -44,7 +44,7 @@ export default function Products(props) {
 
   return <>
     <Head>
-      <title style={{textTransform:'capitalize'}}>{pageTitle + '-| BİRARADAMODA'}</title>
+      <title style={{ textTransform: 'capitalize' }}>{pageTitle + '-| BİRARADAMODA'}</title>
       <meta name="description"
         content={new Date().toLocaleDateString() + pageTitle} />
     </Head>
@@ -107,10 +107,14 @@ function Page({ selectedNavKeywords, keywordgroup, groupName, selectedCat, gende
     <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
- 
-    {pageData && pageData.length > 0 && pageData.map((m, i) => {
+    {pageData && pageData.length > 0 && pageData.filter(f => f.total !== undefined).map((m, i) => {
 
-      return <Grid key={i} item xs={6} sm={3} md={3} lg={2} > {!m.total && <ImageComponent selectedNavKeywords={selectedNavKeywords} selectedCat={selectedCat} placeholder={placeholder} {...m} />}{m.total && <GroupImage groupName={groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} />}</Grid>
+      return <Grid key={i} item xs={6} sm={2} md={2} lg={1} > <GroupImage groupName={groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} /></Grid>
+    })}
+    <Grid item xs={12}></Grid>
+    {pageData && pageData.length > 0 && pageData.filter(f => f.total === undefined).map((m, i) => {
+
+      return <Grid key={i} item xs={6} sm={3} md={3} lg={2} > <ImageComponent selectedNavKeywords={selectedNavKeywords} selectedCat={selectedCat} placeholder={placeholder} {...m} /></Grid>
     })}
     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginBottom: 10 }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
@@ -295,10 +299,10 @@ function GroupImage({ groupName, selectedCat, gender, placeholder, groupNameTitl
   function handleClick(e) {
     e.preventDefault()
     localStorage.setItem(`${keywordTitle}-index`, index)
-    
+
     location.replace(url)
   }
-  return <div><Link onClick={handleClick}><img ref={imageElm} style={{ width: '100%', borderRadius: 20 }} src={placeholder} data-src={imageSource} /></Link>
-    <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link href='' underline="hover"  onClick={handleClick} style={{ textTransform: 'capitalize', fontSize: 12, cursor: "pointer" }}>{keywordTitle} {selectedCat} Seçenekleri</Link></div>
+  return <div><Link onClick={handleClick}><img ref={imageElm} style={{ width: '100%', borderRadius: 5 }} src={placeholder} data-src={imageSource} /></Link>
+    <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link href='' underline="hover" onClick={handleClick} style={{ textTransform: 'capitalize', fontSize: 12, cursor: "pointer" }}>{keywordTitle} {total}</Link></div>
   </div>
 }

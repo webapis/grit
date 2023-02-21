@@ -1,62 +1,51 @@
 
 function productTitleMatch({ kw, title, nws }) {
-    if(kw.includes('ayakkabı'))
-
-    if (title) {
 
 
+    let negativeMatchNotFound = false
 
-        const match = kw.split(',').some(function (keyword) {
+    const sortedKeywords =kw.split(',').sort(function (a, b) {
 
+        return b.length - a.length;
+    })
+    const positiveMatchFound = sortedKeywords.some(function (keyword) {
+    
+        const reg = new RegExp('(\\s|\\b)'+keyword+'($|\\s)', 'i')
 
-            // let  regex ='(^|\\s)'+keyword+'(\\s|\\b)'.replace(' ','')
+        const test = reg.test(title)
+        if(test){
+            debugger
+        }
 
+        return test === true
+
+    })
+
+    if (positiveMatchFound) {
+       
             if (nws.length > 0) {
 
+                negativeMatchNotFound = nws.some((keyword) => {
 
-                if (nws.filter((f) => {
+                    const reg = new RegExp(keyword, 'i')
 
-                    const exists = title.toLowerCase().indexOf(f.toLowerCase()) !== -1
-                    //const exists = title.toLowerCase().split(' ').find(t=> t===f.toLowerCase())
-                    return exists
-                }).length > 0) {
+                    const test = reg.test(title)
 
-                    return false
-                } else {
+                    return test
+                })
 
 
-                    // if (exactmatch) {
-                    // return  title.toLowerCase().indexOf(keyword.toLowerCase()) !==-1
-                    return title.toLowerCase().split(' ').find(t => t === keyword.toLowerCase())//.replace(/\s/g, ',').split(',').filter(f => f === keyword).length > 0
-                    // } else {
-
-                    //   return title.toLowerCase().replace(/\s/g, ',').split(',').filter(f => f === keyword || f.indexOf(keyword) === 0).length > 0
-                    //  }
-                }
-
-            } else {
-
-                if (keyword === 'bluz') {
-
-                }
-                //title.toLowerCase().indexOf(keyword.toLowerCase()) !==-1
-                // if (exactmatch) {
-                //  return title.toLowerCase().split(' ').find(t=> t===keyword.toLowerCase())//.replace(/\s/g, ',').split(',').filter(f => f === keyword).length > 0
-                //}// else {
-                //  return title.toLowerCase().replace(/\s/g, ',').split(',').filter(f => f === keyword || f.indexOf(keyword) === 0).length > 0
-                //  }
-                // return title.toLowerCase().indexOf(keyword.toLowerCase()) !==-1
-                return title.toLowerCase().split(' ').find(t => t === keyword.toLowerCase())
             }
+        
 
-
-        })
-
-        return match
-    } else {
-
-        return false
     }
+
+    const result = positiveMatchFound && (negativeMatchNotFound === false)
+
+    return result
+
+
+
 }
 
 
@@ -64,4 +53,4 @@ function productTitleMatch({ kw, title, nws }) {
 
 module.exports = {
     productTitleMatch
-  };
+};

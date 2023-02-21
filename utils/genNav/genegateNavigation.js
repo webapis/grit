@@ -110,11 +110,11 @@ async function genNav({ functionName,gender }) {
 
             }
             const kw = kws.keywords
-
-
+        
+        
             const match = productTitleMatch({ kw, title, exactmatch, nws })
 
-
+        
             return match
           }
 
