@@ -114,7 +114,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
         const kwds = keywordsIndexImages[0].keywords
 
         // const subkwd = slug[2]
-        products.data.unshift(...kwds)
+        products.data.unshift(...kwds.sort((a, b) => b.total - a.total))
         // kwds.filter(f => f.
         //     keywordTitle !== subkwd).forEach(k => {
         //         const random = getRandomArbitrary(2, products.data.length)
