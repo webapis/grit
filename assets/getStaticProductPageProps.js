@@ -29,7 +29,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     console.log('selectedCat', selectedCat)
     let selectedCatIndex = keywordsArray.find(f => f.title === selectedCat).index
-    debugger
+ 
 
     // const responseCat = await fetch(`${host}/category-nav-counter.json`,{ next: { revalidate: 3600 } })
     // const categories = await responseCat.json()
@@ -55,13 +55,13 @@ export default async function getStaticProductPageProps({ context, host, gender 
         selectedNavIndex = '0-'
     } else {
         selectedNavIndex = getSelectedNavIndex({ keywordgroup, slug })
-        debugger
+     
     }
     let selectedNavKeywords = ''
     let selectedNavIndexArr = selectedNavIndex.split('-').filter(f => f !== '')
 
     if (selectedNavIndex.length > 2 && selectedNavIndexArr && selectedNavIndexArr.length > 0) {
-        debugger
+
         selectedNavKeywords = keywordsArray.filter(f => selectedNavIndexArr.find(d => { return d === f.index.replace('-', '') }))
             .map(m => {
 
@@ -99,7 +99,8 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
             navKeywords = navKeywordsResponse.navKeywords
             keywordsIndexImages = navKeywordsResponse.keywordsIndexImages
-
+            console.log('keywordsIndexImages-----',keywordsIndexImages.length)
+            debugger
                 ;
         } catch (error) {
             console.log('fetchNavKeywords error', error)
@@ -110,19 +111,24 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
 
 
-    if (keywordsIndexImages.length > 0) {
-        const kwds = keywordsIndexImages[0].keywords
+//     if (keywordsIndexImages.length > 0) {
+//         const kwds = keywordsIndexImages[0].keywords
+// debugger
+//         // const subkwd = slug[2]
+//         products.data.unshift(...kwds.sort((a, b) => {
+            
+            
+//             b.total - a.total
+        
+//         }))
+//         // kwds.filter(f => f.
+//         //     keywordTitle !== subkwd).forEach(k => {
+//         //         const random = getRandomArbitrary(2, products.data.length)
 
-        // const subkwd = slug[2]
-        products.data.unshift(...kwds.sort((a, b) => b.total - a.total))
-        // kwds.filter(f => f.
-        //     keywordTitle !== subkwd).forEach(k => {
-        //         const random = getRandomArbitrary(2, products.data.length)
+//         //         products.data.splice(random, 0, k)
 
-        //         products.data.splice(random, 0, k)
-
-        //     })
-    }
+//         //     })
+//     }
 
 
     return {
