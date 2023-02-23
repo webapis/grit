@@ -10,7 +10,7 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
   let productImgIndexes=[]
 
     const productImgIndexesRaw = await fs.readFile(jsonDirectory + `/image-indexes/${selectedCatIndex.replace('-', '')}.json`, 'utf8')
-    debugger
+    
      productImgIndexes = JSON.parse(productImgIndexesRaw)
 
   
@@ -51,9 +51,9 @@ export default async function fetchNavKeywords({ selectedCatIndex, functionName,
   } else {
     url = `${host}/.netlify/functions/${fnName}-navfirst?navindex=${selectedNavIndex}`;
   }
-debugger
+
   const keywordsData = await commonNavHandler({subcategory:fnName,gender,navindex:selectedNavIndex,keyOrder:fn})
-  debugger
+  
   //const keywordsData = await keywordsDataResponse.json()
 
 
@@ -67,7 +67,7 @@ debugger
 
       const keywordIndex = kw[1];
     const matchFound =keywordgroup.find(f=>f.index===keywordIndex.replace('-',''))
-debugger
+
       if (matchFound) {
         const groupName = matchFound.groupName;
         const keywordType = matchFound.keywordType
@@ -112,7 +112,8 @@ debugger
     const bkeywords = b['keywords']
 
     return bkeywords.length - akeywords.length;
-  }).filter(d => d.groupName === 'Seçenekler').map((m, a) => {
+
+  }).filter(d => d.groupName !== 'Dış giyim' && d.groupName !== 'Alt giyim' && d.groupName !== 'Ev giyim' && d.groupName !== 'İç giyim' && d.groupName !== 'Üst giyim' ).map((m, a) => {
     const { groupName, keywords } = m
     return {
       groupName,
@@ -135,7 +136,7 @@ debugger
     }
 
   })
-debugger
+
   return { navKeywords, keywordsIndexImages }
 
 }

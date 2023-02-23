@@ -80,9 +80,63 @@ function Content({ selectedNavKeywords, groupName, selectedCat, gender, placehol
   </Grid>
 }
 
+function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, placeholder, gender }) {
+  const [filter, setFilter] = useState('Seçenekler')
+  debugger
+  const groupKeywords = Object.values(keywordsIndexImages)
 
-function Page({selectedNavIndex, selectedNavKeywords, keywordgroup, groupName, selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages }) {
+  function filterGrup(e) {
+    debugger
+    const id = e.currentTarget.id
+    debugger
+    setFilter(id)
 
+  }
+  debugger
+  return <Grid container gap={1}>
+    <Grid item xs={12}>{groupKeywords.map((m, i) => {
+      const countSelected = selectedNavIndex.split('-').filter(fk => m.keywords.some(s => {
+  
+        return s.index.replace('-', '') === fk
+
+      })).length
+
+      return <Chip color={filter === m.groupName ? 'warning' : 'default'} onClick={filterGrup} key={i} id={m.groupName} label={<span>{m.groupName} {countSelected > 0 && <span>({countSelected})</span>}</span>} style={{ margin: 1 }} />
+    })}</Grid>
+    {groupKeywords.filter(f => f.groupName === filter).map(m => {
+
+
+      return m.keywords.filter(c=>{
+        debugger
+      return  selectedNavIndex.split('-').find(fk =>fk ===c.index.replace('-',''))===undefined
+      
+      } ).map((m, i) => {
+  
+
+        return <Grid key={i} item xs={6} sm={2} md={2} lg={1} > <GroupImage selectedNavIndex={selectedNavIndex} groupName={m.groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} /></Grid>
+      })
+    })}
+
+    {groupKeywords.map(f => {
+
+
+      return { groupName: f.groupName,keywords:f.keywords.filter(d=>selectedNavIndex.split('-').find(fk =>fk ===d.index.replace('-','')) )}
+
+    }).map(m => {
+
+
+      return m.keywords.map((m, i) => {
+        debugger
+
+        return <Grid key={i} item xs={6} sm={2} md={2} lg={1} > <GroupImage selectedNavIndex={selectedNavIndex} groupName={m.groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} /></Grid>
+      })
+    })}
+  </Grid>
+
+
+}
+function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, groupName, selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages }) {
+  console.log('keywordsIndexImages', keywordsIndexImages.length)
   const [pageData, setPageData] = useState([])
 
 
@@ -109,10 +163,7 @@ function Page({selectedNavIndex, selectedNavKeywords, keywordgroup, groupName, s
     <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
-    {pageData && pageData.length > 0 && pageData.filter(f => f.total !== undefined).map((m, i) => {
-
-      return <Grid key={i} item xs={6} sm={2} md={2} lg={1} > <GroupImage selectedNavIndex={selectedNavIndex} groupName={groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} /></Grid>
-    })}
+    <GroupComponent keywordsIndexImages={keywordsIndexImages} gender={gender} placeholder={placeholder} selectedCat={selectedCat} selectedNavIndex={selectedNavIndex} />
     <Grid item xs={12}></Grid>
     {pageData && pageData.length > 0 && pageData.filter(f => f.total === undefined).map((m, i) => {
 
@@ -128,7 +179,7 @@ function Page({selectedNavIndex, selectedNavKeywords, keywordgroup, groupName, s
   </>
 }
 
-function handleClick({ index, event, keyword,selectedNavIndex }) {
+function handleClick({ index, event, keyword, selectedNavIndex }) {
   debugger
   const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')
   localStorage.setItem(`${urlKeywords}-index`, index)
@@ -140,7 +191,7 @@ function handleClick({ index, event, keyword,selectedNavIndex }) {
   let nextUrl;
   let selectedIndex = null
   let locationPathname = location.pathname.substring(0, location.pathname.indexOf('sayfa'))
-  console.log('locationPathname', locationPathname)
+
   if (indexExist) {
 
     selectedIndex = selectedNavIndex.split('-').filter(f => f !== "" && f !== indexExist).map(m => parseInt(m)).sort((a, b) => a - b).map(m => m + "-").join('')
@@ -182,7 +233,7 @@ function Keywords({ navKeywords, selectedNavIndex }) {
           const match = selectedNavIndex.split('-').find(f => f === i.replace('-', ''))
           if (match)
             return <div style={{ display: 'flex', justifyContent: 'space-between' }}><Chip sx={{ textTransform: 'capitalize' }} label={k} size="small" onDelete={(e) => handleClick({ index: i, event: e, keyword: k })} /> <Typography>{new Intl.NumberFormat().format(c)}</Typography></div>
-          return <Link component={NextLink} onClick={(e) => handleClick({ index: i, event: e, keyword: k,selectedNavIndex })} href="" color="inherit" underline="hover" style={{ marginRight: 20, paddingLeft: 10, display: 'flex', justifyContent: 'space-between', backgroundColor: match ? 'yellow' : '' }}><Typography variant='overline' sx={{ textTransform: "uppercase" }}>{k}</Typography><Typography>{new Intl.NumberFormat().format(c)}</Typography></Link>
+          return <Link component={NextLink} onClick={(e) => handleClick({ index: i, event: e, keyword: k, selectedNavIndex })} href="" color="inherit" underline="hover" style={{ marginRight: 20, paddingLeft: 10, display: 'flex', justifyContent: 'space-between', backgroundColor: match ? 'yellow' : '' }}><Typography variant='overline' sx={{ textTransform: "uppercase" }}>{k}</Typography><Typography>{new Intl.NumberFormat().format(c)}</Typography></Link>
         })}
       </AccordionDetails>
     </Accordion>
@@ -196,7 +247,7 @@ function TabsContainer({ selectedTab, handleTabSelection }) {
     <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
       <Tabs value={selectedTab} onChange={handleTabSelection}>
         <Tab label="Bulunan" />
-        <Tab label="Seçenekler" />
+        <Tab label="Filtre" />
 
       </Tabs>
     </Box>
@@ -269,12 +320,12 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
 
 
 
-function GroupImage({ groupName, selectedCat, gender, placeholder, groupNameTitle, imageSource, index, keywordTitle, title, total,selectedNavIndex }) {
- const match = selectedNavIndex.split('-').find(f => f === index.replace('-', ''))
-  console.log(title,keywordTitle,index)
-debugger
+function GroupImage({ groupName, selectedCat, gender, placeholder, groupNameTitle, imageSource, index, keywordTitle, title, total, selectedNavIndex }) {
+  const match = selectedNavIndex.split('-').find(f => f === index.replace('-', ''))
+  console.log(title, keywordTitle, index)
+  debugger
   const imageElm = useRef(null);
-//  const url = `/${gender}/${groupName}/${selectedCat}/${keywordTitle}/sayfa/1`
+  //  const url = `/${gender}/${groupName}/${selectedCat}/${keywordTitle}/sayfa/1`
   useEffect(() => {
 
     if (window.IntersectionObserver) {
@@ -307,14 +358,17 @@ debugger
 
   //   location.replace(url)
   // }
-  return <div style={{backgroundColor:match?' #ff7043':'',padding:match?2:0}}><Link onClick={(e) => handleClick({ index, event: e, keyword: keywordTitle,selectedNavIndex })}><img ref={imageElm} style={{ width: '100%', borderRadius: 5 }} src={placeholder} data-src={imageSource} /></Link>
-    <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link component={NextLink}  href='' underline="hover" onClick={(e) => handleClick({ index, event: e, keyword: keywordTitle,selectedNavIndex })} style={{ textTransform: 'capitalize', fontSize: 12, cursor: "pointer",color:match?'white':'inherit' }}>{keywordTitle}</Link>
-  
+  return <div style={{ backgroundColor: match ? ' #ff7043' : '', padding: match ? 2 : 0 }}><Link onClick={(e) => handleClick({ index, event: e, keyword: keywordTitle, selectedNavIndex })}><img ref={imageElm} style={{ width: '100%', borderRadius: 5 }} src={placeholder} data-src={imageSource} /></Link>
+    <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link component={NextLink} href='' underline="hover" onClick={(e) => handleClick({ index, event: e, keyword: keywordTitle, selectedNavIndex })} style={{ textTransform: 'capitalize', fontSize: 12, cursor: "pointer", color: match ? 'white' : 'inherit' }}>{keywordTitle}</Link>
+
     </div>
-    <div style={{fontSize:9, textAlign:'center',opacity:0.5,color:match?'white':'inherit'}}>{total}</div>
-    {match &&     <IconButton color="primary" aria-label="add to shopping cart" onClick={(e) => handleClick({ index, event: e, keyword: keywordTitle,selectedNavIndex })}>
-        <HighlightOffIcon style={{color:'white'}}/>
-      </IconButton>}
- 
+    <div style={{ fontSize: 9, textAlign: 'center', opacity: 0.5, color: match ? 'white' : 'inherit' }}>{total}</div>
+    {match && <IconButton color="primary" aria-label="add to shopping cart" onClick={(e) => handleClick({ index, event: e, keyword: keywordTitle, selectedNavIndex })}>
+      <HighlightOffIcon style={{ color: 'white' }} />
+    </IconButton>}
+
   </div>
 }
+
+
+
