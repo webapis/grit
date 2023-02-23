@@ -94,8 +94,12 @@ async function navGenRunner(gender) {
             for await (let f of current) {
 
                 if (f.imageUrls) {
-                    f.imageUrls.filter((f, i) => i < 2)
-                    updatedArray.push({ ...f, imageUrls: f.imageUrls.filter((f, i) => i < 2) })
+          
+                    debugger
+                    const randomImage1 = f.imageUrls.length=== 1 ? 0 : generateRandomInteger(f.imageUrls.length - 1)
+                    const randomImage2 = f.imageUrls.length=== 1 ? 0 : generateRandomInteger(f.imageUrls.length - 1)
+                    debugger
+                    updatedArray.push({ ...f, imageUrls:[f.imageUrls[randomImage1],f.imageUrls[randomImage2]]})
                 }
 
                 // if (f.imageUrls && f.imageUrls.length > 0) {

@@ -13,9 +13,7 @@ function productTitleMatch({ kw, title, nws }) {
         const reg = new RegExp('(\\s|\\b)'+keyword+'($|\\s)', 'i')
 
         const test = reg.test(title)
-        if(test){
-            debugger
-        }
+    
 
         return test === true
 
