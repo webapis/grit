@@ -1,6 +1,6 @@
 
 async function navGenRunner(gender) {
-    console.log('gender',gender)
+    console.log('gender', gender)
     const fs = require('fs')
     const path = require('path')
     const plimit = require('p-limit')
@@ -19,13 +19,14 @@ async function navGenRunner(gender) {
 
     try {
         fs.rmSync(path.join(process.cwd(), `${gender}/image-indexes`), { recursive: true, force: true });
-        const fnNames = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'diger']
+       const fnNames = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'diger']
+      // const fnNames = ['seven']
 
         const result = await Promise.all(fnNames.map((functionName) => {
 
             console.log('functionName', functionName)
             if (fs.existsSync(path.join(process.cwd(), `${gender}/_files/data/${functionName}`))) {
-                return limit(async () => await workerPromise({ functionName,gender }))
+                return limit(async () => await workerPromise({ functionName, gender }))
             }
             else return null
 
@@ -80,9 +81,9 @@ async function navGenRunner(gender) {
         if (fs.existsSync(path.join(process.cwd(), `${gender}/category-nav-counter.json`))) {
             fs.unlinkSync(path.join(process.cwd(), `${gender}/category-nav-counter.json`))
         }
-   /*      if (fs.existsSync(path.join(process.cwd(), `public/category-nav-counter.json`))) {
-            fs.unlinkSync(path.join(process.cwd(), `public/category-nav-counter.json`))
-        } */
+        /*      if (fs.existsSync(path.join(process.cwd(), `public/category-nav-counter.json`))) {
+                 fs.unlinkSync(path.join(process.cwd(), `public/category-nav-counter.json`))
+             } */
         for (let c in categoryNav) {
             const current = categoryNav[c]
             if (c === 'diger') {
@@ -128,9 +129,9 @@ async function navGenRunner(gender) {
 
 
         }
-debugger
+        debugger
         fs.appendFileSync(path.join(process.cwd(), `${gender}/category-nav-counter.json`), JSON.stringify(categoryNav));
-       // fs.appendFileSync(path.join(process.cwd(), `public/category-nav-counter.json`), JSON.stringify(categoryNav));
+        // fs.appendFileSync(path.join(process.cwd(), `public/category-nav-counter.json`), JSON.stringify(categoryNav));
         const catImages = result.filter(f => f !== null).reduce((prev, curr, i) => {
             const nxt = JSON.parse(curr).catImages
             const upd = {}
@@ -189,13 +190,13 @@ debugger
 
 
 (async () => {
-const genders = [{ gender: 'kadin', gender1: 'kadin' }, { gender: 'erkek', gender1: 'erkek' }, { gender: 'kcocuk', gender1: 'kiz-cocuk' }, { gender: 'ecocuk', gender1: 'erkek-cocuk' }]
+    const genders = [{ gender: 'kadin', gender1: 'kadin' }, { gender: 'erkek', gender1: 'erkek' }, { gender: 'kcocuk', gender1: 'kiz-cocuk' }, { gender: 'ecocuk', gender1: 'erkek-cocuk' }]
 
-   //const genders = [{ gender: 'kcocuk', gender1: 'kiz-cocuk' }]
+    //const genders = [{ gender: 'kcocuk', gender1: 'kiz-cocuk' }]
 
     for (let g of genders) {
         const { gender1 } = g
         await navGenRunner(gender1)
     }
- 
+
 })()

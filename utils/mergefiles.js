@@ -23,7 +23,7 @@ function mergeFiles(gender) {
     const keywords = require(path.join(process.cwd(), `assets/keywords.json`))
     fs.rmSync(path.join(process.cwd(), `${gender}/_files/data`), { recursive: true, force: true });
 
-    debugger
+
 
     const functionObj = { diger: {} }
 
@@ -35,7 +35,7 @@ function mergeFiles(gender) {
 
         markaProducts.push(...data)
     })
-    debugger
+
     console.log('PRODUCTS TO MERGE', markaProducts.length)
 
 
@@ -45,13 +45,21 @@ function mergeFiles(gender) {
         i++
         const { title, marka } = mp
         const categoryKeywords = keywords.filter(f => f.keywordType === 'category')
+
         var machfound = false
         for (let k of categoryKeywords) {
 
 
             const nws = k.exclude !== '' ? k.exclude.split(',') : []
-
+            if (k.keywords.toLowerCase().includes('penye elbise') && title.toLowerCase().includes('penye elbise')) {
+                console.log(k.keywords)
+                debugger
+            }
             const match = productTitleMatch({ kw: k.keywords, nws, title })
+            if (k.keywords.toLowerCase().includes('penye elbise') && title.toLowerCase().includes('penye elbise')) {
+                console.log(k.keywords)
+                debugger
+            }
             if (match) {
 
                 if (functionObj[k.functionName] === undefined) {

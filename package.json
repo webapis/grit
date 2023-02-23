@@ -10,6 +10,8 @@
     "downloadData": "node utils/downloadData.js",
     "mergefiles": "node utils/mergefiles.js",
     "generateNavigation": "node utils/genNav/NavGenRunner.js",
+    "navKeygenAuto": "node utils/genNav/navKeygenAuto.js",
+    "navKeygenUnique": "node utils/genNav/navKeygenUnique.js",
     "start": "next start -p 8080",
     "lint": "next lint"
   },

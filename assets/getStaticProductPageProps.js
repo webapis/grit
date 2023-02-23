@@ -19,7 +19,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     const categoriesRaw = await fs.readFile(jsonDirectory + '/category-nav-counter.json', 'utf8');
     const keywordgroupRaw = await fs.readFile(keywordsDirectory + '/keywords.json', 'utf8');
-    
+
     const categories = JSON.parse(categoriesRaw)
     const keywordgroup = JSON.parse(keywordgroupRaw)
 
@@ -29,7 +29,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     console.log('selectedCat', selectedCat)
     let selectedCatIndex = keywordsArray.find(f => f.title === selectedCat).index
-debugger
+    debugger
 
     // const responseCat = await fetch(`${host}/category-nav-counter.json`,{ next: { revalidate: 3600 } })
     // const categories = await responseCat.json()
@@ -61,7 +61,7 @@ debugger
     let selectedNavIndexArr = selectedNavIndex.split('-').filter(f => f !== '')
 
     if (selectedNavIndex.length > 2 && selectedNavIndexArr && selectedNavIndexArr.length > 0) {
-debugger
+        debugger
         selectedNavKeywords = keywordsArray.filter(f => selectedNavIndexArr.find(d => { return d === f.index.replace('-', '') }))
             .map(m => {
 
@@ -77,8 +77,8 @@ debugger
 
     let products = []
     try {
-        products = await commonDataHandler({ start: pageNumber, search: '', subcategory: fnName, selectedNavIndex,gender })
- 
+        products = await commonDataHandler({ start: pageNumber, search: '', subcategory: fnName, selectedNavIndex, gender })
+
         // products = await response.json()
     } catch (error) {
         console.log('product fetch error', error)
@@ -113,15 +113,15 @@ debugger
     if (keywordsIndexImages.length > 0) {
         const kwds = keywordsIndexImages[0].keywords
 
-        const subkwd = slug[2]
+        // const subkwd = slug[2]
+        products.data.unshift(...kwds.sort((a, b) => b.total - a.total))
+        // kwds.filter(f => f.
+        //     keywordTitle !== subkwd).forEach(k => {
+        //         const random = getRandomArbitrary(2, products.data.length)
 
-        kwds.filter(f => f.
-            keywordTitle !== subkwd).forEach(k => {
-                const random = getRandomArbitrary(2, products.data.length)
+        //         products.data.splice(random, 0, k)
 
-                products.data.splice(random, 0, k)
-
-            })
+        //     })
     }
 
 
