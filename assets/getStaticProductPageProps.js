@@ -99,7 +99,8 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
             navKeywords = navKeywordsResponse.navKeywords
             keywordsIndexImages = navKeywordsResponse.keywordsIndexImages
-
+            console.log('keywordsIndexImages-----',keywordsIndexImages.length)
+            debugger
                 ;
         } catch (error) {
             console.log('fetchNavKeywords error', error)

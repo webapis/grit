@@ -32,7 +32,7 @@ export default function Products(props) {
   }
 
   const { selectedNavKeywords, groupName, selectedCat, role, placeholder, categories, products, selectedNavIndex, functionName, keywordsIndexImages, navKeywords, keywordgroup, pageNumber, pageTitle, gender, tabValue } = props
-
+  console.log('keywordsIndexImages...',keywordsIndexImages)
   const mapped = Object.entries(categories).map((g) => {
     const groupName = g[0]
     const images = role === 'USER' ? g[1].filter(f => f.count !== undefined) : g[1].map(m => { return { ...m, count: m.count === undefined ? 0 : m.count } })
@@ -135,8 +135,8 @@ function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, pl
 
 
 }
-function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, groupName, selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages }) {
-  console.log('keywordsIndexImages', keywordsIndexImages.length)
+function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages }) {
+
   const [pageData, setPageData] = useState([])
 
 
@@ -146,11 +146,10 @@ function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, groupName, 
     setPageData(data)
   }, [data])
 
-  console.log('currentPage----', typeof (pageNumber))
+
 
   const totalPages = Math.ceil(count / 100)
-  console.log('totalPages', totalPages)
-  console.log('pageNumber', pageNumber)
+
 
   function handleChange(e, pageNumber) {
     const nextUrl = location.href.substring(0, location.href.indexOf('sayfa'))
@@ -163,7 +162,8 @@ function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, groupName, 
     <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
-    <GroupComponent keywordsIndexImages={keywordsIndexImages} gender={gender} placeholder={placeholder} selectedCat={selectedCat} selectedNavIndex={selectedNavIndex} />
+    {keywordsIndexImages &&     <GroupComponent keywordsIndexImages={keywordsIndexImages} gender={gender} placeholder={placeholder} selectedCat={selectedCat} selectedNavIndex={selectedNavIndex} />}
+
     <Grid item xs={12}></Grid>
     {pageData && pageData.length > 0 && pageData.filter(f => f.total === undefined).map((m, i) => {
 
