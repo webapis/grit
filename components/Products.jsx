@@ -304,7 +304,10 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
     placeholders[marka].postfix;
   const trimmedTitle = (title.lastIndexOf("_") > 0) ? title.substr(0, title.lastIndexOf("_")).trim() : title
   const titleWithselectedKeywords = trimmedTitle.replace(marka, '').split(' ').map((m, i) => {
-    const matches = (selectedNavKeywords.includes(m.toLowerCase()))
+    debugger
+    console.log('m----!',m,selectedNavKeywords,selectedNavKeywords.includes(m.toLowerCase().replaceAll('-',' ').toLowerCase()))
+   // const matches = (selectedNavKeywords.includes(m.toLowerCase().replaceAll('-',' ').toLowerCase()))
+    const matches = selectedNavKeywords.find(f=>f.includes(m))
     if (matches) {
       return <span key={i} style={{ fontSize: 11, marginLeft: 2, textTransform: 'capitalize', fontWeight: 700, color: '#ff7043' }}>{m.charAt(0).toUpperCase() + m.slice(1)}{' '} </span>
     }
@@ -320,12 +323,15 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
 
 
 
-function GroupImage({ groupName, selectedCat, gender, placeholder, groupNameTitle, imageSource, index, keywordTitle, title, total, selectedNavIndex }) {
+function GroupImage({ selectedCat, gender, placeholder, imageSource, index, keywordTitle, total, selectedNavIndex }) {
   const match = selectedNavIndex.split('-').find(f => f === index.replace('-', ''))
-  console.log(title, keywordTitle, index)
+
+ 
   debugger
+  const alt =`${gender} ${keywordTitle} ${selectedCat}`
+  console.log("alt",alt)
   const imageElm = useRef(null);
-  //  const url = `/${gender}/${groupName}/${selectedCat}/${keywordTitle}/sayfa/1`
+ 
   useEffect(() => {
 
     if (window.IntersectionObserver) {
@@ -352,13 +358,8 @@ function GroupImage({ groupName, selectedCat, gender, placeholder, groupNameTitl
 
   }, [imageSource]);
 
-  // function handleClick(e) {
-  //   e.preventDefault()
-  //   localStorage.setItem(`${keywordTitle}-index`, index)
 
-  //   location.replace(url)
-  // }
-  return <div style={{ backgroundColor: match ? ' #ff7043' : '', padding: match ? 2 : 0 }}><Link onClick={(e) => handleClick({ index, event: e, keyword: keywordTitle, selectedNavIndex })}><img ref={imageElm} style={{ width: '100%', borderRadius: 5 }} src={placeholder} data-src={imageSource} /></Link>
+  return <div style={{ backgroundColor: match ? ' #ff7043' : '', padding: match ? 2 : 0 }}><Link onClick={(e) => handleClick({ index, event: e, keyword: keywordTitle, selectedNavIndex })}><img alt={alt} ref={imageElm} style={{ width: '100%', borderRadius: 5 }} src={placeholder} data-src={imageSource} /></Link>
     <div style={{ display: 'flex', justifyContent: 'space-around' }}><Link component={NextLink} href='' underline="hover" onClick={(e) => handleClick({ index, event: e, keyword: keywordTitle, selectedNavIndex })} style={{ textTransform: 'capitalize', fontSize: 12, cursor: "pointer", color: match ? 'white' : 'inherit' }}>{keywordTitle}</Link>
 
     </div>
