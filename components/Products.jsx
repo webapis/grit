@@ -6,9 +6,7 @@ import DrawerDesktop from './DrawerDesktop'
 import DrawerMobile from './DrawerMobile'
 import ResponsiveComponent from './ResponseComponent'
 import { Typography } from '@mui/material';
-// import Box from '@mui/material/Box';
-// import Tabs from '@mui/material/Tabs';
-// import Tab from '@mui/material/Tab';
+import PageMenu from './PageMenu'
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -23,6 +21,7 @@ import BreadCrumb from './BreadCrumb';
 import { useRouter } from 'next/router'
 import IconButton from '@mui/material/IconButton';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import useMediaQuery from '@mui/material/useMediaQuery';
 export default function Products(props) {
 
   const router = useRouter()
@@ -77,7 +76,7 @@ function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, pl
   const [filter, setFilter] = useState('Seçenekler')
   debugger
   const groupKeywords = Object.values(keywordsIndexImages)
-debugger
+  debugger
   function filterGrup(e) {
     debugger
     const id = e.currentTarget.id
@@ -86,7 +85,7 @@ debugger
 
   }
   debugger
-  return <Grid container gap={1}>
+  return <Grid container gap={1} >
     <Grid item  >{groupKeywords.map((m, i) => {
       const countSelected = selectedNavIndex.split('-').filter(fk => m.keywords.some(s => {
 
@@ -101,7 +100,7 @@ debugger
 
       {filter === 'filter' && <Grid item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
     </Grid>
-    <Grid container gap={1}>
+    <Grid container gap={1} sx={{ display: 'flex', justifyContent: {xs:'center',md:'start'} }}>
 
 
       {groupKeywords.map(f => {
@@ -125,10 +124,8 @@ debugger
 
 }
 function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages, navKeywords }) {
-
+  const matches = useMediaQuery('(min-width:600px)');
   const [pageData, setPageData] = useState([])
-
-
   const { count, data } = products
 
   useEffect(() => {
@@ -145,10 +142,19 @@ function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, selectedCat
 
     <Grid container>
       <Grid item xs={12}><Typography variant="h1" gutterBottom style={{ textTransform: 'capitalize', fontSize: 30 }}>{gender.replace('-', ' ')} {selectedCat}</Typography></Grid>
-      <Grid item xs={12} sm={12} md={6} style={{ marginTop: 0 }}><Typography variant="body2" display="block" gutterBottom sx={{ color: '#9e9e9e' }}>Toplam bulunan ürün: {new Intl.NumberFormat().format(count)} adet</Typography></Grid>
-      <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
-        <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
+      <Grid container>
+      <Grid item xs={6} style={{ marginTop: 0 }}><Typography variant="body2" display="block" gutterBottom sx={{ color: '#9e9e9e' }}>Toplam bulunan ürün: {new Intl.NumberFormat().format(count)} adet</Typography></Grid>
+  
+
+  {matches && <Grid item  xs={6} style={{display:'flex',justifyContent:'flex-end',width:'100%'}}><Pagination count={totalPages} page={pageNumber} onChange={handleChange} /></Grid>}
+  {!matches && <Grid xs={6}  item style={{textAlign:'end',width:'100%'}}> <PageMenu>
+    <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
+  </PageMenu> </Grid> }
       </Grid>
+     
+
+
+    
     </Grid>
 
     {keywordsIndexImages && <GroupComponent navKeywords={navKeywords} keywordsIndexImages={keywordsIndexImages} gender={gender} placeholder={placeholder} selectedCat={selectedCat} selectedNavIndex={selectedNavIndex} />}

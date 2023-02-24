@@ -14,6 +14,7 @@ export default function DrawerMobile(props) {
     return <div>Loading...</div>
   }
   const { categories, keywordgroup, gender,tabValue,role } = props
+  console.log('xxxxx',tabValue)
   const [state, setState] = React.useState();
 
   function toggleDrawer(event) {
@@ -27,7 +28,7 @@ export default function DrawerMobile(props) {
   return (
 
     <React.Fragment >
-      <AppBar toggleDrawer={toggleDrawer} keywordgroup={keywordgroup} gender={gender}/>
+      <AppBar toggleDrawer={toggleDrawer} keywordgroup={keywordgroup} gender={gender} tabValue={tabValue}/>
       <Drawer
 sx={{ [`& .MuiDrawer-paper`]: { width: '80%', boxSizing: 'border-box' }}}
         anchor="left"
