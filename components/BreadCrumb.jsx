@@ -48,7 +48,7 @@ if(!keywordgroup){
         .split("/")
         .filter((f) => f !== "");
     let bcrumbs = []
-    console.log('decodedbcrumb', decodedbcrumb)
+
     if (decodedbcrumb.length === 1) {
         bcrumbs = decodedbcrumb
     }
@@ -64,7 +64,7 @@ if(!keywordgroup){
             href="/"
         >
             <HomeIcon fontSize="inherit" />
-            Anasayfa
+          
         </Link>
 
         {bcrumbs.map((m, i) => {
