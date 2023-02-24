@@ -99,7 +99,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
             });
 
             navKeywords = navKeywordsResponse.navKeywords
-            keywordsIndexImages = navKeywordsResponse.keywordsIndexImages
+            keywordsIndexImages = navKeywordsResponse.keywordsIndexImages.map(m => { return { ...m, keywords: m.keywords.sort((a, b) => b.total - a.total) } })
        
             debugger
                 ;

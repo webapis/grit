@@ -102,14 +102,14 @@ if(!keywordgroup){
             </Link>
         })}
     </Breadcrumbs>
-        <Stack direction="row" spacing={1}>
+        {/* <Stack direction="row" spacing={1}>
             {bcrumbs.slice(3).map(keyword => {
             
                 const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')
         
-                return <Chip style={{margin:5}} key={keyword} size='small' label={keyword} onDelete={(event) => handleClick({ event, keyword: urlKeywords })} />
+                return <Chip style={{margin:0}} key={keyword} size='small' label={keyword} onDelete={(event) => handleClick({ event, keyword: urlKeywords })} />
             })}
 
-        </Stack>
+        </Stack> */}
     </div>
 }
