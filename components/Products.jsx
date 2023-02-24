@@ -160,10 +160,12 @@ function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, selectedCat
     {keywordsIndexImages && <GroupComponent navKeywords={navKeywords} keywordsIndexImages={keywordsIndexImages} gender={gender} placeholder={placeholder} selectedCat={selectedCat} selectedNavIndex={selectedNavIndex} />}
 
     <Grid item xs={12}></Grid>
+    <Grid container gap={1} sx={{display:'flex',justifyContent:{xs:'center',md:'start'}}}>
     {pageData && pageData.length > 0 && pageData.filter(f => f.total === undefined).map((m, i) => {
 
-      return <Grid key={i} item xs={6} sm={3} md={3} lg={2} > <ImageComponent selectedNavKeywords={selectedNavKeywords} selectedCat={selectedCat} placeholder={placeholder} {...m} /></Grid>
+      return <Grid key={i} item xs={5} sm={3} md={3} lg={2} > <ImageComponent selectedNavKeywords={selectedNavKeywords} selectedCat={selectedCat} placeholder={placeholder} {...m} /></Grid>
     })}
+    </Grid>
     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginBottom: 10 }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
     </Grid>
