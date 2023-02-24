@@ -3,7 +3,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import AppBar from '../components/AppBar';
+
 
 import CardMedia from '@mui/material/CardMedia';
 import DrawerDesktop from './DrawerDesktop'
@@ -16,8 +16,8 @@ import Container from '@mui/material/Container'
 import ResponsiveComponent from './ResponseComponent'
 import Link from 'next/link'
 export default function IndexComponent(props) {
-    const {categories,placeholder,role,gender,tabValue}=props
-    console.log(`gender--`,gender)
+    const {categories,role,gender,tabValue}=props
+ 
     const mapped =categories.map((g)=>{
         const groupName = g[0]
         const images = role === 'USER' ? g[1].filter(f => f.count !== undefined) : g[1].map(m => { return { ...m, count: m.count === undefined ? 0 : m.count } })

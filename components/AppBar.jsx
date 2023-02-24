@@ -37,7 +37,7 @@ HideOnScroll.propTypes = {
 
 export default function HideAppBar(props) {
   const {toggleDrawer,keywordgroup,gender,tabValue}=props
-
+console.log('!!!!! tabValue',tabValue)
   
   return (
     <React.Fragment>
@@ -70,7 +70,7 @@ export default function HideAppBar(props) {
       <BreadCrumb keywordgroup={keywordgroup} gender={gender} />
       </div>
           <div style={{display:'flex',justifyContent:'center'}}>
-          {!toggleDrawer &&  <GenderTabs tabValue={tabValue}/>}
+         <GenderTabs tabValue={tabValue} gender={gender}/>
           </div>
    
         
