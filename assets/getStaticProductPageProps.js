@@ -73,19 +73,20 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     }
 
-    var url = `${host}/.netlify/functions/${fnName}/?start=${pageNumber}&selectedNavIndex=${selectedNavIndex}&search=`;
+   // var url = `${host}/.netlify/functions/${fnName}/?start=${pageNumber}&selectedNavIndex=${selectedNavIndex}&search=`;
 
     let products = []
     try {
         products = await commonDataHandler({ start: pageNumber, search: '', subcategory: fnName, selectedNavIndex, gender })
 
-        // products = await response.json()
+
     } catch (error) {
         console.log('product fetch error', error)
     }
 
     let navKeywords = []
     let keywordsIndexImages = []
+
     if (selectedNavIndex !== '-') {
         try {
             const navKeywordsResponse = await fetchNavKeywords({
@@ -98,8 +99,8 @@ export default async function getStaticProductPageProps({ context, host, gender 
             });
 
             navKeywords = navKeywordsResponse.navKeywords
-            keywordsIndexImages = navKeywordsResponse.keywordsIndexImages
-            console.log('keywordsIndexImages-----',keywordsIndexImages.length)
+            keywordsIndexImages = navKeywordsResponse.keywordsIndexImages.map(m => { return { ...m, keywords: m.keywords.sort((a, b) => b.total - a.total) } })
+       
             debugger
                 ;
         } catch (error) {
@@ -111,24 +112,6 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
 
 
-//     if (keywordsIndexImages.length > 0) {
-//         const kwds = keywordsIndexImages[0].keywords
-// debugger
-//         // const subkwd = slug[2]
-//         products.data.unshift(...kwds.sort((a, b) => {
-            
-            
-//             b.total - a.total
-        
-//         }))
-//         // kwds.filter(f => f.
-//         //     keywordTitle !== subkwd).forEach(k => {
-//         //         const random = getRandomArbitrary(2, products.data.length)
-
-//         //         products.data.splice(random, 0, k)
-
-//         //     })
-//     }
 
 
     return {
@@ -137,6 +120,3 @@ export default async function getStaticProductPageProps({ context, host, gender 
     }
 }
 
-function getRandomArbitrary(min, max) {
-    return Math.ceil(Math.random() * (max - min) + min);
-}

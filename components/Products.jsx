@@ -6,9 +6,9 @@ import DrawerDesktop from './DrawerDesktop'
 import DrawerMobile from './DrawerMobile'
 import ResponsiveComponent from './ResponseComponent'
 import { Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+// import Box from '@mui/material/Box';
+// import Tabs from '@mui/material/Tabs';
+// import Tab from '@mui/material/Tab';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -32,7 +32,7 @@ export default function Products(props) {
   }
 
   const { selectedNavKeywords, groupName, selectedCat, role, placeholder, categories, products, selectedNavIndex, functionName, keywordsIndexImages, navKeywords, keywordgroup, pageNumber, pageTitle, gender, tabValue } = props
-  console.log('keywordsIndexImages...',keywordsIndexImages)
+
   const mapped = Object.entries(categories).map((g) => {
     const groupName = g[0]
     const images = role === 'USER' ? g[1].filter(f => f.count !== undefined) : g[1].map(m => { return { ...m, count: m.count === undefined ? 0 : m.count } })
@@ -64,27 +64,20 @@ function Content({ selectedNavKeywords, groupName, selectedCat, gender, placehol
   const [selectedTab, setSelectedTab] = useState(0)
 
 
-  function handleTabSelection(e, newvalue) {
-    setSelectedTab(newvalue)
-  }
 
 
 
-  return <Grid spacing={1} container style={{ backgrounColor: 'yellow', width: '100%' }}>
-    <Grid item xs={12}>
-      <TabsContainer selectedTab={selectedTab} handleTabSelection={handleTabSelection} />
-    </Grid>
 
-    {selectedTab === 0 && <Page selectedNavIndex={selectedNavIndex} selectedNavKeywords={selectedNavKeywords} keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} products={products} />}
-    {selectedTab === 1 && <Grid xs={12} sm={3} md={6} lg={6} item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
+  return <Grid spacing={1} container style={{ backgrounColor: 'yellow', width: '100%', marginTop: 10 }}>
+    {selectedTab === 0 && <Page navKeywords={navKeywords} selectedNavIndex={selectedNavIndex} selectedNavKeywords={selectedNavKeywords} keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} products={products} />}
   </Grid>
 }
 
-function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, placeholder, gender }) {
+function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, placeholder, gender, navKeywords }) {
   const [filter, setFilter] = useState('Seçenekler')
   debugger
   const groupKeywords = Object.values(keywordsIndexImages)
-
+debugger
   function filterGrup(e) {
     debugger
     const id = e.currentTarget.id
@@ -94,48 +87,44 @@ function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, pl
   }
   debugger
   return <Grid container gap={1}>
-    <Grid item xs={12}>{groupKeywords.map((m, i) => {
+    <Grid item  >{groupKeywords.map((m, i) => {
       const countSelected = selectedNavIndex.split('-').filter(fk => m.keywords.some(s => {
-  
+
         return s.index.replace('-', '') === fk
 
       })).length
 
       return <Chip color={filter === m.groupName ? 'warning' : 'default'} onClick={filterGrup} key={i} id={m.groupName} label={<span>{m.groupName} {countSelected > 0 && <span>({countSelected})</span>}</span>} style={{ margin: 1 }} />
-    })}</Grid>
-    {groupKeywords.filter(f => f.groupName === filter).map(m => {
-
-
-      return m.keywords.filter(c=>{
-        debugger
-      return  selectedNavIndex.split('-').find(fk =>fk ===c.index.replace('-',''))===undefined
-      
-      } ).map((m, i) => {
-  
-
-        return <Grid key={i} item xs={6} sm={2} md={2} lg={1} > <GroupImage selectedNavIndex={selectedNavIndex} groupName={m.groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} /></Grid>
-      })
     })}
 
-    {groupKeywords.map(f => {
+      <Chip color={filter === 'filter' ? 'warning' : 'default'} onClick={filterGrup} key={111} id='filter' label={<span>Filter</span>} style={{ margin: 1 }} />
+
+      {filter === 'filter' && <Grid item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
+    </Grid>
+    <Grid container gap={1}>
 
 
-      return { groupName: f.groupName,keywords:f.keywords.filter(d=>selectedNavIndex.split('-').find(fk =>fk ===d.index.replace('-','')) )}
-
-    }).map(m => {
-
-
-      return m.keywords.map((m, i) => {
-        debugger
-
-        return <Grid key={i} item xs={6} sm={2} md={2} lg={1} > <GroupImage selectedNavIndex={selectedNavIndex} groupName={m.groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} /></Grid>
-      })
-    })}
+      {groupKeywords.map(f => {
+        return { groupName: f.groupName, keywords: f.keywords.filter(d => selectedNavIndex.split('-').find(fk => fk === d.index.replace('-', ''))) }
+      }).map(m => {
+        return m.keywords.map((m, i) => {
+          return <Grid key={i} item xs={3} sm={2} md={2} lg={1} > <GroupImage selectedNavIndex={selectedNavIndex} groupName={m.groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} /></Grid>
+        })
+      })}
+      {groupKeywords.filter(f => f.groupName === filter).map(m => {
+        return m.keywords.filter(c => {
+          debugger
+          return selectedNavIndex.split('-').find(fk => fk === c.index.replace('-', '')) === undefined
+        }).map((m, i) => {
+          return <Grid key={i} item xs={3} sm={2} md={2} lg={1} ><GroupImage selectedNavIndex={selectedNavIndex} groupName={m.groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} /></Grid>
+        })
+      })}
+    </Grid>
   </Grid>
 
 
 }
-function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages }) {
+function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages, navKeywords }) {
 
   const [pageData, setPageData] = useState([])
 
@@ -146,23 +135,23 @@ function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, selectedCat
     setPageData(data)
   }, [data])
 
-
-
   const totalPages = Math.ceil(count / 100)
-
 
   function handleChange(e, pageNumber) {
     const nextUrl = location.href.substring(0, location.href.indexOf('sayfa'))
-
     location.replace(nextUrl + 'sayfa/' + pageNumber)
   }
   return <>
 
-    <Grid item xs={12} sm={12} md={6} style={{ marginTop: 10 }}><Typography variant="body2" display="block" gutterBottom sx={{ color: '#9e9e9e' }}>Toplam bulunan ürün: {new Intl.NumberFormat().format(count)} adet</Typography></Grid>
-    <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
-      <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
+    <Grid container>
+      <Grid item xs={12}><Typography variant="h1" gutterBottom style={{ textTransform: 'capitalize', fontSize: 30 }}>{gender.replace('-', ' ')} {selectedCat}</Typography></Grid>
+      <Grid item xs={12} sm={12} md={6} style={{ marginTop: 0 }}><Typography variant="body2" display="block" gutterBottom sx={{ color: '#9e9e9e' }}>Toplam bulunan ürün: {new Intl.NumberFormat().format(count)} adet</Typography></Grid>
+      <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
+        <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
+      </Grid>
     </Grid>
-    {keywordsIndexImages &&     <GroupComponent keywordsIndexImages={keywordsIndexImages} gender={gender} placeholder={placeholder} selectedCat={selectedCat} selectedNavIndex={selectedNavIndex} />}
+
+    {keywordsIndexImages && <GroupComponent navKeywords={navKeywords} keywordsIndexImages={keywordsIndexImages} gender={gender} placeholder={placeholder} selectedCat={selectedCat} selectedNavIndex={selectedNavIndex} />}
 
     <Grid item xs={12}></Grid>
     {pageData && pageData.length > 0 && pageData.filter(f => f.total === undefined).map((m, i) => {
@@ -239,20 +228,20 @@ function Keywords({ navKeywords, selectedNavIndex }) {
     </Accordion>
   })
 }
-//
 
 
-function TabsContainer({ selectedTab, handleTabSelection }) {
-  return (
-    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-      <Tabs value={selectedTab} onChange={handleTabSelection}>
-        <Tab label="Bulunan" />
-        <Tab label="Filtre" />
 
-      </Tabs>
-    </Box>
-  );
-}
+// function TabsContainer({ selectedTab, handleTabSelection }) {
+//   return (
+//     <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+//       <Tabs value={selectedTab} onChange={handleTabSelection}>
+//         <Tab label="Bulunan" />
+//         <Tab label="Filtre" />
+
+//       </Tabs>
+//     </Box>
+//   );
+// }
 
 
 function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, priceNew, timestamp, placeholder }) {
@@ -304,10 +293,10 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
     placeholders[marka].postfix;
   const trimmedTitle = (title.lastIndexOf("_") > 0) ? title.substr(0, title.lastIndexOf("_")).trim() : title
   const titleWithselectedKeywords = trimmedTitle.replace(marka, '').split(' ').map((m, i) => {
-    debugger
-    console.log('m----!',m,selectedNavKeywords,selectedNavKeywords.includes(m.toLowerCase().replaceAll('-',' ').toLowerCase()))
-   // const matches = (selectedNavKeywords.includes(m.toLowerCase().replaceAll('-',' ').toLowerCase()))
-    const matches = selectedNavKeywords.find(f=>f.includes(m))
+
+
+
+    const matches = selectedNavKeywords ? selectedNavKeywords.find(f => f.includes(m)) : false
     if (matches) {
       return <span key={i} style={{ fontSize: 11, marginLeft: 2, textTransform: 'capitalize', fontWeight: 700, color: '#ff7043' }}>{m.charAt(0).toUpperCase() + m.slice(1)}{' '} </span>
     }
@@ -326,12 +315,12 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
 function GroupImage({ selectedCat, gender, placeholder, imageSource, index, keywordTitle, total, selectedNavIndex }) {
   const match = selectedNavIndex.split('-').find(f => f === index.replace('-', ''))
 
- 
+
   debugger
-  const alt =`${gender} ${keywordTitle} ${selectedCat}`
-  console.log("alt",alt)
+  const alt = `${gender} ${keywordTitle} ${selectedCat}`
+  console.log("alt", alt)
   const imageElm = useRef(null);
- 
+
   useEffect(() => {
 
     if (window.IntersectionObserver) {

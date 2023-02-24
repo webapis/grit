@@ -36,14 +36,13 @@ HideOnScroll.propTypes = {
 };
 
 export default function HideAppBar(props) {
-  const {toggleDrawer,showmenu,keywordgroup,gender,tabValue}=props
+  const {toggleDrawer,keywordgroup,gender,tabValue}=props
 
   
   return (
     <React.Fragment>
       <CssBaseline />
       <HideOnScroll {...props}>
-   
         <AppBar sx={{ zIndex: 2,backgroundColor:'white',color:' #ff7043'}} elevation={0}>
           <Toolbar style={{backgroundColor:' #ff7043',color:'white'}}>
             {toggleDrawer &&      <IconButton
@@ -62,14 +61,20 @@ export default function HideAppBar(props) {
             BİRARADAMODA
             <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın ve Erkek Marka Giyimler</Typography>
           </Typography>
-          {!toggleDrawer &&  <GenderTabs tabValue={tabValue}/>}
+         
    
    
       
           </Toolbar>
-          <Toolbar>
-          <BreadCrumb keywordgroup={keywordgroup} gender={gender} />
-          </Toolbar>
+          <div style={{display:'flex',justifyContent:'center'}}>
+      <BreadCrumb keywordgroup={keywordgroup} gender={gender} />
+      </div>
+          <div style={{display:'flex',justifyContent:'center'}}>
+          {!toggleDrawer &&  <GenderTabs tabValue={tabValue}/>}
+          </div>
+   
+        
+         
         </AppBar>
    
       </HideOnScroll>
@@ -81,14 +86,14 @@ export default function HideAppBar(props) {
 
 
 
-function TabsContainer({ selectedTab, handleTabSelection }) {
-  return (
-    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-      <Tabs value={selectedTab} onChange={handleTabSelection}>
-        <Tab label="Bulunan" />
-        <Tab label="Seçenekler" />
+// function TabsContainer({ selectedTab, handleTabSelection }) {
+//   return (
+//     <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+//       <Tabs value={selectedTab} onChange={handleTabSelection}>
+//         <Tab label="Bulunan" />
+//         <Tab label="Seçenekler" />
 
-      </Tabs>
-    </Box>
-  );
-}
+//       </Tabs>
+//     </Box>
+//   );
+// }
