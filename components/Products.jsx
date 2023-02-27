@@ -22,6 +22,8 @@ import { useRouter } from 'next/router'
 import IconButton from '@mui/material/IconButton';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import SearchIcon from '@mui/icons-material/Search';
+import SearchInput from './SearchBox'
 export default function Products(props) {
 
   const router = useRouter()
@@ -97,10 +99,11 @@ function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, pl
     })}
 
       <Chip color={filter === 'filter' ? 'warning' : 'default'} onClick={filterGrup} key={111} id='filter' label={<span>Filter</span>} style={{ margin: 1 }} />
-
+      <Chip color={filter === 'search' ? 'warning' : 'default'} onClick={filterGrup} key={111} id='search' label={<span><SearchIcon /></span>} style={{ margin: 1 }} />
       {filter === 'filter' && <Grid item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
+      {filter === 'search' && <Grid item><SearchInput /></Grid>}
     </Grid>
-    <Grid container gap={1} sx={{ display: 'flex', justifyContent: {xs:'center',md:'start'} }}>
+    <Grid container gap={1} sx={{ display: 'flex', justifyContent: { xs: 'center', md: 'start' } }}>
 
 
       {groupKeywords.map(f => {
@@ -143,28 +146,22 @@ function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, selectedCat
     <Grid container>
       <Grid item xs={12}><Typography variant="h1" gutterBottom style={{ textTransform: 'capitalize', fontSize: 30 }}>{gender.replace('-', ' ')} {selectedCat}</Typography></Grid>
       <Grid container>
-      <Grid item xs={6} style={{ marginTop: 0 }}><Typography variant="body2" display="block" gutterBottom sx={{ color: '#9e9e9e' }}>Toplam bulunan ürün: {new Intl.NumberFormat().format(count)} adet</Typography></Grid>
-  
-
-  {matches && <Grid item  xs={6} style={{display:'flex',justifyContent:'flex-end',width:'100%'}}><Pagination count={totalPages} page={pageNumber} onChange={handleChange} /></Grid>}
-  {!matches && <Grid xs={6}  item style={{textAlign:'end',width:'100%'}}> <PageMenu>
-    <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
-  </PageMenu> </Grid> }
+        <Grid item xs={6} style={{ marginTop: 0 }}><Typography variant="body2" display="block" gutterBottom sx={{ color: '#9e9e9e' }}>Toplam bulunan ürün: {new Intl.NumberFormat().format(count)} adet</Typography></Grid>
+        {matches && <Grid item xs={6} style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}><Pagination count={totalPages} page={pageNumber} onChange={handleChange} /></Grid>}
+        {!matches && <Grid xs={6} item style={{ textAlign: 'end', width: '100%' }}> <PageMenu>
+          <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
+        </PageMenu> </Grid>}
       </Grid>
-     
-
-
-    
     </Grid>
 
     {keywordsIndexImages && <GroupComponent navKeywords={navKeywords} keywordsIndexImages={keywordsIndexImages} gender={gender} placeholder={placeholder} selectedCat={selectedCat} selectedNavIndex={selectedNavIndex} />}
 
     <Grid item xs={12}></Grid>
-    <Grid container gap={1} sx={{display:'flex',justifyContent:{xs:'center',md:'start'}}}>
-    {pageData && pageData.length > 0 && pageData.filter(f => f.total === undefined).map((m, i) => {
+    <Grid container gap={1} sx={{ display: 'flex', justifyContent: { xs: 'center', md: 'start' } }}>
+      {pageData && pageData.length > 0 && pageData.filter(f => f.total === undefined).map((m, i) => {
 
-      return <Grid key={i} item xs={5} sm={3} md={3} lg={2} > <ImageComponent selectedNavKeywords={selectedNavKeywords} selectedCat={selectedCat} placeholder={placeholder} {...m} /></Grid>
-    })}
+        return <Grid key={i} item xs={5} sm={3} md={3} lg={2} > <ImageComponent selectedNavKeywords={selectedNavKeywords} selectedCat={selectedCat} placeholder={placeholder} {...m} /></Grid>
+      })}
     </Grid>
     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginBottom: 10 }}>
       <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
