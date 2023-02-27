@@ -371,7 +371,7 @@
         },
         "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
         "placeholder": "./placeholder-img/placeholder.jpg",
-        "imageHost": "https://img.tozlu.com/",
+        "imageHost": "https://static.ticimax.cloud/",
         "detailHost": "https://www.tozlu.com/",
         "postfix": "",
         "imgPostFix": "?tr=w-400"
