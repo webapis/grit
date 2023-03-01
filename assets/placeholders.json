@@ -660,7 +660,7 @@
         },
         "imagePrefix": "https://ik.imagekit.io/mumrjdehaou/",
         "placeholder": "./placeholder-img/placeholder.jpg",
-        "imageHost": "https://static.ticimax.cloud/",
+        "imageHost": "",
         "detailHost": "https://www.dericlub.com.tr/",
         "postfix": "",
         "imgPostFix": "?tr=w-400"
