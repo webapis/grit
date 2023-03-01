@@ -115,7 +115,7 @@ function CategoryImage({ title, url, count,placeholder,imageUrls }) {
 
 
     }, []);
-
+console.log('marka',marka)
     const imageSource =
     placeholders[marka].imagePrefix.trim() +
     placeholders[marka].imageHost.trim() +
