@@ -59,7 +59,7 @@ console.log('!!!!! tabValue',tabValue)
          
           <Typography variant="h6" noWrap component="div">
             BİRARADAMODA
-            <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Kadın ve Erkek Marka Giyimler</Typography>
+            <Typography variant="body2" style={{ fontSize: 14, opacity: 0.7 }}>Tüm aradığınız moda birarada</Typography>
           </Typography>
          
    
