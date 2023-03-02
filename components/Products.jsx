@@ -99,9 +99,9 @@ function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, pl
     })}
 
       <Chip color={filter === 'filter' ? 'warning' : 'default'} onClick={filterGrup} key={111} id='filter' label={<span>Filter</span>} style={{ margin: 1 }} />
-      <Chip color={filter === 'search' ? 'warning' : 'default'} onClick={filterGrup} key={111} id='search' label={<span><SearchIcon /></span>} style={{ margin: 1 }} />
+      {/* <Chip color={filter === 'search' ? 'warning' : 'default'} onClick={filterGrup} key={111} id='search' label={<span><SearchIcon /></span>} style={{ margin: 1 }} /> */}
       {filter === 'filter' && <Grid item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
-      {filter === 'search' && <Grid item><SearchInput /></Grid>}
+      {/* {filter === 'search' && <Grid item><SearchInput /></Grid>} */}
     </Grid>
     <Grid container gap={1} sx={{ display: 'flex', justifyContent: { xs: 'center', md: 'start' } }}>
 
