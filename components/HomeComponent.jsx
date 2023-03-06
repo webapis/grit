@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {SearchBox} from './SearchBox'
 import DrawerDesktop from './DrawerDesktop'
 import DrawerMobile from './DrawerMobile'
 import ResponsiveComponent from './ResponseComponent'
@@ -25,6 +25,7 @@ class HomeComponent extends React.Component {
            return b.totalGroup-a.totalGroup})
        
         return <div>
+     
             <ResponsiveComponent maxWidth={800} render={()=><DrawerMobile role={role} genderTitle={genderTitle} tabValue={tabValue} gender={gender} categories={mapped} ><Categories gender={gender} categories={mapped} placeholder={placeholder}/></DrawerMobile>} />
             <ResponsiveComponent minWidth={801} render={()=><DrawerDesktop role={role} genderTitle={genderTitle} tabValue={tabValue} gender={gender} categories={mapped}><Categories gender={gender} categories={mapped} placeholder={placeholder}/></DrawerDesktop>} />
         </div>
