@@ -3,7 +3,7 @@
 import getSelectedNavIndex from '../components/getSelectedNavIndex';
 import fetchNavKeywords from '../components/fetchNavKeywords'
 import commonDataHandler from './commonDataHandler'
-
+import commonSearchDataHandler from './commonSearchDataHandler'
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -13,7 +13,9 @@ export default async function getStaticProductPageProps({ context, host, gender 
     const { params: { slug } } = context
 
     const groupName = slug[0].replace('-', ' ')
-
+    console.log('slug',slug)
+    const search = slug.some(s=>s==='search') ? slug[slug.length-1]:''
+    console.log('search',search)
     const jsonDirectory = path.join(process.cwd(), gender);
     const keywordsDirectory = path.join(process.cwd(), `assets`);
 
@@ -27,12 +29,9 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     const selectedCat = slug[1]
 
-    console.log('selectedCat', selectedCat)
-    let selectedCatIndex = keywordsArray.find(f => f.title === selectedCat).index
- 
 
-    // const responseCat = await fetch(`${host}/category-nav-counter.json`,{ next: { revalidate: 3600 } })
-    // const categories = await responseCat.json()
+    let selectedCatIndex = keywordsArray.find(f => f.title === selectedCat)? keywordsArray.find(f => f.title === selectedCat).index :''
+ 
 
     if (process.env.ROLE === 'USER') {
         delete categories['diger']
@@ -47,7 +46,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
         .replace(/ı/g, "i")
         .replace(/ç/g, "c")
         .replace(/ğ/g, "g");
-    //const host = process.env.SERVERLESS
+
     const pageNumber = slug[slug.length - 1].toString()
 
     let selectedNavIndex = ''
@@ -61,23 +60,23 @@ export default async function getStaticProductPageProps({ context, host, gender 
     let selectedNavIndexArr = selectedNavIndex.split('-').filter(f => f !== '')
 
     if (selectedNavIndex.length > 2 && selectedNavIndexArr && selectedNavIndexArr.length > 0) {
-
         selectedNavKeywords = keywordsArray.filter(f => selectedNavIndexArr.find(d => { return d === f.index.replace('-', '') }))
             .map(m => {
-
                 return m.keywords
             }).reduce((p, c, i, arr) => {
-
                 return [...p, c.split(',')]
             }, []).flat(1)
-
     }
-
-   // var url = `${host}/.netlify/functions/${fnName}/?start=${pageNumber}&selectedNavIndex=${selectedNavIndex}&search=`;
 
     let products = []
     try {
-        products = await commonDataHandler({ start: pageNumber, search: '', subcategory: fnName, selectedNavIndex, gender })
+
+        if(search.length>0){
+            products = await commonSearchDataHandler({ start: pageNumber, search, subcategory: fnName, selectedNavIndex:'', gender })
+        }else{
+            products = await commonDataHandler({ start: pageNumber, search: '', subcategory: fnName, selectedNavIndex, gender })
+        }
+    
 
 
     } catch (error) {
@@ -87,7 +86,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
     let navKeywords = []
     let keywordsIndexImages = []
 
-    if (selectedNavIndex !== '-') {
+    if (selectedNavIndex !== '-' && selectedNavIndex !== '') {
         try {
             const navKeywordsResponse = await fetchNavKeywords({
                 functionName,
@@ -109,9 +108,6 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     }
     const pageTitle = `${gender} ${slug.slice(0, slug.indexOf('sayfa')).join(' ').replace(/-/g, ' ')}`
-
-
-
 
 
     return {

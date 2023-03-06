@@ -1,6 +1,5 @@
 
-// import getSelectedNavIndex from '../../components/getSelectedNavIndex';
-// import fetchNavKeywords from '../../components/fetchNavKeywords'
+
 import Products from '../../components/Products'
 import getStaticPagePaths from '../../assets/getStaticProductPagePaths';
 import getStaticPageProps from '../../assets/getStaticProductPageProps'

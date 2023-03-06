@@ -10,7 +10,7 @@ export default class MyDocument extends Document {
        <Head>
          {this.props.emotionStyleTags}
        </Head>
-       <body>
+       <body >
          <Main />
          <NextScript />
        </body>

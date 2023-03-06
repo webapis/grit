@@ -64,11 +64,6 @@ function Content({ selectedNavKeywords, groupName, selectedCat, gender, placehol
 
   const [selectedTab, setSelectedTab] = useState(0)
 
-
-
-
-
-
   return <Grid spacing={1} container style={{ backgrounColor: 'yellow', width: '100%', marginTop: 10 }}>
     {selectedTab === 0 && <Page navKeywords={navKeywords} selectedNavIndex={selectedNavIndex} selectedNavKeywords={selectedNavKeywords} keywordgroup={keywordgroup} groupName={groupName} selectedCat={selectedCat} gender={gender} keywordsIndexImages={keywordsIndexImages} placeholder={placeholder} pageNumber={pageNumber} products={products} />}
   </Grid>
@@ -76,17 +71,24 @@ function Content({ selectedNavKeywords, groupName, selectedCat, gender, placehol
 
 function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, placeholder, gender, navKeywords }) {
   const [filter, setFilter] = useState('Seçenekler')
-  debugger
+  
+
+  useEffect(() => {
+    const selectedFilter = location.href.includes('search')
+    if (selectedFilter) {
+      setFilter('search')
+    }
+  }, [])
   const groupKeywords = Object.values(keywordsIndexImages)
-  debugger
+  
   function filterGrup(e) {
-    debugger
+    
     const id = e.currentTarget.id
-    debugger
+    
     setFilter(id)
 
   }
-  debugger
+  
   return <Grid container gap={1} >
     <Grid item  >{groupKeywords.map((m, i) => {
       const countSelected = selectedNavIndex.split('-').filter(fk => m.keywords.some(s => {
@@ -99,9 +101,9 @@ function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, pl
     })}
 
       <Chip color={filter === 'filter' ? 'warning' : 'default'} onClick={filterGrup} key={111} id='filter' label={<span>Filter</span>} style={{ margin: 1 }} />
-      {/* <Chip color={filter === 'search' ? 'warning' : 'default'} onClick={filterGrup} key={111} id='search' label={<span><SearchIcon /></span>} style={{ margin: 1 }} /> */}
+      <Chip color={filter === 'search' ? 'warning' : 'default'} onClick={filterGrup} key={112} id='search' label={<span><SearchIcon /></span>} style={{ margin: 1 }} />
       {filter === 'filter' && <Grid item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
-      {/* {filter === 'search' && <Grid item><SearchInput /></Grid>} */}
+      {filter === 'search' && <Grid item><SearchInput gender={gender}/></Grid>}
     </Grid>
     <Grid container gap={1} sx={{ display: 'flex', justifyContent: { xs: 'center', md: 'start' } }}>
 
@@ -115,7 +117,7 @@ function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, pl
       })}
       {groupKeywords.filter(f => f.groupName === filter).map(m => {
         return m.keywords.filter(c => {
-          debugger
+          
           return selectedNavIndex.split('-').find(fk => fk === c.index.replace('-', '')) === undefined
         }).map((m, i) => {
           return <Grid key={i} item xs={3} sm={2} md={2} lg={1} ><GroupImage selectedNavIndex={selectedNavIndex} groupName={m.groupName} selectedCat={selectedCat} gender={gender} placeholder={placeholder}  {...m} /></Grid>
@@ -123,14 +125,18 @@ function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, pl
       })}
     </Grid>
   </Grid>
-
-
 }
 function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, selectedCat, gender, products, pageNumber, placeholder, keywordsIndexImages, navKeywords }) {
+  const [search ,setSearch]=useState('')
   const matches = useMediaQuery('(min-width:600px)');
   const [pageData, setPageData] = useState([])
   const { count, data } = products
-
+useEffect(()=>{
+  const search =location.href.includes('search')
+  if(search){
+    setSearch(decodeURI( location.href.substring(location.href.indexOf('search/')+7)))
+  }
+},[])
   useEffect(() => {
     setPageData(data)
   }, [data])
@@ -142,7 +148,6 @@ function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, selectedCat
     location.replace(nextUrl + 'sayfa/' + pageNumber)
   }
   return <>
-
     <Grid container>
       <Grid item xs={12}><Typography variant="h1" gutterBottom style={{ textTransform: 'capitalize', fontSize: 30 }}>{gender.replace('-', ' ')} {selectedCat}</Typography></Grid>
       <Grid container>
@@ -153,28 +158,26 @@ function Page({ selectedNavIndex, selectedNavKeywords, keywordgroup, selectedCat
         </PageMenu> </Grid>}
       </Grid>
     </Grid>
-
     {keywordsIndexImages && <GroupComponent navKeywords={navKeywords} keywordsIndexImages={keywordsIndexImages} gender={gender} placeholder={placeholder} selectedCat={selectedCat} selectedNavIndex={selectedNavIndex} />}
 
     <Grid item xs={12}></Grid>
     <Grid container gap={1} sx={{ display: 'flex', justifyContent: { xs: 'center', md: 'start' } }}>
       {pageData && pageData.length > 0 && pageData.filter(f => f.total === undefined).map((m, i) => {
 
-        return <Grid key={i} item xs={5} sm={3} md={3} lg={2} > <ImageComponent selectedNavKeywords={selectedNavKeywords} selectedCat={selectedCat} placeholder={placeholder} {...m} /></Grid>
+        return <Grid key={i} item xs={5} sm={3} md={3} lg={2} > <ImageComponent search={search} selectedNavKeywords={selectedNavKeywords} selectedCat={selectedCat} placeholder={placeholder} {...m} /></Grid>
       })}
     </Grid>
     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginBottom: 10 }}>
-      <Pagination count={totalPages} page={pageNumber} onChange={handleChange} />
+      <Pagination count={totalPages} page={pageNumber } onChange={handleChange} />
     </Grid>
     {pageNumber === totalPages && <Grid item xs={12}><BreadCrumb gender={gender} keywordgroup={keywordgroup} /></Grid>}
     {pageNumber === totalPages && <Grid item xs={12}>Son Sayfa</Grid>}
-
     <Grid item><Footer /></Grid>
   </>
 }
 
 function handleClick({ index, event, keyword, selectedNavIndex }) {
-  debugger
+  
   const urlKeywords = containsNumbers(keyword) ? keyword : keyword.replace(' ', '-')
   localStorage.setItem(`${urlKeywords}-index`, index)
   event.preventDefault()
@@ -249,8 +252,7 @@ function Keywords({ navKeywords, selectedNavIndex }) {
 // }
 
 
-function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, priceNew, timestamp, placeholder }) {
-
+function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, priceNew, timestamp, placeholder,search }) {
 
   const imageEl = useRef(null);
 
@@ -282,9 +284,6 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
       window.obz.observe(imageEl.current)
     }
 
-
-
-
   }, [imageUrl]);
 
   const imageSource =
@@ -296,13 +295,31 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
     placeholders[marka].detailHost +
     link +
     placeholders[marka].postfix;
-  const trimmedTitle = (title.lastIndexOf("_") > 0) ? title.substr(0, title.lastIndexOf("_")).trim() : title
-  const titleWithselectedKeywords = trimmedTitle.replace(marka, '').split(' ').map((m, i) => {
+  const trimmedTitle =  title.substr(0, title.lastIndexOf("_")).trim() 
+  debugger
+  const titleWithselectedKeywords = trimmedTitle.replace(marka, '').trim().split(' ').map((m, i) => {
+    let matcheSearch =false
+    if(search){
+       matcheSearch = search.trim().split(' ').find(f => {
+        if(f.length>2 && m.length>2 ){
+            return ( f.toLowerCase().includes(m)|| m.toLowerCase().includes(f.toLowerCase()))
+        
+        }else{
+    
+          return false
+        }
+       })
+
+       if(matcheSearch){
+        return <span key={i} style={{ fontSize: 11, marginLeft: 2, textTransform: 'capitalize', fontWeight: 700, color: '#ff7043' }}>{m.charAt(0).toUpperCase() + m.slice(1)}{' '} </span>
+       }
+    }
 
 
 
-    const matches = selectedNavKeywords ? selectedNavKeywords.find(f => f.includes(m)) : false
-    if (matches) {
+    const matchesIndex = selectedNavKeywords ? selectedNavKeywords.find(f => f.includes(m)) : false
+
+    if (matchesIndex) {
       return <span key={i} style={{ fontSize: 11, marginLeft: 2, textTransform: 'capitalize', fontWeight: 700, color: '#ff7043' }}>{m.charAt(0).toUpperCase() + m.slice(1)}{' '} </span>
     }
     return <span style={{ textTransform: 'capitalize', fontSize: 11 }} key={i}>{' '} {m.charAt(0).toUpperCase() + m.slice(1)}</span>
@@ -321,7 +338,7 @@ function GroupImage({ selectedCat, gender, placeholder, imageSource, index, keyw
   const match = selectedNavIndex.split('-').find(f => f === index.replace('-', ''))
 
 
-  debugger
+
   const alt = `${gender} ${keywordTitle} ${selectedCat}`
   console.log("alt", alt)
   const imageElm = useRef(null);
