@@ -17,10 +17,9 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
 
     const dataRaw = await fss.readFile(jsonDirectory + `/keywords.json`, 'utf8');
     const allkeywords = JSON.parse(dataRaw)
-    //const dirPath = path.join(`./api/_files/data/${subcategory}`)
-    const cr = process.cwd()
 
-    const dirPath = `${process.cwd()}/${gender}/_files/data`
+    debugger
+
 
     const files = []//fs.readdirSync(dirPath)
     walkSync(`${process.cwd()}/${gender}/_files/data`, (filepath) => {
@@ -41,107 +40,80 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
     console.log('startAt----', startAt)
     var products = TAFFY(data);
 
-    const filterByKeyword = selectedNavIndex === '' ? function () { return true } : function filterByKeyword() {
 
-        let splittedKeywordsIndex = selectedNavIndex.split('-').filter(f => f !== '')
-        let foundkeywords = allkeywords.filter(function (f) {
-            const includes = splittedKeywordsIndex.includes(f.index)
-            return includes
-        })
+ 
+   let categorykeywords = search.split(' ').map((m)=>{
 
+    const result = allkeywords.filter(f=>f.keywordType==='category').filter((f)=>{
+        const curr =f
+      
+      const match =  curr.keywords.match(m)
 
-        const title = this.title
-        const priceNew = this.priceNew
+      return match
+        
+    })
 
-        const match = foundkeywords.filter(kws => {
-
-            let negwords = kws.exclude
-            let exactmatch = kws.exactmatch
-            let groupName = kws.groupName
-            let index = parseInt(kws.index.replace('-', ''))
-            if (groupName === 'Fiyat') {
-
-
-                const priceRange = kws.keywords.split('-').map(m => parseInt(m).toFixed(2))
-
-                const startPrice = parseFloat(priceRange[0])
-
-                const endPrice = parseFloat(priceRange[1])
+    return result
+   }).filter(f=>f.length >0).map(m=>m.map(n=> n.keywords.split(','))).flat()
 
 
 
-                try {
-                    const price = priceNew.toString().replace('.', '').replace(',', '.')
-                    const productPrice = parseFloat(price)
 
-                    if (endPrice) {
+    let otherKeywords = search.split(' ').map(k=>k.toLowerCase()).filter((f)=> !categorykeywords.some(d=>d.includes(f)))
 
-                        if (productPrice >= startPrice && productPrice <= endPrice) {
-                            return true
-                        } else {
-                            return false;
-                        }
-
-                    }
-                    else {
-
-                        if (productPrice >= startPrice) {
-                            return true
-                        } else {
-
-                            return false
-                        }
-
-                    }
-                } catch (error) {
-
+    let regexFoundKeywords =categorykeywords.map((m) => {
+       if(m.length>1){
+            return m.map((n,i,arr)=>{
+                debugger
+                if (i === 0) {
+                    return '(' + n
                 }
-
-            } else {
-
-                let nws = []
-
-                if (negwords) {
-                    nws = negwords.split(',')
-
+                if (i === arr.length - 1) {
+                    return n + ')'
                 }
-                const kw = kws.keywords
-                const match = productTitleMatch({ kw, title, exactmatch, nws })
-                return match
-            }
-        })
+                return n
+            }).join('|')
+        }
+        else{
+            return m[0]
+        }
+    
+    })
+debugger
+    let regexWithoutDub = regexFoundKeywords
 
-        return match.length === foundkeywords.length
-    }
+ console.log('regexWithoutDub',regexWithoutDub)
+ console.log('otherKeywords',otherKeywords)
+   console.log('permutator other',permutator(otherKeywords))
+//.map((m, i, arr) => {
+//     if (arr.length - 1 > i) {
+//         return `(${m}.*)|`
+//     }
+//     return `(${m}.*)`
 
-    const searchArr = search.split(' ').length > 0 ? permutator( search.split(' ')).map(n=>n.join(' ')).map((m, i, arr) => {
+// }).join('') )
+
+    const searchArr = [...otherKeywords,...regexWithoutDub].length > 0 ? permutator([...otherKeywords,...regexWithoutDub]).map(n => n.join(' ')).map((m, i, arr) => {
         if (arr.length - 1 > i) {
             return `(${m})|`
         }
         return `(${m})`
 
     }).join('') : search
+    debugger
+console.log('searchArr',searchArr)
     const filterBySearch = search === '' ? {} : { title: { regex: new RegExp(searchArr, 'i') } }
 
 
-    var filteredData = products().filter(filterBySearch).filter(filterByKeyword).get()
+    var filteredData = products().filter(filterBySearch).get()
 
-
+    debugger
     var orderedData = orderData(filteredData)
     var orderedDb = TAFFY(orderedData)
 
     var d = orderedDb().start(startAt).limit(100).get()
     let count = orderedDb().count()
 
-
-
-    console.log('data.length', d.length)
-
-
-    console.log('search', filterBySearch)
-
-    console.log('startAt', startAt)
-    console.log('count1', count)
 
     return { data: d, count }
 }
@@ -168,3 +140,10 @@ const permutator = (inputArr) => {
 
     return result;
 }
+
+      
+function removeDuplicates(arr) {
+    return arr.filter((item, 
+        index) => arr.indexOf(item) === index);
+}
+  

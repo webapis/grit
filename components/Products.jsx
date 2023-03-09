@@ -90,7 +90,7 @@ function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, pl
   }
   
   return <Grid container gap={1} >
-    <Grid item  >{groupKeywords.map((m, i) => {
+    <Grid item  container>{groupKeywords.map((m, i) => {
       const countSelected = selectedNavIndex.split('-').filter(fk => m.keywords.some(s => {
 
         return s.index.replace('-', '') === fk
@@ -99,11 +99,11 @@ function GroupComponent({ keywordsIndexImages, selectedNavIndex, selectedCat, pl
 
       return <Chip color={filter === m.groupName ? 'warning' : 'default'} onClick={filterGrup} key={i} id={m.groupName} label={<span>{m.groupName} {countSelected > 0 && <span>({countSelected})</span>}</span>} style={{ margin: 1 }} />
     })}
-
-      <Chip color={filter === 'filter' ? 'warning' : 'default'} onClick={filterGrup} key={111} id='filter' label={<span>Filter</span>} style={{ margin: 1 }} />
+      {navKeywords.length>0 && <Chip color={filter === 'filter' ? 'warning' : 'default'} onClick={filterGrup} key={111} id='filter' label={<span>Filter</span>} style={{ margin: 1 }} />}
+      
       <Chip color={filter === 'search' ? 'warning' : 'default'} onClick={filterGrup} key={112} id='search' label={<span><SearchIcon /></span>} style={{ margin: 1 }} />
       {filter === 'filter' && <Grid item><Keywords selectedNavIndex={selectedNavIndex} navKeywords={navKeywords} /></Grid>}
-      {filter === 'search' && <Grid item><SearchInput gender={gender}/></Grid>}
+      {filter === 'search' && <Grid item xs={12} ><SearchInput gender={gender}/></Grid>}
     </Grid>
     <Grid container gap={1} sx={{ display: 'flex', justifyContent: { xs: 'center', md: 'start' } }}>
 
