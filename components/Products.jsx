@@ -302,20 +302,18 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
     if(search){
        matcheSearch = search.trim().split(' ').find(f => {
         if(f.length>2 && m.length>2 ){
-            return ( f.toLowerCase().includes(m)|| m.toLowerCase().includes(f.toLowerCase()))
-        
-        }else{
-    
+          const regValue =f.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
+          const regex = new RegExp(regValue,'i')
+            return ( regex.test(m)|| m.toLowerCase().includes(f.toLowerCase()))
+        }else
+        {
           return false
         }
        })
-
        if(matcheSearch){
         return <span key={i} style={{ fontSize: 11, marginLeft: 2, textTransform: 'capitalize', fontWeight: 700, color: '#ff7043' }}>{m.charAt(0).toUpperCase() + m.slice(1)}{' '} </span>
        }
     }
-
-
 
     const matchesIndex = selectedNavKeywords ? selectedNavKeywords.find(f => f.includes(m)) : false
 
@@ -323,7 +321,6 @@ function ImageComponent({ selectedNavKeywords, title, marka, imageUrl, link, pri
       return <span key={i} style={{ fontSize: 11, marginLeft: 2, textTransform: 'capitalize', fontWeight: 700, color: '#ff7043' }}>{m.charAt(0).toUpperCase() + m.slice(1)}{' '} </span>
     }
     return <span style={{ textTransform: 'capitalize', fontSize: 11 }} key={i}>{' '} {m.charAt(0).toUpperCase() + m.slice(1)}</span>
-
 
   })
   return <div><a href={detailHost} target="_blank"> <img ref={imageEl} style={{ width: '100%' }} src={placeholder} data-src={imageSource} alt={title} /></a><div style={{ display: 'flex', justifyContent: 'space-between' }}><Typography style={{ textTransform: 'uppercase', fontSize: 11 }} variant="body2">{marka}</Typography><Typography variant="body2" style={{ fontSize: 11 }}>{priceNew} TL</Typography></div><Link color="inherit" underline="hover" variant="body2" href={detailHost} target="_blank" style={{ textTransform: 'capitalize' }}>{titleWithselectedKeywords}</Link>

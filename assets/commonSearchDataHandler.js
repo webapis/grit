@@ -5,7 +5,7 @@ import orderData from './orderData'
 import { promises as fss } from 'fs';
 import path from 'path';
 import { walkSync } from '../utils/walkSync'
-const { productTitleMatch } = require('./productTitleMatch')
+
 const fs = require('fs')
 
 
@@ -41,67 +41,116 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
     var products = TAFFY(data);
 
 
- 
-   let categorykeywords = search.split(' ').map((m)=>{
 
-    const result = allkeywords.filter(f=>f.keywordType==='category').filter((f)=>{
-        const curr =f
+    let categorykeywords = search.split(' ').map((m) => {
+
+        const result = allkeywords.filter(f => f.keywordType === 'category').filter((f) => {
+            const curr = f
       
-      const match =  curr.keywords.match(m)
-
-      return match
-        
-    })
-
-    return result
-   }).filter(f=>f.length >0).map(m=>m.map(n=> n.keywords.split(','))).flat()
-
-
-
-
-    let otherKeywords = search.split(' ').map(k=>k.toLowerCase()).filter((f)=> !categorykeywords.some(d=>d.includes(f)))
-
-    let regexFoundKeywords =categorykeywords.map((m) => {
-       if(m.length>1){
-            return m.map((n,i,arr)=>{
+            if (curr.keywords.includes('tişört') && m.includes('tişört')) {
                 debugger
+            }
+    
+            const regValue = curr.keywords.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)').split(',').map((d, i, arr) => {
+                if (arr.length === 1) {
+                    return d
+                }
                 if (i === 0) {
-                    return '(' + n
+                    return '(' + d + '|'
                 }
                 if (i === arr.length - 1) {
-                    return n + ')'
+                    return d + ')'
                 }
-                return n
+
+                return d + '|'
+
+            }).join(' ')
+
+        
+            if (curr.keywords.includes('tişört') && m.includes('tişört')) {
+                debugger
+            }
+            const reg = new RegExp(regValue)
+        
+
+            const match = reg.test(m)
+         
+            if (curr.keywords.includes('tişört') && m.includes('tişört')) {
+                console.log('reg',reg)
+                console.log('match',match)
+              }
+            return match
+
+        })
+
+        return result
+    }).filter(f => f.length > 0).map(m => m.map(n => n.keywords.split(','))).flat()
+
+
+    console.log('categorykeywords', categorykeywords)
+
+    let otherKeywords = search.split(' ').map(k => k.toLowerCase()).filter((f) => !categorykeywords.some(d => {
+
+        const regValue = d.join(',').replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)').split(',').map((d, i, arr) => {
+            if (arr.length === 1) {
+                return d
+            }
+            if (i === 0) {
+                return '(' + d + '|'
+            }
+            if (i === arr.length - 1) {
+                return d + ')'
+            }
+
+            return d + '|'
+
+        }).join('')
+        const reg = new RegExp(regValue)
+
+
+        const match = reg.test(f)
+        debugger
+        return match
+
+
+
+    }))
+
+    let regexFoundKeywords = categorykeywords.map((m) => {
+        if (m.length > 1) {
+            return m.map((n, i, arr) => {
+
+                if (i === 0) {
+                    return '(' + n.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
+                }
+                if (i === arr.length - 1) {
+                    return n.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)') + ')'
+                }
+                return n.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
             }).join('|')
         }
-        else{
-            return m[0]
+        else {
+            return m[0].replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
         }
-    
+
     })
-debugger
+    debugger
     let regexWithoutDub = regexFoundKeywords
 
- console.log('regexWithoutDub',regexWithoutDub)
- console.log('otherKeywords',otherKeywords)
-   console.log('permutator other',permutator(otherKeywords))
-//.map((m, i, arr) => {
-//     if (arr.length - 1 > i) {
-//         return `(${m}.*)|`
-//     }
-//     return `(${m}.*)`
+    console.log('regexWithoutDub', regexWithoutDub)
+    console.log('otherKeywords', otherKeywords)
+    console.log('permutator other', permutator(otherKeywords))
 
-// }).join('') )
 
-    const searchArr = [...otherKeywords,...regexWithoutDub].length > 0 ? permutator([...otherKeywords,...regexWithoutDub]).map(n => n.join(' ')).map((m, i, arr) => {
+    const searchArr = [...otherKeywords, ...regexWithoutDub].length > 0 ? permutator([...otherKeywords, ...regexWithoutDub]).map(n => n.join(' ')).map((m, i, arr) => {
         if (arr.length - 1 > i) {
-            return `(${m})|`
+            return `(\\s)(${m})|`
         }
-        return `(${m})`
+        return `(\\s)(${m})`
 
-    }).join('') : search
+    }).join('') : search.replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
     debugger
-console.log('searchArr',searchArr)
+    console.log('searchArr', searchArr)
     const filterBySearch = search === '' ? {} : { title: { regex: new RegExp(searchArr, 'i') } }
 
 
@@ -141,9 +190,8 @@ const permutator = (inputArr) => {
     return result;
 }
 
-      
+
 function removeDuplicates(arr) {
-    return arr.filter((item, 
+    return arr.filter((item,
         index) => arr.indexOf(item) === index);
 }
-  

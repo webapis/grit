@@ -5,7 +5,7 @@ import orderData from './orderData'
 import { promises as fss } from 'fs';
 import path from 'path';
 import { walkSync } from '../utils/walkSync'
-const { productTitleMatch } = require('./productTitleMatch')
+
 const fs = require('fs')
 
 
@@ -17,10 +17,9 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
 
     const dataRaw = await fss.readFile(jsonDirectory + `/keywords.json`, 'utf8');
     const allkeywords = JSON.parse(dataRaw)
-    //const dirPath = path.join(`./api/_files/data/${subcategory}`)
-    const cr = process.cwd()
 
-    const dirPath = `${process.cwd()}/${gender}/_files/data`
+    debugger
+
 
     const files = []//fs.readdirSync(dirPath)
     walkSync(`${process.cwd()}/${gender}/_files/data`, (filepath) => {
@@ -41,112 +40,129 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
     console.log('startAt----', startAt)
     var products = TAFFY(data);
 
-    const filterByKeyword = selectedNavIndex === '' ? function () { return true } : function filterByKeyword() {
-
-        let splittedKeywordsIndex = selectedNavIndex.split('-').filter(f => f !== '')
-        let foundkeywords = allkeywords.filter(function (f) {
-            const includes = splittedKeywordsIndex.includes(f.index)
-            return includes
-        })
 
 
-        const title = this.title
-        const priceNew = this.priceNew
+    let categorykeywords = search.split(' ').map((m) => {
 
-        const match = foundkeywords.filter(kws => {
-
-            let negwords = kws.exclude
-            let exactmatch = kws.exactmatch
-            let groupName = kws.groupName
-            let index = parseInt(kws.index.replace('-', ''))
-            if (groupName === 'Fiyat') {
-
-
-                const priceRange = kws.keywords.split('-').map(m => parseInt(m).toFixed(2))
-
-                const startPrice = parseFloat(priceRange[0])
-
-                const endPrice = parseFloat(priceRange[1])
-
-
-
-                try {
-                    const price = priceNew.toString().replace('.', '').replace(',', '.')
-                    const productPrice = parseFloat(price)
-
-                    if (endPrice) {
-
-                        if (productPrice >= startPrice && productPrice <= endPrice) {
-                            return true
-                        } else {
-                            return false;
-                        }
-
-                    }
-                    else {
-
-                        if (productPrice >= startPrice) {
-                            return true
-                        } else {
-
-                            return false
-                        }
-
-                    }
-                } catch (error) {
-
-                }
-
-            } else {
-
-                let nws = []
-
-                if (negwords) {
-                    nws = negwords.split(',')
-
-                }
-                const kw = kws.keywords
-                const match = productTitleMatch({ kw, title, exactmatch, nws })
-                return match
+        const result = allkeywords.filter(f => f.keywordType === 'category').filter((f) => {
+            const curr = f
+      
+            if (curr.keywords.includes('tişört') && m.includes('tişört')) {
+                debugger
             }
+    
+            const regValue = curr.keywords.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)').split(',').map((d, i, arr) => {
+                if (arr.length === 1) {
+                    return d
+                }
+                if (i === 0) {
+                    return '(' + d + '|'
+                }
+                if (i === arr.length - 1) {
+                    return d + ')'
+                }
+
+                return d + '|'
+
+            }).join('')
+
+        
+            if (curr.keywords.includes('tişört') && m.includes('tişört')) {
+                debugger
+            }
+            const reg = new RegExp("\\b"+regValue)
+        
+
+            const match = reg.test(m)
+         
+            if (curr.keywords.includes('tişört') && m.includes('tişört')) {
+                console.log('reg',reg)
+                console.log('match',match)
+              }
+            return match
+
         })
 
-        return match.length === foundkeywords.length
-    }
-    let foundkeywords = allkeywords.filter((k) => {
-        const test = search.split(' ').some((s)=> s.match(k.keywords)) 
-debugger
-        return test
-       }  )
-    debugger
-    const searchArr = [...foundkeywords, ...search.split(' ')].length > 0 ? permutator([...foundkeywords, ...search.split(' ')]).map(n => n.join(' ')).map((m, i, arr) => {
-        if (arr.length - 1 > i) {
-            return `(${m})|`
+        return result
+    }).filter(f => f.length > 0).map(m => m.map(n => n.keywords.split(','))).flat()
+
+
+    console.log('categorykeywords', categorykeywords)
+
+    let otherKeywords = search.split(' ').map(k => k.toLowerCase()).filter((f) => !categorykeywords.some(d => {
+
+        const regValue = d.join(',').replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)').split(',').map((d, i, arr) => {
+            if (arr.length === 1) {
+                return d
+            }
+            if (i === 0) {
+                return '(' + d + '|'
+            }
+            if (i === arr.length - 1) {
+                return d + ')'
+            }
+
+            return d + '|'
+
+        }).join('')
+        const reg = new RegExp(regValue)
+
+
+        const match = reg.test(f)
+        debugger
+        return match
+
+
+
+    }))
+
+    let regexFoundKeywords = categorykeywords.map((m) => {
+        if (m.length > 1) {
+            return m.map((n, i, arr) => {
+
+                if (i === 0) {
+                    return '(' + n.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
+                }
+                if (i === arr.length - 1) {
+                    return n.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)') + ')'
+                }
+                return n.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
+            }).join('|')
         }
-        return `(${m})`
+        else {
+            return m[0].replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
+        }
 
-    }).join('') : search
-    const filterBySearch = search === '' ? {} : { title: { regex: new RegExp(searchArr, 'i') } }
+    })
+    debugger
+    let regexWithoutDub = regexFoundKeywords
+
+    console.log('regexWithoutDub', regexWithoutDub)
+    console.log('otherKeywords', otherKeywords)
+    console.log('permutator other', permutator(otherKeywords))
 
 
-    var filteredData = products().filter(filterBySearch).filter(filterByKeyword).get()
+    const searchArr = [...otherKeywords, ...regexWithoutDub].length > 0 ? permutator([...otherKeywords, ...regexWithoutDub]).map(n => n.join(' ')).map((m, i, arr) => {
+        if (arr.length - 1 > i) {
+            return `(\\s)(${m})|`
+        }
+        return `(\\s)(${m})`
+
+    }).join('') : search.replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
+    debugger
+    console.log('searchArr', searchArr.replaceAll(' ',''))
+    const filterBySearch = search === '' ? {} : { title: { regex: new RegExp(searchArr.replaceAll(' ',''), 'i') } }
 
 
+    var filteredData = products().filter(filterBySearch).get()
+
+    debugger
     var orderedData = orderData(filteredData)
     var orderedDb = TAFFY(orderedData)
 
     var d = orderedDb().start(startAt).limit(100).get()
     let count = orderedDb().count()
 
-
-
-    console.log('data.length', d.length)
-
-
-    console.log('search', filterBySearch)
-
-    console.log('startAt', startAt)
-    console.log('count1', count)
 
     return { data: d, count }
 }
@@ -172,4 +188,10 @@ const permutator = (inputArr) => {
     permute(inputArr)
 
     return result;
+}
+
+
+function removeDuplicates(arr) {
+    return arr.filter((item,
+        index) => arr.indexOf(item) === index);
 }
