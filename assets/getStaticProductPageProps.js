@@ -39,7 +39,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
     }
     const data = Object.values(categories).flat(2);
     const selectedGroup = data.find(f => f.groupName.toLowerCase() === groupName.toLowerCase())
-
+console.log('selectedGroup',selectedGroup)
     const functionName = selectedGroup ? selectedGroup.functionName : ''
     const fnName = functionName
         .replace(/ö/g, "o")
@@ -87,7 +87,8 @@ export default async function getStaticProductPageProps({ context, host, gender 
     let navKeywords = []
     let keywordsIndexImages = []
 
-    if (selectedNavIndex !== '-' && selectedNavIndex !== '') {
+    if (selectedNavIndex !== '-' && selectedNavIndex !== ''  && functionName) {
+        console.log('functionName',functionName)
         try {
             const navKeywordsResponse = await fetchNavKeywords({
                 functionName,
