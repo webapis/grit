@@ -46,7 +46,7 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
 
         const result = allkeywords.filter(f => f.keywordType === 'category').filter((f) => {
             const curr = f
-            const regCurr =m.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
+      
             if (curr.keywords.includes('tişört') && m.includes('tişört')) {
                 debugger
             }
@@ -64,18 +64,21 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
 
                 return d + '|'
 
-            }).join(' ')
+            }).join('')
 
         
             if (curr.keywords.includes('tişört') && m.includes('tişört')) {
                 debugger
             }
-            const reg = new RegExp(regValue)
-            
+            const reg = new RegExp("\\b"+regValue)
+        
 
-            const match = curr.keywords.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)').split(',').some(s=>s===regCurr)
+            const match = reg.test(m)
          
-          
+            if (curr.keywords.includes('tişört') && m.includes('tişört')) {
+                console.log('reg',reg)
+                console.log('match',match)
+              }
             return match
 
         })
@@ -147,8 +150,8 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
 
     }).join('') : search.replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
     debugger
-    console.log('searchArr', searchArr)
-    const filterBySearch = search === '' ? {} : { title: { regex: new RegExp(searchArr, 'i') } }
+    console.log('searchArr', searchArr.replaceAll(' ',''))
+    const filterBySearch = search === '' ? {} : { title: { regex: new RegExp(searchArr.replaceAll(' ',''), 'i') } }
 
 
     var filteredData = products().filter(filterBySearch).get()

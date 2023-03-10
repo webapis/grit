@@ -3,7 +3,10 @@ import Paper from '@mui/material/Paper';
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
 import { useState, useEffect } from 'react';
-
+function removeDuplicates(arr) {
+  return arr.filter((item, 
+      index) => arr.indexOf(item) === index);
+}
 export default function SearchBox({ gender }) {
   const [value, setValue] = useState('')
 
@@ -18,10 +21,12 @@ export default function SearchBox({ gender }) {
   }
   function searchHandler() {
     const href = location.href.replaceAll('?', '')
+    const trimmedValue =removeDuplicates(value.toLowerCase().split(' ')).join(' ').trim()
+    debugger
     if (href.includes('search')) {
-      location.replace(encodeURI(`/${gender}/search/${value}`))
+      location.replace(encodeURI(`/${gender}/search/${trimmedValue}`))
     } else {
-      location.replace(encodeURI(`/${gender}/search/${value}`))
+      location.replace(encodeURI(`/${gender}/search/${trimmedValue}`))
     }
   }
   return <Paper
@@ -31,6 +36,7 @@ export default function SearchBox({ gender }) {
   >
 
     <TextField
+    fullWidth
       value={value}
       sx={{ ml: 1, flex: 10 }}
       placeholder={"Ürün ara"}
