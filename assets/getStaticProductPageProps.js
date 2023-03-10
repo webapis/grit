@@ -14,7 +14,8 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     const groupName = slug[0].replace('-', ' ')
     console.log('slug',slug)
-    const search = slug.some(s=>s==='search') ? slug[slug.length-1]:''
+    //  const search = slug.some(s=>s==='search') ? slug[slug.length-1]:''
+    const search = slug.some(s=>s==='search') ? slug.slice(1,2)[0]:''
     console.log('search',search)
     const jsonDirectory = path.join(process.cwd(), gender);
     const keywordsDirectory = path.join(process.cwd(), `assets`);
@@ -38,7 +39,7 @@ export default async function getStaticProductPageProps({ context, host, gender 
     }
     const data = Object.values(categories).flat(2);
     const selectedGroup = data.find(f => f.groupName.toLowerCase() === groupName.toLowerCase())
-
+console.log('selectedGroup',selectedGroup)
     const functionName = selectedGroup ? selectedGroup.functionName : ''
     const fnName = functionName
         .replace(/ö/g, "o")
@@ -86,7 +87,8 @@ export default async function getStaticProductPageProps({ context, host, gender 
     let navKeywords = []
     let keywordsIndexImages = []
 
-    if (selectedNavIndex !== '-' && selectedNavIndex !== '') {
+    if (selectedNavIndex !== '-' && selectedNavIndex !== ''  && functionName) {
+        console.log('functionName',functionName)
         try {
             const navKeywordsResponse = await fetchNavKeywords({
                 functionName,
