@@ -46,7 +46,7 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
 
         const result = allkeywords.filter(f => f.keywordType === 'category').filter((f) => {
             const curr = f
-      
+            const regCurr =m.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
             if (curr.keywords.includes('tişört') && m.includes('tişört')) {
                 debugger
             }
@@ -71,14 +71,11 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
                 debugger
             }
             const reg = new RegExp(regValue)
-        
+            
 
-            const match = reg.test(m)
+            const match = curr.keywords.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)').split(',').some(s=>s===regCurr)
          
-            if (curr.keywords.includes('tişört') && m.includes('tişört')) {
-                console.log('reg',reg)
-                console.log('match',match)
-              }
+          
             return match
 
         })
