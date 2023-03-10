@@ -12,7 +12,8 @@ export default function SearchBox({ gender }) {
 
   useEffect(() => {
     const slug = location.href.split('/')
-    const value = location.href.includes('search') ? decodeURI(slug[slug.length - 1]) : ''
+    const value = location.href.includes('search') ? decodeURI(location.pathname.split('/').slice(3,4)[0]) : ''
+    console.log('value',location.pathname.split('/').slice(3,4)[0]) 
     setValue(value)
   }, [])
   function searchInputChanged(e) {
@@ -24,9 +25,9 @@ export default function SearchBox({ gender }) {
     const trimmedValue =removeDuplicates(value.toLowerCase().split(' ')).join(' ').trim()
     debugger
     if (href.includes('search')) {
-      location.replace(encodeURI(`/${gender}/search/${trimmedValue}`))
+      location.replace(encodeURI(`/${gender}/search/${trimmedValue}/sayfa/1`))
     } else {
-      location.replace(encodeURI(`/${gender}/search/${trimmedValue}`))
+      location.replace(encodeURI(`/${gender}/search/${trimmedValue}/sayfa/1`))
     }
   }
   return <Paper

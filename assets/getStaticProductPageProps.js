@@ -14,7 +14,8 @@ export default async function getStaticProductPageProps({ context, host, gender 
 
     const groupName = slug[0].replace('-', ' ')
     console.log('slug',slug)
-    const search = slug.some(s=>s==='search') ? slug[slug.length-1]:''
+    //  const search = slug.some(s=>s==='search') ? slug[slug.length-1]:''
+    const search = slug.some(s=>s==='search') ? slug.slice(1,2)[0]:''
     console.log('search',search)
     const jsonDirectory = path.join(process.cwd(), gender);
     const keywordsDirectory = path.join(process.cwd(), `assets`);
