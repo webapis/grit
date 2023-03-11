@@ -111,7 +111,7 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
 
 
 
-    }))
+    })).map(d=>d.replaceAll(/(ı|i)/g, '(i|ı)').replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)'))
 
     let regexFoundKeywords = categorykeywords.map((m) => {
         if (m.length > 1) {
