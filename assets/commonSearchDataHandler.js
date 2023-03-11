@@ -99,7 +99,7 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
                 return d + ')'
             }
 
-            return d + '|'
+            return d  + '|'
 
         }).join('')
         const reg = new RegExp(regValue)
@@ -139,11 +139,11 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
     console.log('permutator other', permutator(otherKeywords))
 
 
-    const searchArr = [...otherKeywords, ...regexWithoutDub].length > 0 ? permutator([...otherKeywords, ...regexWithoutDub]).map(n => n.join(' ')).map((m, i, arr) => {
+    const searchArr = [...otherKeywords, ...regexWithoutDub].length > 0 ? permutator([...otherKeywords, ...regexWithoutDub]).map(n => n.join('.*')).map((m, i, arr) => {
         if (arr.length - 1 > i) {
-            return `(\\s)(${m})|`
+            return `(\\s|\\b)(${m})|`
         }
-        return `(\\s)(${m})`
+        return `(\\s|\\b)(${m})`
 
     }).join('') : search.replaceAll(/(o|ö)/g, '(o|ö)').replaceAll(/(c|ç)/g, '(c|ç)').replaceAll(/(s|ş)/g, '(s|ş)').replaceAll(/(ü|u)/g, '(ü|u)')
     debugger
@@ -157,6 +157,7 @@ async function commonSearchDataHandler({ start, search, selectedNavIndex, subcat
     var orderedData = orderData(filteredData)
     var orderedDb = TAFFY(orderedData)
 
+    debugger
     var d = orderedDb().start(startAt).limit(100).get()
     let count = orderedDb().count()
 
